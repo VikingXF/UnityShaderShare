@@ -15,6 +15,7 @@
 *.sln
 VsCode/
 Water/Library
+Water/Temp
 # ============ #
 # OS generated #
 # ============ #
