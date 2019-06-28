@@ -3,56 +3,45 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+
+		//TOONY COLORS
+		_Color("Color", Color) = (1.0,1.0,1.0,1.0)
+		_HColor("Highlight Color", Color) = (0.6,0.6,0.6,1.0)
+		_SColor("Shadow Color", Color) = (0.2,0.2,0.2,1.0)
+
+		//TOONY COLORS RAMP
+		_RampThreshold("Ramp Threshold", Range(0,1)) = 0.5
+		_RampSmooth("Ramp Smoothing", Range(0.01,1)) = 0.1
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
+        CGPROGRAM
 
-            #include "UnityCG.cginc"
+	    #include "Include/Cartoon_Include.cginc"
+        #include "UnityCG.cginc"
+		#pragma surface surf ToonyColors
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-            };
+		fixed4 _Color;
+		sampler2D _MainTex;
 
-            struct v2f
-            {
-                float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
-                float4 vertex : SV_POSITION;
-            };
+		struct Input
+		{
+			half2 uv_MainTex : TEXCOORD0;
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
+		};
+          
+		void surf(Input IN, inout SurfaceOutput o)
+		{
+			half4 main = tex2D(_MainTex, IN.uv_MainTex);
+			o.Albedo = main.rgb * _Color.rgb;
+			o.Alpha = main.a * _Color.a;
 
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
-                return o;
-            }
+		}
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
-            }
-            ENDCG
-        }
+        ENDCG
+        
     }
 }
