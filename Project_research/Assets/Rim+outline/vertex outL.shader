@@ -59,7 +59,7 @@ Shader "Babybus/outL/vertex outL3" {
 			Cull Front
 			ZWrite On			
 			
-			Offset 50, 50
+			Offset 200, 200
 			
 			Blend SrcAlpha OneMinusSrcAlpha
 			CGPROGRAM

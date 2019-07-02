@@ -42,7 +42,7 @@ Shader "Babybus/Cartoon/CartoonUnlit"
                 float2 uv : TEXCOORD0;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
-				float4 CarToonColor: TEXCOORD2;
+				fixed ndl: TEXCOORD2;
             };
 
             sampler2D _MainTex;
@@ -63,14 +63,12 @@ Shader "Babybus/Cartoon/CartoonUnlit"
 				//计算光照
 				fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
 				fixed3 lightDir = mul((float3x3)unity_ObjectToWorld, ObjSpaceLightDir(v.vertex));
-				fixed ndl = max(0, dot(worldNormal, lightDir)*0.5 + 0.5);
-				fixed3 ramp = smoothstep(_RampThreshold - _RampSmooth * 0.5, _RampThreshold + _RampSmooth * 0.5, ndl);
-				ramp *= LIGHT_ATTENUATION(i);
-				_SColor = lerp(_HColor, _SColor, _SColor.a);	//通过阴影颜色的Alpha控制阴影的强度
-				ramp = lerp(_SColor.rgb, _HColor.rgb, ramp);
-				o.CarToonColor.rgb = _LightColor0.rgb * ramp;
-				
+				o.ndl = max(0, dot(worldNormal, lightDir)*0.5 + 0.5);
+								
 				//计算光照结束
+				
+				
+				
 
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
@@ -81,7 +79,12 @@ Shader "Babybus/Cartoon/CartoonUnlit"
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv)*_Color;
 
-				col *= i.CarToonColor;
+				fixed3 ramp = smoothstep(_RampThreshold - _RampSmooth * 0.5, _RampThreshold + _RampSmooth * 0.5, i.ndl);
+				ramp *= LIGHT_ATTENUATION(i);
+				_SColor = lerp(_HColor, _SColor, _SColor.a);	//通过阴影颜色的Alpha控制阴影的强度
+				ramp = lerp(_SColor.rgb, _HColor.rgb, ramp);
+				col.rgb *= _LightColor0.rgb * ramp;
+
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<AnimationData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <pngName />
+  <resWidth>1920</resWidth>
+  <resHeight>1080</resHeight>
+  <scale>1</scale>
+  <frameCount>1</frameCount>
+  <frameRate>1</frameRate>
+  <myCameraname>Main Camera</myCameraname>
+  <path>C:/Users/xuef/Desktop</path>
+</AnimationData>
