@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 72006d7d1239ebc4192f1be5fb638dc3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - originalRenderer: {instanceID: 0}
+  - processedMesh: {instanceID: 0}
+  - wireframeRenderer: {instanceID: 0}
+  - wireframeMaterialCull: {instanceID: 0}
+  - wireframeMaterialNoCull: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

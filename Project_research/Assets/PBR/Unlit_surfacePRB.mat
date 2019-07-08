@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit_surfacePRB
+  m_Shader: {fileID: 4800000, guid: a120dd5831d83924db10e4de1967ae72, type: 3}
+  m_ShaderKeywords: _DISSOLVEEFFECT_OFF _HITEFFECT_OFF
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BurnMap:
+        m_Texture: {fileID: 2800000, guid: 01cc27dce59f0c143b00bb94ede7ef4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BurnRamp:
+        m_Texture: {fileID: 2800000, guid: a06eb930beab9ec45b8923a30c2c415a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveTex:
+        m_Texture: {fileID: 2800000, guid: 3a542d9e1a36b6f4e964181523c83f02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionTex:
+        m_Texture: {fileID: 2800000, guid: ed55e9f3225fe1d4f9f59a31f901ef7e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ed55e9f3225fe1d4f9f59a31f901ef7e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRTex:
+        m_Texture: {fileID: 2800000, guid: 5c748fa6396758c4a8c9f4ace6a8b249, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AOAdjust: 0
+    - _BurnSize: 0
+    - _CutOff: 1
+    - _DissolveEffect: 0
+    - _DissolvePower: -0.2
+    - _EmissionScale: 0
+    - _HitEffect: 0
+    - _MetallicAdjust: 1
+    - _RimPower: 1
+    - _RoughnessAdjust: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DissolveEmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GlowColor: {r: 1, g: 1, b: 1, a: 1}

@@ -15,23 +15,25 @@ public class MaskBlurEffect : MonoBehaviour
     public Shader BlurShader;
     private Material BlurMaterial;
 
-    //迭代次数
-    [Tooltip("[Mask贴图控制模糊区域，贴图为黑白纹理，黑色像素为模糊区域，白色为不模糊区域。")]
-    public Texture2D MaskTex;
-
     public static int ChangeValue;
     public static float ChangeValue2;
     public static int ChangeValue3;
 
     //降采样次数
     [Range(0, 6), Tooltip("[降采样次数]向下采样的次数。此值越大,则采样间隔越大,需要处理的像素点越少,运行速度越快。")]
-    public int DownSampleNum = 2;
+    public int DownSampleNum = 1;
     //模糊扩散度
     [Range(0.0f, 20.0f), Tooltip("[模糊扩散度]进行高斯模糊时，相邻像素点的间隔。此值越大相邻像素间隔越远，图像越模糊。但过大的值会导致失真。")]
-    public float BlurSpreadSize = 3.0f;
+    public float BlurSpreadSize = 1.0f;
     //迭代次数
     [Range(0, 8), Tooltip("[迭代次数]此值越大,则模糊操作的迭代次数越多，模糊效果越好，但消耗越大。")]
-    public int BlurIterations = 3;
+    public int BlurIterations = 1;
+
+    public bool isMask = false;
+
+    //迭代次数
+    [Tooltip("[Mask贴图控制模糊区域，贴图为黑白纹理，黑色像素为模糊区域，白色为不模糊区域。")]
+    public Texture2D MaskTex;
 
     //材质获取跟设置
     Material material
@@ -96,8 +98,39 @@ public class MaskBlurEffect : MonoBehaviour
             RenderTexture renderBuffer = RenderTexture.GetTemporary(rtW, rtH, 0, sourceTexture.format);
             renderBuffer.filterMode = FilterMode.Bilinear;
 
+            Graphics.Blit(sourceTexture, renderBuffer);
+            for (int i = 0; i < BlurIterations; i++)
+            {
+                //根据向下采样的次数确定宽度系数。用于控制降采样后相邻像素的间隔
+                float widthMod = 1.0f / (1.0f * (1 << DownSampleNum));
 
+                material.SetFloat("_BlurSize", i + BlurSpreadSize* widthMod);
+                RenderTexture tempBuffer = RenderTexture.GetTemporary(rtW, rtH, 0);
 
+                //垂直方向模糊
+                Graphics.Blit(renderBuffer, tempBuffer, material, 0);
+                RenderTexture.ReleaseTemporary(renderBuffer);
+                renderBuffer = tempBuffer;
+                tempBuffer = RenderTexture.GetTemporary(rtW, rtH, 0);
+
+                //水平方向模糊
+                Graphics.Blit(renderBuffer, tempBuffer, material, 1);
+                RenderTexture.ReleaseTemporary(renderBuffer);
+                renderBuffer = tempBuffer;
+            }
+
+            if (isMask)
+            {
+                material.SetTexture("_MaskTex", MaskTex);
+                material.SetTexture("_BlurTex", renderBuffer);
+                Graphics.Blit(sourceTexture, destTexture, material, 2);
+            }
+            else
+            {
+                Graphics.Blit(renderBuffer, destTexture);
+            }
+                
+           
             //清空renderBuffer
             RenderTexture.ReleaseTemporary(renderBuffer);
         }
