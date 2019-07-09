@@ -1,4 +1,5 @@
-﻿//=======================================================
+﻿#if UNITY_EDITOR
+//=======================================================
 // 作者：xuefei
 // 描述：保存序列帧1.0版本
 //=======================================================
@@ -122,8 +123,8 @@ namespace xfScreenshot
             Debug.Log(filename);
 
             //Initialize and render textures
-            RenderTexture blackCamRenderTexture = new RenderTexture(screenWidth* scale, screenHeight* scale, 24, RenderTextureFormat.ARGBInt);
-            RenderTexture whiteCamRenderTexture = new RenderTexture(screenWidth* scale, screenHeight* scale, 24, RenderTextureFormat.ARGBInt);
+            RenderTexture blackCamRenderTexture = new RenderTexture(screenWidth* scale, screenHeight* scale, 24, RenderTextureFormat.ARGB32);
+            RenderTexture whiteCamRenderTexture = new RenderTexture(screenWidth* scale, screenHeight* scale, 24, RenderTextureFormat.ARGB32);
 
             exportCamera.targetTexture = blackCamRenderTexture;
             exportCamera.backgroundColor = Color.black;
@@ -196,3 +197,4 @@ namespace xfScreenshot
 
     }
 }
+#endif

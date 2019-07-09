@@ -2,6 +2,7 @@
 // 作者：xuefei
 // 描述：渲染工具1.0版本
 //=======================================================
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -197,7 +198,7 @@ namespace xfScreenshot
 
                 TextureFormat tFormat;
                 if(isTransparent)
-                    tFormat = TextureFormat.RGBAFloat;
+                    tFormat = TextureFormat.ARGB32;
                 else
                     tFormat = TextureFormat.RGB24;
 
@@ -312,3 +313,4 @@ namespace xfScreenshot
         public string path;
     }
 }
+#endif
