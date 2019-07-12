@@ -26,7 +26,7 @@ Material:
     - _MainTex:
         m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 0.8, y: 0.8}
-        m_Offset: {x: 0.11, y: 0.18}
+        m_Offset: {x: 0.11, y: 0.17}
     - _MaskTex:
         m_Texture: {fileID: 2800000, guid: cd288e73fbb59d14a9adca1b78c8bb1d, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -36,15 +36,17 @@ Material:
         m_Scale: {x: 0.4, y: 0.3}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BlueSize: 0
+    - _BlueSize: 2.91
     - _FireSpeed: 1.08
+    - _FireUSpeed: 0
+    - _FireVSpeed: 0
     - _InnerPow: 1
-    - _InnerStep: 0.66
-    - _InnerVerticalFalloff: 2.46
-    - _Noisemultiplier: 4.7
+    - _InnerStep: 0.91
+    - _InnerVerticalFalloff: 1
+    - _Noisemultiplier: 4.4
     - _ZTest: 4
     m_Colors:
     - _InnerColourBase: {r: 1024, g: 1024, b: 0, a: 1}
-    - _OuterColourBase: {r: 2, g: 0.23220849, b: 0, a: 1}
-    - _TintColor: {r: 0.9810126, g: 1, b: 0, a: 0.23137255}
+    - _OuterColourBase: {r: 2.670157, g: 0.32153723, b: 0, a: 1}
+    - _TintColor: {r: 0.18546152, g: 0, b: 1, a: 0.20784314}
     - _WaveParams: {r: 0, g: -2, b: 0, a: 0}

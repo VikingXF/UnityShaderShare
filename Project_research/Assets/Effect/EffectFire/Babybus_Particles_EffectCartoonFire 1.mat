@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Babybus_Particles_EffectCartoonFire
-  m_Shader: {fileID: 4800000, guid: 708e73f7db89aba4b81ecb926885185f, type: 3}
+  m_Name: Babybus_Particles_EffectCartoonFire 1
+  m_Shader: {fileID: 4800000, guid: a4ed35ca6b8322b47bc1efe38b9804f2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -28,20 +28,22 @@ Material:
         m_Scale: {x: 0.8, y: 0.8}
         m_Offset: {x: 0.11, y: 0.18}
     - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: cd288e73fbb59d14a9adca1b78c8bb1d, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 3febb63e2fc9c0a4fb08c029b2e2278e, type: 3}
+        m_Scale: {x: 1, y: 0.75}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
         m_Texture: {fileID: 2800000, guid: e80c3c84ea861404d8a427db8b7abf04, type: 3}
-        m_Scale: {x: 0.4, y: 0.3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BlueSize: 0
     - _FireSpeed: 1.08
+    - _FireUSpeed: 0
+    - _FireVSpeed: -3.76
     - _InnerPow: 1
     - _InnerStep: 0.66
     - _InnerVerticalFalloff: 2.46
-    - _Noisemultiplier: 4.7
+    - _Noisemultiplier: 2
     - _ZTest: 4
     m_Colors:
     - _InnerColourBase: {r: 1024, g: 1024, b: 0, a: 1}
