@@ -1,6 +1,6 @@
 ﻿//=======================================================
 // 作者：xf
-// 描述：绘图工具
+// 描述：绘图+顶点色绘制工具
 //=======================================================
 
 #if UNITY_EDITOR
@@ -8,12 +8,28 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace xfColorPaint
 {
 
     public class ColorPaint : EditorWindow
     {
+
+        static public int MenChoose;
+        static public string[] PainterGUIMen = { "PainterTex", "PainterVertexColor" };
+
+        //检查模型变量
+        private GameObject go;
+        private string gui_Notification;
+        private Collider collider;
+        private MeshFilter mf;
+        private Mesh mesh;
+        private Material rendererMaterial;
+
+
+        //绘图变量
+        #region
         int resWidth = 512;
         int resHeight = 512;
 
@@ -22,7 +38,7 @@ namespace xfColorPaint
         float brushSize = 16f;
         float brushOpacity = 0.5f;
         public string MeshPaintEditorFolder = "Assets/Tools/ColorPaint/Brushes/";
-        public string PaintTextureFolder = "Assets/Tools/ColorPaint/";
+        public string PaintTextureFolder = "Assets/Tools/ColorPaint/MaskTex/";
         Texture[] brushTex;
         // Texture[] texLayer;
         int selBrush = 0;
@@ -35,8 +51,22 @@ namespace xfColorPaint
         public Vector2 mousePos;
         public bool changeingBrushValue = false;
         public bool down = false;
+        #endregion
 
-               [MenuItem("Tools/绘图工具")]
+        //绘制顶点色变量
+        #region
+        public bool allowVertexPainting ;
+        public Color VertexColor;
+        public bool ShowVertexColorsBool = true;
+        public bool SaveVertexColorsData = true;
+        private string ShowVertexColorsShader = "显示顶点色";
+        private Vector3[] vertices;
+        private Color[] originalColors, debugColors;
+        private Material originalMaterial;
+        private static Material debugMaterial;
+
+        #endregion
+        [MenuItem("Tools/绘图工具")]
         public static void ShowWindow()
         {
 
@@ -50,107 +80,88 @@ namespace xfColorPaint
         {
             SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
             SceneView.onSceneGUIDelegate += this.OnSceneGUI;
+
+            if (debugMaterial == null)
+            {
+                debugMaterial = new Material(Shader.Find("Babybus/VertexColorsShader"));
+            }
+
         }
         void OnDestroy()
         {
             SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
+ 
 
         }
 
         void OnSceneGUI(SceneView sceneView)
         {
-
-
-            //判断绘制
-            if (allowPainting)
-            {
-
-                if (Selection.activeTransform == null)
+            if (MenChoose == 0)
+            {        
+               
+                //判断绘制
+                if (allowPainting)
                 {
-                    EditorUtility.DisplayDialog("警告", "请选择一个需要绘制贴图的模型！", "OK");
-                    allowPainting = false;
+                    if (Selection.activeTransform == null)
+                    {
+                        EditorUtility.DisplayDialog("警告", "请选择一个需要绘制Mask贴图的模型！", "OK");
+                        allowPainting = false;
+                    }
+                    else
+                    {
+                        PaintColor();
+                    }
                 }
-                else
+
+                if (allowPainting == false && down)
                 {
-                    PaintColor();
-
+                    SaveTexture();
+                    Debug.Log("保存");
+                    down = false;
                 }
-
             }
-
-            if (allowPainting == false && down)
+            if (MenChoose == 1)
             {
-                SaveTexture();
-                Debug.Log("保存");
-                down = false;
+                //判断绘制
+                if (allowVertexPainting)
+                {
+                    if (Selection.activeTransform == null)
+                    {
+                        EditorUtility.DisplayDialog("警告", "请选择一个需要绘制顶点色的模型！", "OK");
+                        allowVertexPainting = false;
+                    }
+                    else
+                    {
+                       
+                        PaintVertexColor();
+                    }
+                }
+
             }
 
         }
 
 
 
-
+       
         void OnGUI()
         {
-            
-            GUILayout.Space(10f);
-
-            //画笔设置
-            foregroundColor = EditorGUILayout.ColorField("画笔颜色:", foregroundColor);
-            brushSize = (int)EditorGUILayout.Slider("画笔大小", brushSize, 1, 36);//笔刷大小						
-            brushOpacity = EditorGUILayout.Slider("画笔透明度", brushOpacity, 0, 1f);//笔刷透明度
-
-            //画笔样式
-            IniBrush();
-            GUILayout.BeginHorizontal("box", GUILayout.Width(300));
-            selBrush = GUILayout.SelectionGrid(selBrush, brushTex, 9, "gridlist", GUILayout.Width(300), GUILayout.Height(65));
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            MenChoose = GUILayout.Toolbar(MenChoose, PainterGUIMen, GUILayout.Width(290), GUILayout.Height(20));
+            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-
-            //绘制按钮
-            allowPainting = GUILayout.Toggle(allowPainting, "绘制", GUI.skin.button, GUILayout.Height(60));
-            if (allowPainting)
+           
+            switch (MenChoose)
             {
-                down = true;
+                case 0:
+                    PainterTexGUI();
+                    break;
+                case 1:
+                    PainterVertexColorGUI();
+                    break;
             }
-
-
-            //创建贴图
-            if (GUILayout.Button("创建贴图"))
-            {
-                //判断是否重名
-                if (File.Exists(PaintTextureFolder + MaskTexName + ".png"))
-                {
-                    EditorUtility.DisplayDialog("警告", "有重复名称贴图，请更改贴图名称！", "OK");
-                    exporNameSuccess = false;
-                }
-                else
-                {
-                    exporNameSuccess = true;
-                }
-                creatMaskTex();
-            }
-
-            //贴图大小设置
-            EditorGUILayout.LabelField("创建贴图的分辨率设置", EditorStyles.boldLabel);
-            resWidth = EditorGUILayout.IntField("Width", resWidth);
-            resHeight = EditorGUILayout.IntField("Height", resHeight);
-            MaskTexName = EditorGUILayout.TextField("贴图名称 ", MaskTexName);
-
-            if (GUILayout.Button("设置贴图"))
-            {
-               setMaskTex(PaintTextureFolder + MaskTexName + ".png");
-            }
-
-            //存放目录
-            GUILayout.Label("笔刷存放路径", EditorStyles.boldLabel);
-            EditorGUILayout.BeginHorizontal();
-            MeshPaintEditorFolder = EditorGUILayout.TextField(MeshPaintEditorFolder, GUILayout.ExpandWidth(false));             
-            EditorGUILayout.EndHorizontal();
-
-            GUILayout.Label("贴图存放路径", EditorStyles.boldLabel);
-            EditorGUILayout.BeginHorizontal();
-            PaintTextureFolder = EditorGUILayout.TextField(PaintTextureFolder, GUILayout.ExpandWidth(false));
-            EditorGUILayout.EndHorizontal();
+           
 
             //标签
             GUILayout.FlexibleSpace();
@@ -158,7 +169,177 @@ namespace xfColorPaint
 
           
         }
+      
 
+        void PainterTexGUI()
+        {
+            if (Cheak())
+            {
+                GUILayout.Space(10f);
+
+                //画笔设置
+                foregroundColor = EditorGUILayout.ColorField("画笔颜色:", foregroundColor);
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("R"))
+                {
+                    foregroundColor = new Color(1, 0, 0, 1);
+                }
+                if (GUILayout.Button("G"))
+                {
+                    foregroundColor = new Color(0, 1, 0, 1);
+                }
+                if (GUILayout.Button("B"))
+                {
+                    foregroundColor = new Color(0, 0, 1, 1);
+                }
+                if (GUILayout.Button("A"))
+                {
+                    foregroundColor = new Color(0, 0, 0, 0);
+                }
+
+                GUILayout.EndHorizontal();
+                brushSize = (int)EditorGUILayout.Slider("画笔大小", brushSize, 1, 36);//笔刷大小						
+                brushOpacity = EditorGUILayout.Slider("画笔透明度", brushOpacity, 0, 1f);//笔刷透明度
+
+                //画笔样式
+                IniBrush();
+                GUILayout.BeginHorizontal("box", GUILayout.Width(300));
+                selBrush = GUILayout.SelectionGrid(selBrush, brushTex, 9, "gridlist", GUILayout.Width(300), GUILayout.Height(65));
+                GUILayout.EndHorizontal();
+
+                //绘制按钮
+                allowPainting = GUILayout.Toggle(allowPainting, "绘制", GUI.skin.button, GUILayout.Height(60));
+                if (allowPainting)
+                {
+                    down = true;
+                }
+
+
+                //创建贴图
+                if (GUILayout.Button("创建贴图"))
+                {
+                    //判断是否重名
+                    if (File.Exists(PaintTextureFolder + MaskTexName + ".png"))
+                    {
+                        EditorUtility.DisplayDialog("警告", "有重复名称贴图，请更改贴图名称！", "OK");
+                        exporNameSuccess = false;
+                    }
+                    else
+                    {
+                        exporNameSuccess = true;
+                    }
+                    creatMaskTex();
+                }
+
+                //贴图大小设置
+                EditorGUILayout.LabelField("创建贴图的分辨率设置", EditorStyles.boldLabel);
+                resWidth = EditorGUILayout.IntField("Width", resWidth);
+                resHeight = EditorGUILayout.IntField("Height", resHeight);
+                MaskTexName = EditorGUILayout.TextField("贴图名称 ", MaskTexName);
+
+                if (GUILayout.Button("设置贴图"))
+                {
+                    setMaskTex(PaintTextureFolder + MaskTexName + ".png");
+                }
+                GUILayout.Label("说明：所要绘制模型材质必须为_MaskTex", EditorStyles.boldLabel);
+                //存放目录
+                GUILayout.Label("笔刷存放路径", EditorStyles.boldLabel);
+                EditorGUILayout.BeginHorizontal();
+                MeshPaintEditorFolder = EditorGUILayout.TextField(MeshPaintEditorFolder, GUILayout.ExpandWidth(false));
+                EditorGUILayout.EndHorizontal();
+
+                GUILayout.Label("贴图存放路径", EditorStyles.boldLabel);
+                EditorGUILayout.BeginHorizontal();
+                PaintTextureFolder = EditorGUILayout.TextField(PaintTextureFolder, GUILayout.ExpandWidth(false));
+                EditorGUILayout.EndHorizontal();
+            }
+             else
+            {
+                EditorGUILayout.HelpBox(gui_Notification, MessageType.Warning);
+                return;
+            }
+
+            
+        }
+
+
+        void PainterVertexColorGUI()
+        {
+          
+            if (Cheak())
+            {
+                GUILayout.Space(10f);
+                //画笔设置
+                VertexColor = EditorGUILayout.ColorField("画笔颜色:", VertexColor);
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("R"))
+                {
+                    VertexColor = new Color(1, 0, 0, 1);
+                }
+                if (GUILayout.Button("G"))
+                {
+                    VertexColor = new Color(0, 1, 0, 1);
+                }
+                if (GUILayout.Button("B"))
+                {
+                    VertexColor = new Color(0, 0, 1, 1);
+                }
+                if (GUILayout.Button("A"))
+                {
+                    VertexColor = new Color(0, 0, 0, 0);
+                }
+
+                GUILayout.EndHorizontal();
+                brushSize = (int)EditorGUILayout.Slider("画笔大小", brushSize, 1, 36);//笔刷大小						
+                brushOpacity = EditorGUILayout.Slider("画笔透明度", brushOpacity, 0, 1f);//笔刷透明度
+
+                //绘制按钮
+                allowVertexPainting = GUILayout.Toggle(allowVertexPainting, "绘制顶点色", GUI.skin.button, GUILayout.Height(60));
+                
+                if (GUILayout.Button(ShowVertexColorsShader))
+                {
+
+                    if (ShowVertexColorsBool)
+                    {
+                        ShowVertexColorsShader = "显示顶点色";
+                        if (SaveVertexColorsData)
+                        {
+                            SaveModleData();                          
+                            SaveVertexColorsData = false;
+                        }
+                        
+                        Selection.activeGameObject.GetComponent<Renderer>().sharedMaterial = debugMaterial;
+                        ShowVertexColorsBool = false;
+                    }
+                    else
+                    {
+                        if (originalMaterial != debugMaterial)
+                        {
+                            ShowVertexColorsShader = "隐藏顶点色";
+                            Selection.activeGameObject.GetComponent<Renderer>().sharedMaterial = originalMaterial;
+                            ShowVertexColorsBool = true;
+                        }
+                        
+                    }
+                }
+
+                //if (allowVertexPainting)
+                //{
+                //    down = true;
+                //}
+
+            }
+            else
+            {
+                EditorGUILayout.HelpBox(gui_Notification, MessageType.Warning);
+                return;
+            }
+
+
+        }
+
+        //PainterTex
+        #region
         //获取笔刷  
         void IniBrush()
         {
@@ -219,11 +400,6 @@ namespace xfColorPaint
             Texture2D MaskTex = (Texture2D)AssetDatabase.LoadAssetAtPath(directory, typeof(Texture2D));
             Selection.activeTransform.gameObject.GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_MaskTex", MaskTex);
         }
-
-        
-
-
-
 
         int brushSizeInPourcent;
         Texture2D MaskTex;
@@ -322,9 +498,78 @@ namespace xfColorPaint
             File.WriteAllBytes(path, bytes);
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);//刷新
         }
+        #endregion
 
 
+        //PainterVertexColor
+        #region
+        void PaintVertexColor()
+        {
+            
 
+        }
+        //暂存模型顶点色/顶点/材质
+        void SaveModleData()
+        {
+            originalMaterial = Selection.activeGameObject.GetComponent<Renderer>().sharedMaterial;
+            mesh = Selection.activeGameObject.GetComponent<MeshFilter>().sharedMesh;
+            originalColors = mesh.colors;
+            vertices = mesh.vertices;
+            if (mesh.colors.Length > 0)
+                debugColors = mesh.colors;
+            else
+            {
+                Debug.LogWarning("Mesh originally has no vertex color data!!");
+                debugColors = new Color[vertices.Length];
+            }
+            Debug.Log(originalMaterial.name);
+
+        }
+        #endregion
+
+
+        bool Cheak()
+        {
+            bool Cheak = false;
+            go = Selection.activeGameObject;
+            if (go != null)
+            {
+                collider = go.GetComponent<Collider>();
+                if (collider != null)
+                {
+                    mf = go.GetComponent<MeshFilter>();
+                    if (mf != null)
+                    {
+                        mesh = mf.sharedMesh;
+                        if (mesh != null)
+                        {
+                           
+                            rendererMaterial = go.GetComponent<Renderer>().sharedMaterial;
+                            if (rendererMaterial != null)
+                            {
+                                //originalMaterial = rendererMaterial;
+                                Cheak = true;
+                               
+                            }
+                            else
+                                gui_Notification = "选择的模型没有meshrender或Material!";
+
+                        }
+                        else
+                            gui_Notification = "选择的模型没有mesh!";
+                    }
+                    else
+                        gui_Notification = "选择的模型没有MeshFilter!";
+                }
+                else
+                    gui_Notification = "选择的模型没有collider!";
+            }
+            else
+                gui_Notification = "请选择一个需要绘制的模型!";
+
+            return Cheak;
+
+        }
     }
 }
 #endif
