@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Material
-  m_Shader: {fileID: 4800000, guid: c6b28bd011609d741aa0d3d5a8afec8f, type: 3}
+  m_Name: MaskTex
+  m_Shader: {fileID: 4800000, guid: 506035f9e02e07b46a3d9a0236bedd22, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

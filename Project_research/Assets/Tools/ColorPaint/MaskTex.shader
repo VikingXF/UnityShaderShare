@@ -1,4 +1,4 @@
-﻿Shader "Unlit/put"
+﻿Shader "Babybus/MaskTex"
 {
     Properties
     {

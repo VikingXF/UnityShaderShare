@@ -27,6 +27,8 @@ namespace xfColorPaint
         private Mesh mesh;
         private Material rendererMaterial;
 
+        //private Mesh curMesh;
+        //private GameObject curGo;
 
         //绘图变量
         #region
@@ -56,10 +58,11 @@ namespace xfColorPaint
         //绘制顶点色变量
         #region
         public bool allowVertexPainting ;
+        public bool selobjectbool = true;
         public Color VertexColor;
         public bool ShowVertexColorsBool = true;
         public bool SaveVertexColorsData = true;
-        private string ShowVertexColorsShader = "显示顶点色";
+        private string ShowVertexColorsShader = "切换顶点色显示";
         private Vector3[] vertices;
         private Color[] originalColors, debugColors;
         private Material originalMaterial;
@@ -90,7 +93,7 @@ namespace xfColorPaint
         void OnDestroy()
         {
             SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
- 
+           
 
         }
 
@@ -132,18 +135,26 @@ namespace xfColorPaint
                     }
                     else
                     {
+                        if (selobjectbool)
+                        {
+                           SaveModleData();
+                           selobjectbool = false;
+                        }
                        
-                        PaintVertexColor();
+                        OperationPaint();
+
                     }
+                }
+                else
+                {
+                    
+                    selobjectbool = true;
                 }
 
             }
 
         }
-
-
-
-       
+     
         void OnGUI()
         {
             GUILayout.BeginHorizontal();
@@ -160,12 +171,11 @@ namespace xfColorPaint
                 case 1:
                     PainterVertexColorGUI();
                     break;
-            }
-           
+            }         
 
             //标签
             GUILayout.FlexibleSpace();
-            GUILayout.Box("2018.11.6@xf", GUILayout.Height(30), GUILayout.ExpandWidth(true));
+            GUILayout.Box("2019.7.7@xf", GUILayout.Height(30), GUILayout.ExpandWidth(true));
 
           
         }
@@ -180,27 +190,29 @@ namespace xfColorPaint
                 //画笔设置
                 foregroundColor = EditorGUILayout.ColorField("画笔颜色:", foregroundColor);
                 GUILayout.BeginHorizontal();
-                if (GUILayout.Button("R"))
+                if (GUILayout.Button("R", GUILayout.Height(20)))
                 {
                     foregroundColor = new Color(1, 0, 0, 1);
                 }
-                if (GUILayout.Button("G"))
+                if (GUILayout.Button("G", GUILayout.Height(20)))
                 {
                     foregroundColor = new Color(0, 1, 0, 1);
                 }
-                if (GUILayout.Button("B"))
+                if (GUILayout.Button("B", GUILayout.Height(20)))
                 {
                     foregroundColor = new Color(0, 0, 1, 1);
                 }
-                if (GUILayout.Button("A"))
+                if (GUILayout.Button("A", GUILayout.Height(20)))
                 {
                     foregroundColor = new Color(0, 0, 0, 0);
                 }
 
                 GUILayout.EndHorizontal();
-                brushSize = (int)EditorGUILayout.Slider("画笔大小", brushSize, 1, 36);//笔刷大小						
-                brushOpacity = EditorGUILayout.Slider("画笔透明度", brushOpacity, 0, 1f);//笔刷透明度
-
+                GUILayout.Space(7f);
+                brushSize = (int)EditorGUILayout.Slider("画笔大小", brushSize, 1, 36);//笔刷大小		
+                GUILayout.Space(7f);
+                brushOpacity = EditorGUILayout.Slider("画笔透明度", brushOpacity, 0.0f, 1.0f);//笔刷透明度
+                GUILayout.Space(7f);
                 //画笔样式
                 IniBrush();
                 GUILayout.BeginHorizontal("box", GUILayout.Width(300));
@@ -262,7 +274,6 @@ namespace xfColorPaint
             
         }
 
-
         void PainterVertexColorGUI()
         {
           
@@ -272,39 +283,43 @@ namespace xfColorPaint
                 //画笔设置
                 VertexColor = EditorGUILayout.ColorField("画笔颜色:", VertexColor);
                 GUILayout.BeginHorizontal();
-                if (GUILayout.Button("R"))
+                if (GUILayout.Button("R", GUILayout.Height(30)))
                 {
                     VertexColor = new Color(1, 0, 0, 1);
                 }
-                if (GUILayout.Button("G"))
+                if (GUILayout.Button("G", GUILayout.Height(30)))
                 {
                     VertexColor = new Color(0, 1, 0, 1);
                 }
-                if (GUILayout.Button("B"))
+                if (GUILayout.Button("B", GUILayout.Height(30)))
                 {
                     VertexColor = new Color(0, 0, 1, 1);
                 }
-                if (GUILayout.Button("A"))
+                if (GUILayout.Button("A", GUILayout.Height(30)))
                 {
                     VertexColor = new Color(0, 0, 0, 0);
                 }
 
                 GUILayout.EndHorizontal();
-                brushSize = (int)EditorGUILayout.Slider("画笔大小", brushSize, 1, 36);//笔刷大小						
-                brushOpacity = EditorGUILayout.Slider("画笔透明度", brushOpacity, 0, 1f);//笔刷透明度
-
+                GUILayout.Space(7f);
+                brushSize = (float)EditorGUILayout.Slider("画笔大小", brushSize, 0.1f, 36.0f);//笔刷大小	
+                GUILayout.Space(7f);
+                brushOpacity = EditorGUILayout.Slider("画笔透明度", brushOpacity, 0.0f, 1.0f);//笔刷透明度
+                GUILayout.Space(7f);
                 //绘制按钮
                 allowVertexPainting = GUILayout.Toggle(allowVertexPainting, "绘制顶点色", GUI.skin.button, GUILayout.Height(60));
-                
-                if (GUILayout.Button(ShowVertexColorsShader))
+             
+
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button(ShowVertexColorsShader,GUILayout.Height(40)))
                 {
 
                     if (ShowVertexColorsBool)
                     {
-                        ShowVertexColorsShader = "显示顶点色";
+                        //ShowVertexColorsShader = "切换顶点色显示";
                         if (SaveVertexColorsData)
                         {
-                            SaveModleData();                          
+                                                 
                             SaveVertexColorsData = false;
                         }
                         
@@ -315,7 +330,7 @@ namespace xfColorPaint
                     {
                         if (originalMaterial != debugMaterial)
                         {
-                            ShowVertexColorsShader = "隐藏顶点色";
+                           // ShowVertexColorsShader = "隐藏顶点色";
                             Selection.activeGameObject.GetComponent<Renderer>().sharedMaterial = originalMaterial;
                             ShowVertexColorsBool = true;
                         }
@@ -323,11 +338,26 @@ namespace xfColorPaint
                     }
                 }
 
-                //if (allowVertexPainting)
-                //{
-                //    down = true;
-                //}
+                if (GUILayout.Button("还原顶点色",  GUILayout.Height(40)))
+                {
+                    mesh.colors = originalColors;
+                }
+                GUILayout.EndHorizontal();
 
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("保存为新Mesh", GUILayout.Height(40)))
+                {
+                    SaveMesh();
+                    
+                }
+
+                if (GUILayout.Button("系统自带模型保存为新Mesh", GUILayout.Height(40)))
+                {
+                    AutoSaveMesh();
+                }
+
+                GUILayout.EndHorizontal();
+                GUILayout.Label("说明：如果是系统模型请选择系统自带模型保存", EditorStyles.boldLabel);
             }
             else
             {
@@ -403,6 +433,89 @@ namespace xfColorPaint
 
         int brushSizeInPourcent;
         Texture2D MaskTex;
+
+        //旧方法
+        //void PaintColor()
+        //{
+
+        //    Transform CurrentSelect = Selection.activeTransform;
+
+        //    MeshFilter temp = CurrentSelect.GetComponent<MeshFilter>();//获取当前模型的MeshFilter
+        //    float orthographicSize = (brushSize * CurrentSelect.localScale.x) * (temp.sharedMesh.bounds.size.x / 200);//笔刷在模型上的正交大小
+        //    MaskTex = (Texture2D)CurrentSelect.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_MaskTex");//从材质球中获取MaskTex贴图
+
+        //    brushSizeInPourcent = (int)Mathf.Round((brushSize * MaskTex.width) / 100);//笔刷在模型上的大小
+
+
+        //    Event e = Event.current;//检测输入
+
+        //    HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+        //    //curHit = new RaycastHit();
+
+        //    Ray worldRay = HandleUtility.GUIPointToWorldRay(e.mousePosition);//从鼠标位置发射一条射线           
+        //    //Debug.Log(worldRay);
+
+        //    if (Physics.Raycast(worldRay, out curHit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Default")))//射线检测名为"Default"的层
+        //    {
+
+        //        Handles.color = new Color(foregroundColor.r, foregroundColor.g, foregroundColor.b, brushOpacity);//颜色
+        //        //Handles.DrawSolidDisc(curHit.point, curHit.normal, orthographicSize);
+        //        //Handles.color = Color.green;
+        //        Handles.DrawWireDisc(curHit.point, curHit.normal, orthographicSize);//根据笔刷大小在鼠标位置显示一个圆
+
+
+        //        //鼠标点击或按下并拖动进行绘制
+        //        if ((e.type == EventType.MouseDrag && e.alt == false && e.control == false && e.shift == false && e.button == 0) || (e.type == EventType.MouseDown && e.shift == false && e.alt == false && e.control == false && e.button == 0))
+        //        {
+        //            //选择绘制的通道
+        //            Color targetColor = new Color(1f, 0f, 0f, 0f);
+
+        //            targetColor = foregroundColor;
+
+        //            Vector2 pixelUV = curHit.textureCoord;
+
+        //            //计算笔刷所覆盖的区域
+        //            int PuX = Mathf.FloorToInt(pixelUV.x * MaskTex.width);
+        //            int PuY = Mathf.FloorToInt(pixelUV.y * MaskTex.height);
+        //            int x = Mathf.Clamp(PuX - brushSizeInPourcent / 2, 0, MaskTex.width - 1);
+        //            int y = Mathf.Clamp(PuY - brushSizeInPourcent / 2, 0, MaskTex.height - 1);
+        //            int width = Mathf.Clamp((PuX + brushSizeInPourcent / 2), 0, MaskTex.width) - x;
+        //            int height = Mathf.Clamp((PuY + brushSizeInPourcent / 2), 0, MaskTex.height) - y;
+
+        //            Color[] terrainBay = MaskTex.GetPixels(x, y, width, height, 0);//获取贴图被笔刷所覆盖的区域的颜色
+
+        //            Texture2D TBrush = brushTex[selBrush] as Texture2D;//获取笔刷性状贴图
+        //            float[] brushAlpha = new float[brushSizeInPourcent * brushSizeInPourcent];//笔刷透明度
+
+        //            //根据笔刷贴图计算笔刷的透明度
+        //            for (int i = 0; i < brushSizeInPourcent; i++)
+        //            {
+        //                for (int j = 0; j < brushSizeInPourcent; j++)
+        //                {
+        //                    brushAlpha[j * brushSizeInPourcent + i] = TBrush.GetPixelBilinear(((float)i) / brushSizeInPourcent, ((float)j) / brushSizeInPourcent).a;
+        //                }
+        //            }
+
+        //            //计算绘制后的颜色
+        //            for (int i = 0; i < height; i++)
+        //            {
+        //                for (int j = 0; j < width; j++)
+        //                {
+        //                    int index = (i * width) + j;
+        //                    float Stronger = brushAlpha[Mathf.Clamp((y + i) - (PuY - brushSizeInPourcent / 2), 0, brushSizeInPourcent - 1) * brushSizeInPourcent + Mathf.Clamp((x + j) - (PuX - brushSizeInPourcent / 2), 0, brushSizeInPourcent - 1)] * brushOpacity;
+
+        //                    terrainBay[index] = Color.Lerp(terrainBay[index], targetColor, Stronger);
+        //                }
+        //            }
+        //            Undo.RegisterCompleteObjectUndo(MaskTex, "meshPaint");//保存历史记录以便撤销
+
+        //            MaskTex.SetPixels(x, y, width, height, terrainBay, 0);//把绘制后的MaskTex贴图保存起来
+        //            MaskTex.Apply();                 
+        //        }
+        //    }
+
+        //}
+      
         void PaintColor()
         {
 
@@ -411,86 +524,134 @@ namespace xfColorPaint
             MeshFilter temp = CurrentSelect.GetComponent<MeshFilter>();//获取当前模型的MeshFilter
             float orthographicSize = (brushSize * CurrentSelect.localScale.x) * (temp.sharedMesh.bounds.size.x / 200);//笔刷在模型上的正交大小
             MaskTex = (Texture2D)CurrentSelect.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_MaskTex");//从材质球中获取MaskTex贴图
-
             brushSizeInPourcent = (int)Mathf.Round((brushSize * MaskTex.width) / 100);//笔刷在模型上的大小
-            
 
             Event e = Event.current;//检测输入
+            Ray worldRay = HandleUtility.GUIPointToWorldRay(e.mousePosition);//从鼠标位置发射一条射线   
 
-            HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
-            curHit = new RaycastHit();
+            int controlID = GUIUtility.GetControlID( FocusType.Passive);
+            //int controlID = GUIUtility.GetControlID(sceneView.GetHashCode(), FocusType.Passive);
 
-            Ray worldRay = HandleUtility.GUIPointToWorldRay(e.mousePosition);//从鼠标位置发射一条射线           
-            //Debug.Log(worldRay);
-
-            if (Physics.Raycast(worldRay, out curHit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Default")))//射线检测名为"Default"的层
+            switch (e.GetTypeForControl(controlID))
             {
-
-                Handles.color = new Color(foregroundColor.r, foregroundColor.g, foregroundColor.b, brushOpacity);//颜色
-                //Handles.DrawSolidDisc(curHit.point, curHit.normal, orthographicSize);
-                //Handles.color = Color.green;
-                Handles.DrawWireDisc(curHit.point, curHit.normal, orthographicSize);//根据笔刷大小在鼠标位置显示一个圆
-
-
-                //鼠标点击或按下并拖动进行绘制
-                if ((e.type == EventType.MouseDrag && e.alt == false && e.control == false && e.shift == false && e.button == 0) || (e.type == EventType.MouseDown && e.shift == false && e.alt == false && e.control == false && e.button == 0))
-                {
-                    //选择绘制的通道
-                    Color targetColor = new Color(1f, 0f, 0f, 0f);
-
-                    targetColor = foregroundColor;
-
-                    Vector2 pixelUV = curHit.textureCoord;
-
-                    //计算笔刷所覆盖的区域
-                    int PuX = Mathf.FloorToInt(pixelUV.x * MaskTex.width);
-                    int PuY = Mathf.FloorToInt(pixelUV.y * MaskTex.height);
-                    int x = Mathf.Clamp(PuX - brushSizeInPourcent / 2, 0, MaskTex.width - 1);
-                    int y = Mathf.Clamp(PuY - brushSizeInPourcent / 2, 0, MaskTex.height - 1);
-                    int width = Mathf.Clamp((PuX + brushSizeInPourcent / 2), 0, MaskTex.width) - x;
-                    int height = Mathf.Clamp((PuY + brushSizeInPourcent / 2), 0, MaskTex.height) - y;
-
-                    Color[] terrainBay = MaskTex.GetPixels(x, y, width, height, 0);//获取贴图被笔刷所覆盖的区域的颜色
-
-                    Texture2D TBrush = brushTex[selBrush] as Texture2D;//获取笔刷性状贴图
-                    float[] brushAlpha = new float[brushSizeInPourcent * brushSizeInPourcent];//笔刷透明度
-
-                    //根据笔刷贴图计算笔刷的透明度
-                    for (int i = 0; i < brushSizeInPourcent; i++)
-                    {
-                        for (int j = 0; j < brushSizeInPourcent; j++)
-                        {
-                            brushAlpha[j * brushSizeInPourcent + i] = TBrush.GetPixelBilinear(((float)i) / brushSizeInPourcent, ((float)j) / brushSizeInPourcent).a;
-                        }
+                case EventType.Layout:
+                    {                       
+                        HandleUtility.AddDefaultControl(controlID);
                     }
-
-                    //计算绘制后的颜色
-                    for (int i = 0; i < height; i++)
+                    break;
+                case EventType.MouseDown:
+                case EventType.MouseDrag:
                     {
-                        for (int j = 0; j < width; j++)
+                        if (e.GetTypeForControl(controlID) == EventType.MouseDrag && GUIUtility.hotControl != controlID)
                         {
-                            int index = (i * width) + j;
-                            float Stronger = brushAlpha[Mathf.Clamp((y + i) - (PuY - brushSizeInPourcent / 2), 0, brushSizeInPourcent - 1) * brushSizeInPourcent + Mathf.Clamp((x + j) - (PuX - brushSizeInPourcent / 2), 0, brushSizeInPourcent - 1)] * brushOpacity;
-
-                            terrainBay[index] = Color.Lerp(terrainBay[index], targetColor, Stronger);
+                            return;
                         }
+                        if (e.alt || e.control)
+                        {
+                            return;
+                        }
+                        if (e.button != 0)
+                        {
+                            return;
+                        }
+
+                        if (HandleUtility.nearestControl != controlID)
+                        {
+                            return;
+                        }
+                        if (e.type == EventType.MouseDown)
+                        {
+                            GUIUtility.hotControl = controlID;
+                        }
+                        //Do painting
+                        if (Physics.Raycast(worldRay, out curHit, float.MaxValue))
+                        {
+
+                            if (curHit.transform == go.transform)
+                            {
+                                //选择绘制的通道
+                                Color targetColor = new Color(1f, 0f, 0f, 0f);
+
+                                targetColor = foregroundColor;
+
+                                Vector2 pixelUV = curHit.textureCoord;
+
+                                //计算笔刷所覆盖的区域
+                                int PuX = Mathf.FloorToInt(pixelUV.x * MaskTex.width);
+                                int PuY = Mathf.FloorToInt(pixelUV.y * MaskTex.height);
+                                int x = Mathf.Clamp(PuX - brushSizeInPourcent / 2, 0, MaskTex.width - 1);
+                                int y = Mathf.Clamp(PuY - brushSizeInPourcent / 2, 0, MaskTex.height - 1);
+                                int width = Mathf.Clamp((PuX + brushSizeInPourcent / 2), 0, MaskTex.width) - x;
+                                int height = Mathf.Clamp((PuY + brushSizeInPourcent / 2), 0, MaskTex.height) - y;
+
+                                Color[] terrainBay = MaskTex.GetPixels(x, y, width, height, 0);//获取贴图被笔刷所覆盖的区域的颜色
+
+                                Texture2D TBrush = brushTex[selBrush] as Texture2D;//获取笔刷性状贴图
+                                float[] brushAlpha = new float[brushSizeInPourcent * brushSizeInPourcent];//笔刷透明度
+
+                                //根据笔刷贴图计算笔刷的透明度
+                                for (int i = 0; i < brushSizeInPourcent; i++)
+                                {
+                                    for (int j = 0; j < brushSizeInPourcent; j++)
+                                    {
+                                        brushAlpha[j * brushSizeInPourcent + i] = TBrush.GetPixelBilinear(((float)i) / brushSizeInPourcent, ((float)j) / brushSizeInPourcent).a;
+                                    }
+                                }
+
+                                //计算绘制后的颜色
+                                for (int i = 0; i < height; i++)
+                                {
+                                    for (int j = 0; j < width; j++)
+                                    {
+                                        int index = (i * width) + j;
+                                        float Stronger = brushAlpha[Mathf.Clamp((y + i) - (PuY - brushSizeInPourcent / 2), 0, brushSizeInPourcent - 1) * brushSizeInPourcent + Mathf.Clamp((x + j) - (PuX - brushSizeInPourcent / 2), 0, brushSizeInPourcent - 1)] * brushOpacity;
+
+                                        terrainBay[index] = Color.Lerp(terrainBay[index], targetColor, Stronger);
+                                    }
+                                }
+                                Undo.RegisterCompleteObjectUndo(MaskTex, "meshPaint");//保存历史记录以便撤销
+
+                                MaskTex.SetPixels(x, y, width, height, terrainBay, 0);//把绘制后的MaskTex贴图保存起来
+                                MaskTex.Apply();
+
+                            }
+                        }
+                        e.Use();
                     }
-                    Undo.RegisterCompleteObjectUndo(MaskTex, "meshPaint");//保存历史记录以便撤销
+                    break;
+                case EventType.MouseUp:
+                    {                       
+                        if (GUIUtility.hotControl != controlID)
+                        {
+                            return;
+                        }
+                        GUIUtility.hotControl = 0;
+                        e.Use();
+                        SaveTexture();
+                    }
+                    break;
 
-                    MaskTex.SetPixels(x, y, width, height, terrainBay, 0);//把绘制后的MaskTex贴图保存起来
-                    MaskTex.Apply();
-                  
+                case EventType.Repaint:
+                    {
+                        //Draw paint brush
+                        if (Physics.Raycast(worldRay, out curHit, float.MaxValue))
+                        {
+                            if (curHit.transform == go.transform)
+                            {
+                                Handles.color = new Color(foregroundColor.r, foregroundColor.g, foregroundColor.b, brushOpacity);
+                                Handles.DrawSolidDisc(curHit.point, curHit.normal, orthographicSize);
+                                Handles.color = Color.green;
+                                Handles.DrawWireDisc(curHit.point, curHit.normal, orthographicSize);
 
-                }
-
-                
+                            }
+                        }
+                        HandleUtility.Repaint();
+                    }
+                    break;
 
             }
-            
-
 
         }
-
         public void SaveTexture()
         {
             var path = AssetDatabase.GetAssetPath(MaskTex);
@@ -503,10 +664,110 @@ namespace xfColorPaint
 
         //PainterVertexColor
         #region
+        void OperationPaint()
+        {
+            //if (selobjectbool)
+            //{
+            //    Debug.Log("123");
+            //    curGo = Selection.activeGameObject;
+            //    curMesh = curGo.GetComponent<MeshFilter>().sharedMesh;
+            //    selobjectbool = false;
+            //}
+
+            Event e = Event.current;
+            Ray worldRay = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+            int controlID = GUIUtility.GetControlID(FocusType.Passive);
+            switch (e.GetTypeForControl(controlID))
+            {
+                case EventType.Layout:
+                    {
+                        HandleUtility.AddDefaultControl(controlID);
+                    }
+                    break;
+                case EventType.MouseDown:
+                case EventType.MouseDrag:
+                    {
+                        if (e.GetTypeForControl(controlID) == EventType.MouseDrag && GUIUtility.hotControl != controlID)
+                        {
+                            return;
+                        }
+                        if (e.alt || e.control)
+                        {
+                            return;
+                        }
+                        if (e.button != 0)
+                        {
+                            return;
+                        }
+
+                        if (HandleUtility.nearestControl != controlID)
+                        {
+                            return;
+                        }
+                        if (e.type == EventType.MouseDown)
+                        {
+                            GUIUtility.hotControl = controlID;
+                        }
+                        //Do painting
+                        if (Physics.Raycast(worldRay, out curHit, float.MaxValue))
+                        {
+
+                            if (curHit.transform == go.transform)
+                            {
+                                PaintVertexColor();
+
+                            }
+                        }
+                        e.Use();
+                    }
+                    break;
+                case EventType.MouseUp:
+                    {
+                        if (GUIUtility.hotControl != controlID)
+                        {
+                            return;
+                        }
+                        GUIUtility.hotControl = 0;
+                        e.Use();
+                       
+                    }
+                    break;
+                case EventType.Repaint:
+                    {
+                        //Draw paint brush
+                        if (Physics.Raycast(worldRay, out curHit, float.MaxValue))
+                        {
+                            if (curHit.transform == go.transform)
+                            {
+                                Handles.color = new Color(VertexColor.r, VertexColor.g, VertexColor.b, brushOpacity);
+                                Handles.DrawSolidDisc(curHit.point, curHit.normal, brushSize);
+                                Handles.color = Color.green;
+                                Handles.DrawWireDisc(curHit.point, curHit.normal, brushSize);
+
+                            }
+                        }
+                        HandleUtility.Repaint();
+                    }
+                    break;
+            }
+        }
+
+
+        
+
         void PaintVertexColor()
         {
+            Vector3 hitPos = Vector3.Scale(go.transform.InverseTransformPoint(curHit.point), go.transform.localScale);
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                Vector3 vertPos = Vector3.Scale(vertices[i], go.transform.localScale);
+                float mag = (vertPos - hitPos).magnitude;
+                if (mag > brushSize)
+                    continue;
+                debugColors[i] = Color.Lerp(debugColors[i], VertexColor, brushOpacity);
+            }
+            mesh.colors = debugColors;
             
-
         }
         //暂存模型顶点色/顶点/材质
         void SaveModleData()
@@ -524,6 +785,34 @@ namespace xfColorPaint
             }
             Debug.Log(originalMaterial.name);
 
+        }
+
+        void SaveMesh()
+        {
+            Mesh data = (Mesh)Instantiate(mesh);           
+            string name = AssetDatabase.GenerateUniqueAssetPath(AssetDatabase.GetAssetPath(mesh).Replace(".FBX", ".mat"));
+            AssetDatabase.CreateAsset(data, name);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            //Revert original mesh colors
+            mesh.colors = originalColors;
+            Debug.LogWarning("Mesh is Saved as " + name + ".");
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = data;
+
+        }
+        void AutoSaveMesh()
+        {
+            Mesh data = (Mesh)Instantiate(mesh);
+            string name = AssetDatabase.GenerateUniqueAssetPath("Assets/New Mesh.mat");
+            AssetDatabase.CreateAsset(data, name);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            //Revert original mesh colors
+            mesh.colors = originalColors;
+            Debug.LogWarning("Mesh is Saved as " + name + ".");
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = data;
         }
         #endregion
 
