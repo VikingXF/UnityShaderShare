@@ -1,0 +1,407 @@
+﻿//=======================================================
+// 作者：xf
+// 描述：模型/贴图导入批处理
+//=======================================================
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+
+public class AssetsSettings : EditorWindow
+{
+
+    //贴图变量
+    #region
+    static bool IsPowerof2 = true;
+    static bool IsMipMaps = false;
+    static bool RWenabled = false;
+    static bool IsCompression = true;
+
+    int toolbarInt = 0;
+    string[] toolbarStrings = new string[] { "贴图/UI", "模型" ,"材质批处理"};
+
+    // 2的N次方设置枚举
+    public enum NpotScaleNum
+    {
+        None,
+        ToNearest,
+        ToLarger,
+        ToSmaller,
+    }
+    static private NpotScaleNum npotScaleNum = NpotScaleNum.ToNearest;
+
+    // 贴图类型设置
+    public enum TextureType
+    {
+        Default,
+        Sprite,      
+    }
+    static private TextureType textureType = TextureType.Default;
+    #endregion
+
+    //模型变量
+    #region
+
+    static bool MeshCom = true;
+    static bool MeshRW = false;  
+    static bool MeshOpt = true;
+    static bool MeshGC = false;
+    static bool MeshKQ = false;
+    static bool MeshIA = true;
+    static bool MeshAnimCompression = true;
+    static bool MeshImportMaterials = true;
+    #endregion
+
+    //材质变量
+    #region
+    public enum MaterilaType
+    {
+        Unlit,
+        Mobile,
+    }
+    static private MaterilaType MaterilasType = MaterilaType.Unlit;
+    #endregion
+
+    [MenuItem("Tools/资源设置批处理工具")]
+    public static void ShowWindow()
+    {
+
+        EditorWindow editorWindow = EditorWindow.GetWindow(typeof(AssetsSettings));
+        editorWindow.autoRepaintOnSceneChange = true;
+        editorWindow.Show();
+        editorWindow.titleContent.text = "资源设批处理1.0";
+    }
+
+    void OnEnable()
+    {
+        SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
+        SceneView.onSceneGUIDelegate += this.OnSceneGUI;
+    }
+    void OnDestroy()
+    {
+        SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
+
+    }
+
+    void OnSceneGUI(SceneView sceneView)
+    {
+
+
+
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Space(10f);
+        toolbarInt = GUILayout.Toolbar(toolbarInt, toolbarStrings);
+        
+        switch (toolbarInt)      
+        {
+            case 0:
+                GUILayout.BeginVertical("box", GUILayout.Width(200));
+                GUILayout.Label("贴图设置");
+
+                GUILayout.BeginHorizontal();
+                textureType = (TextureType)EditorGUILayout.EnumPopup(new GUIContent("Texture Type"), textureType);
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();   
+                IsPowerof2 = GUILayout.Toggle(IsPowerof2, "");
+                npotScaleNum = (NpotScaleNum)EditorGUILayout.EnumPopup(new GUIContent("Non Power of 2"), npotScaleNum);
+                GUILayout.EndHorizontal();
+
+                IsMipMaps = GUILayout.Toggle(IsMipMaps, "    Generate Mip Maps");
+
+                RWenabled = GUILayout.Toggle(RWenabled, "    Read/Write Enabled");
+
+                IsCompression = GUILayout.Toggle(IsCompression, "    Compression(Max Size:1024)");
+
+
+                if (GUILayout.Button("贴图批处理", GUILayout.Width(240), GUILayout.Height(30)))
+                {
+
+                    SelectedTexChange();
+
+                }
+                GUILayout.EndVertical();
+                break;
+
+            case 1:
+                GUILayout.BeginVertical("box", GUILayout.Width(200));
+                GUILayout.Label("模型设置");
+
+                MeshCom = GUILayout.Toggle(MeshCom, "    Mesh Compression");
+                MeshRW  = GUILayout.Toggle(MeshRW, "    Read/Write Enabled");
+                MeshOpt = GUILayout.Toggle(MeshOpt, "    Optimze Mesh");
+                MeshGC = GUILayout.Toggle(MeshGC, "    Generate Colliders");
+                MeshKQ = GUILayout.Toggle(MeshKQ, "    Keep Quads");
+                MeshIA = GUILayout.Toggle(MeshIA, "    Import Animation");
+                MeshAnimCompression = GUILayout.Toggle(MeshAnimCompression, "    Anim Compression()");
+                MeshImportMaterials = GUILayout.Toggle(MeshImportMaterials, "    Import Materials");
+
+                if (GUILayout.Button("模型批处理", GUILayout.Width(240), GUILayout.Height(30)))
+                {
+
+                    SelectedMeshChange();
+                    
+                }
+
+                GUILayout.EndVertical();
+                break;
+            case 2:
+                GUILayout.BeginVertical("box", GUILayout.Width(200));
+                GUILayout.Label("材质设置");
+                GUILayout.BeginHorizontal();
+                MaterilasType = (MaterilaType)EditorGUILayout.EnumPopup(new GUIContent("材质选项是否受光"), MaterilasType);
+            
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginVertical("box", GUILayout.Width(200));
+                GUILayout.Label("说明：Unlit不接受光，mobile接受光           ");
+                GUILayout.EndVertical();
+
+                if (GUILayout.Button("材质处理", GUILayout.Width(240), GUILayout.Height(30)))
+                {
+
+                   SelectedMaterilasChange();
+
+                }
+
+                GUILayout.EndVertical();
+                break;
+
+
+        }
+        
+    }
+
+    //贴图处理
+    #region
+    static void SelectedTexChange()
+    {
+
+        Object[] textures = GetSelectedTextures();
+      
+        if (textures.Length == 0)
+        {
+            EditorUtility.DisplayDialog("警告", "选择一个包含贴图的文件夹或者单独贴图！", "OK");
+            return;
+        }
+ 
+        foreach (Texture2D texture in textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+            TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+
+            //贴图类型设置
+            switch (textureType)
+            {
+                case TextureType.Default:
+                    textureImporter.textureType = TextureImporterType.Default;
+                    break;
+                case TextureType.Sprite:
+                    textureImporter.textureType = TextureImporterType.Sprite;
+                    break;
+            }
+
+            //2的N次方设置
+            if (IsPowerof2 == true)
+            {
+                switch(npotScaleNum)
+                { 
+                    case NpotScaleNum.None:
+                        textureImporter.npotScale = TextureImporterNPOTScale.None;
+                        break;
+                    case NpotScaleNum.ToNearest:
+                        textureImporter.npotScale = TextureImporterNPOTScale.ToNearest;
+                        break;
+                    case NpotScaleNum.ToLarger:
+                        textureImporter.npotScale = TextureImporterNPOTScale.ToLarger;
+                        break;
+                    case NpotScaleNum.ToSmaller:
+                        textureImporter.npotScale = TextureImporterNPOTScale.ToSmaller;
+                        break;
+                }               
+            }
+            //MipMaop设置
+            textureImporter.mipmapEnabled = IsMipMaps;
+
+            //贴图可读写设置
+            textureImporter.isReadable = RWenabled;
+
+            //贴图压缩设置
+            if (IsCompression == true )                                                                                                                                                                                                     
+            {
+
+                if (!textureImporter.DoesSourceTextureHaveAlpha())//不带alpha通道的
+                {
+                    textureImporter.alphaIsTransparency = false;
+                    textureImporter.SetPlatformTextureSettings("Android", 1024, TextureImporterFormat.ETC_RGB4);
+                    textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.PVRTC_RGB4);
+
+                }
+                else  //带alpha通道的
+                {
+                    textureImporter.alphaIsTransparency = true;
+                    textureImporter.SetPlatformTextureSettings("Android", 1024, TextureImporterFormat.ETC2_RGBA8);
+                    textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.PVRTC_RGBA4);
+                }
+
+
+            }
+
+           
+
+            AssetDatabase.ImportAsset(path);
+        }
+    }
+    static Object[] GetSelectedTextures()
+    {
+        return Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+    }
+    #endregion
+
+
+    //模型处理
+    #region
+    static void SelectedMeshChange()
+    {
+        Object[] meshs = GetSelectedModels();
+
+        if (meshs.Length == 0)
+        {
+            EditorUtility.DisplayDialog("警告", "选择一个包含模型的文件夹或者单独模型！", "OK");
+            return;
+        }
+      
+
+        for (int i = 0; i < meshs.Length; i++)
+        {
+            var a = meshs[i] as GameObject;
+            if (a != null)
+            {
+                string path = AssetDatabase.GetAssetPath(a);
+                ModelImporter modelImporter = AssetImporter.GetAtPath(path) as ModelImporter;
+
+                //Model
+                if (MeshCom == true)
+                {
+                    modelImporter.meshCompression = ModelImporterMeshCompression.Medium;
+                }
+               
+                modelImporter.isReadable = MeshRW;
+                modelImporter.optimizeMesh = MeshOpt;
+                modelImporter.addCollider = MeshGC;
+                modelImporter.keepQuads = MeshKQ;
+
+                //Animation
+                modelImporter.importAnimation = MeshIA;
+                if (MeshAnimCompression == true)
+                {
+                    modelImporter.animationCompression = ModelImporterAnimationCompression.Optimal;
+                    modelImporter.animationRotationError = 1;
+                    modelImporter.animationPositionError = 1;
+                    modelImporter.animationScaleError = 1;
+                }
+
+                //Materials
+                modelImporter.importMaterials = MeshImportMaterials;
+                if (MeshImportMaterials == true)
+                {
+                    modelImporter.materialLocation = ModelImporterMaterialLocation.External;
+                    modelImporter.materialName = ModelImporterMaterialName.BasedOnTextureName;
+                    modelImporter.materialSearch = ModelImporterMaterialSearch.RecursiveUp;
+                }
+                
+
+
+                AssetDatabase.ImportAsset(path);
+            }
+
+        }
+
+        
+    }
+    static Object[] GetSelectedModels()
+    {
+
+        return Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
+    }
+
+    #endregion
+
+
+    //材质球处理
+    #region
+    static void SelectedMaterilasChange()
+    {
+        Object[] Materilas = GetSelectedMaterilas();
+        if (Materilas.Length == 0)
+        {
+            EditorUtility.DisplayDialog("警告", "选择一个包含材质球的文件夹或者单独材质球！", "OK");
+            return;
+        }
+        foreach (Material material in Materilas)
+        {
+            if (material.mainTexture !=null)
+            {
+
+                string path2 = AssetDatabase.GetAssetPath(material.mainTexture);
+                TextureImporter textureImporter2 = AssetImporter.GetAtPath(path2) as TextureImporter;
+
+                if (!textureImporter2.DoesSourceTextureHaveAlpha())//不带alpha通道的
+                {
+                    switch (MaterilasType)
+                    {
+                        case MaterilaType.Unlit:
+                            material.shader = Shader.Find("Babybus/Unlit/Texture");
+                            break;
+                        case MaterilaType.Mobile:
+                            material.shader = Shader.Find("Babybus/Mobile/Diffuse");
+                            break;
+                    }
+                }
+
+                else  //带alpha通道的
+                {
+                    switch (MaterilasType)
+                    {
+                        case MaterilaType.Unlit:
+                            material.shader = Shader.Find("Babybus/Unlit/Transparent");
+                            break;
+                        case MaterilaType.Mobile:
+                            material.shader = Shader.Find("Babybus/Mobile/Transparent-VertexLit");
+                            material.color = Color.white;
+                            break;
+                    }
+
+                }
+            }
+            else
+            {
+                Debug.Log(material.name);
+            }
+            
+            
+
+        }
+
+
+    }
+
+    static Object[] GetSelectedMaterilas()
+    {
+
+        return Selection.GetFiltered(typeof(Material), SelectionMode.DeepAssets);
+    }
+
+    #endregion
+
+
+}
+
+
+#endif
