@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: 6f855c3b85fc1d44fa16d140e8324909
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: LCollarbone
+    100004: LForearm
+    100006: LPalm
+    100008: LUpperarm
+    100010: Neck1
+    100012: Neck2
+    100014: pelvis
+    100016: RCollarbone
+    100018: RForearm
+    100020: ribcage
+    100022: RPalm
+    100024: RUpperarm
+    100026: Spine1
+    100028: Spine2
+    100030: waipao_01
+    100032: waipao_02
+    100034: waipao_04
+    100036: waipao_05
+    100038: waipao_07
+    100040: waipao_08
+    100042: waipao_10
+    100044: waipao_11
+    100046: waipao_13
+    100048: waipao_14
+    100050: waipao_16
+    100052: waipao_17
+    100054: "\u9B54\u6CD5\u888D3"
+    400000: //RootNode
+    400002: LCollarbone
+    400004: LForearm
+    400006: LPalm
+    400008: LUpperarm
+    400010: Neck1
+    400012: Neck2
+    400014: pelvis
+    400016: RCollarbone
+    400018: RForearm
+    400020: ribcage
+    400022: RPalm
+    400024: RUpperarm
+    400026: Spine1
+    400028: Spine2
+    400030: waipao_01
+    400032: waipao_02
+    400034: waipao_04
+    400036: waipao_05
+    400038: waipao_07
+    400040: waipao_08
+    400042: waipao_10
+    400044: waipao_11
+    400046: waipao_13
+    400048: waipao_14
+    400050: waipao_16
+    400052: waipao_17
+    400054: "\u9B54\u6CD5\u888D3"
+    2100000: "\u82F1\u8BED-\u89D2\u8272-Molly-\u9B54\u6CD5\u888D3"
+    2100002: "\u82F1\u8BED-\u89D2\u8272-Molly-\u9B54\u6CD5\u888D3-2"
+    4300000: "\u9B54\u6CD5\u888D3"
+    9500000: //RootNode
+    13700000: "\u9B54\u6CD5\u888D3"
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
