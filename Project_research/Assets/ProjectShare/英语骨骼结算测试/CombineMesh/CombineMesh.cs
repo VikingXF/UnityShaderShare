@@ -37,7 +37,7 @@ public class CombineMesh : MonoBehaviour
 
             for (int j = 0; j < mrChildren[i].materials.Length; j++)
             {
-               
+
                 materials.Add(mrChildren[i].sharedMaterials[j]);
                 Texture2D tx = mrChildren[i].sharedMaterials[j].GetTexture("_MainTex") as Texture2D;
                 Texture2D tx2D = new Texture2D(tx.width, tx.height, TextureFormat.ARGB32, false);
@@ -46,15 +46,15 @@ public class CombineMesh : MonoBehaviour
                 //textures[i] = tx2D;
                 textures.Add(tx2D);
             }
-           
-        
+
+
         }
 
 
         Material materialNew = new Material(materials[0].shader);
         materialNew.CopyPropertiesFromMaterial(materials[0]);
         mrSelf.sharedMaterial = materialNew;
-
+  
 
         Texture2D texture = new Texture2D(1024, 1024);
         materialNew.SetTexture("_MainTex", texture);
@@ -63,15 +63,15 @@ public class CombineMesh : MonoBehaviour
 
         for (int i = 0; i < mfChildren.Length; i++)
         {
-
+          
             for (int sub = 0; sub < mfChildren[i].sharedMesh.subMeshCount; sub++)
             {
                 CombineInstance ci = new CombineInstance();
-                Rect rect = rects[i];
+               
                 Mesh meshCombine = mfChildren[i].sharedMesh;
-               // Vector2[] uvs = new Vector2[meshCombine.uv.Length];
-
-                //把网格的uv根据贴图的rect刷一遍
+                // Vector2[] uvs = new Vector2[meshCombine.uv.Length];
+                // Rect rect = rects[i];
+                ////把网格的uv根据贴图的rect刷一遍
                 //for (int j = 0; j < uvs.Length; j++)
                 //{
                 //    uvs[j].x = rect.x + meshCombine.uv[j].x * rect.width;
@@ -83,6 +83,7 @@ public class CombineMesh : MonoBehaviour
                 ci.subMeshIndex = sub;
                 combine.Add(ci);
                 combine.ToArray()[i].transform = mfChildren[i].transform.localToWorldMatrix;
+               
             }
            
             mfChildren[i].gameObject.SetActive(false);
@@ -90,7 +91,7 @@ public class CombineMesh : MonoBehaviour
 
 
         Mesh newMesh = new Mesh();
-        newMesh.CombineMeshes(combine.ToArray(), false, true);//合并网格
+        newMesh.CombineMeshes(combine.ToArray(), false, false);//合并网格
         mfSelf.mesh = newMesh;
     }
 
