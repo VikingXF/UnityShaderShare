@@ -76,14 +76,14 @@ Shader "Unlit/Caustic_projector"
 				float frameCount = imod((float)(_Time.w*10), 48);
 				float mask = frameCount / 16;
 				float row =  imod(frameCount, 16) / 4 ;
-				float col =  imod(imod(frameCount, 16), 4);
+				float col =  imod(imod(frameCount, 16), 4);				
 				float2 aniUV = float2(0.25*(col), 0.25*(row));
 				aniUV = frac(i.uv)*float2(0.25, 0.25)+aniUV;
 				float4 causticCol = tex2D(_Mafloatex, aniUV);
 				float causticfloatensity = 1.0;
 				if(mask == 0)
 				{
-					causticfloatensity = causticCol.r;
+					causticfloatensity = causticCol.b;
 				}
 				else if(mask == 1)
 				{
@@ -94,7 +94,18 @@ Shader "Unlit/Caustic_projector"
 					causticfloatensity = causticCol.b;
 				}
 				causticfloatensity=i.floatensity*causticfloatensity*_Causticfloatensity;
-				return result*causticfloatensity;
+				return saturate(result*causticfloatensity);
+
+				
+
+				/*float2 aniUV = float2(0, 0);
+				aniUV = frac(i.uv)*float2(0.25, 0.25) ;
+				float4 causticCol = tex2D(_Mafloatex, aniUV);				
+				float causticfloatensity = causticCol.b;
+
+				causticfloatensity = causticfloatensity*_Causticfloatensity;
+				return saturate(causticfloatensity);*/
+
             }
             ENDCG
         }

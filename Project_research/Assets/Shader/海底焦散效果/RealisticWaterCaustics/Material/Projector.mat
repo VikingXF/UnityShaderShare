@@ -4,58 +4,61 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Projector
   m_Shader: {fileID: 4800000, guid: 7eb0be9327d766f4a864905a217ac19e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _GroundTex
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
+    - _GroundTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 9836d999a63e0644898ed5b7fedc913a, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0.28, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 2800000, guid: 3a542d9e1a36b6f4e964181523c83f02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 7.81, y: 1}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTexture:
+        m_Texture: {fileID: 2800000, guid: 3a542d9e1a36b6f4e964181523c83f02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T_mask:
+        m_Texture: {fileID: 2800000, guid: 9836d999a63e0644898ed5b7fedc913a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-      data:
-        first:
-          name: _Tiled
-        second: 9.70085716
-      data:
-        first:
-          name: _Density
-        second: .00371428556
-      data:
-        first:
-          name: _Intensity
-        second: 1.39999998
-      data:
-        first:
-          name: _Lerp
-        second: .517857075
-      data:
-        first:
-          name: _FadeHeight
-        second: 2.03571415
-      data:
-        first:
-          name: _FadeFalloff
-        second: 1.33928573
+    - _CausticIntensity: 0.525
+    - _ChangeSpeed: 4
+    - _Cutoff: 0.5
+    - _Density: 0.00391
+    - _FadeFalloff: 2
+    - _FadeHeight: 3.52
+    - _Intensity: 1.23
+    - _Lerp: 0.328
+    - _N_BY_KD: 0.61
+    - _N_BY_QD: 2.46
+    - _N_mask: 1.01
+    - _Tiled: 28.1
+    - _ZTest: 4
     m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+    - _C_BYcolor: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WaveParams: {r: 0.76, g: 1.85, b: 1.47, a: 0.42}
