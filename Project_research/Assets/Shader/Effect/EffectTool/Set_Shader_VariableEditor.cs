@@ -7,20 +7,23 @@ using UnityEditor;
 [CustomEditor(typeof(Set_Shader_Variable))]
 public class Set_Shader_VariableEditor : Editor
 {
-    private Set_Shader_Variable set_shader_variable;
-    private AnimationCurve FloatCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    private Gradient Color = new Gradient();
-    private bool FloatToggle = true;
+
 
     public override void OnInspectorGUI()
     {
-        set_shader_variable = target as Set_Shader_Variable;
+        Set_Shader_Variable set_shader_variable = target as Set_Shader_Variable;
 
         EditorGUILayout.Space();
-        FloatCurve = (AnimationCurve)EditorGUILayout.CurveField("Curve", FloatCurve);
+        set_shader_variable.IsLoop = EditorGUILayout.Toggle("IsLoop", set_shader_variable.IsLoop);
+        set_shader_variable.FloatCurve = (AnimationCurve)EditorGUILayout.CurveField("Curve", set_shader_variable.FloatCurve);
+
+        set_shader_variable.FloatToggle = EditorGUILayout.BeginToggleGroup("FloatToggle", set_shader_variable.FloatToggle);
+      
+        //if (set_shader_variable.FloatToggle)
+        //{
+            set_shader_variable.Color = (Gradient)EditorGUILayout.GradientField("Gradient", set_shader_variable.Color);
+        //}
        
-        FloatToggle = EditorGUILayout.BeginToggleGroup("FloatToggle", FloatToggle);
-        Color = (Gradient)EditorGUILayout.GradientField("Gradient", Color);
         EditorGUILayout.EndToggleGroup();
 
 
