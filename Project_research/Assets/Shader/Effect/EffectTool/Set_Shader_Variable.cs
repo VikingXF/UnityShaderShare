@@ -16,6 +16,7 @@ public class Set_Shader_Variable : MonoBehaviour
     public Gradient Color = new Gradient();
     public bool IsLoop;
     public bool FloatToggle = true;
+    public bool ColorToggle = true;
 
     // Start is called before the first frame update
     //void Start()
