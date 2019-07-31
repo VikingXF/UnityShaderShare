@@ -1,9 +1,5 @@
 /*--------------------------------------------------------
-  InnerMantisLODEditorOnline.cs
-
-  Created by MINGFEN WANG on 13-12-26.
-  Copyright (c) 2013 MINGFEN WANG. All rights reserved.
-  http://www.mesh-online.net/
+  减面生成LOD工具
 --------------------------------------------------------*/
 using UnityEngine;
 using UnityEngine.Networking;
@@ -64,7 +60,7 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"When Clicked, necessory mesh data will be uploaded to server, the server will cache your data for 24 hours, so you need not upload your data frequently. But if you have restarted Unity, your data might mismatch the cache on the server side, if this happens, you have to upload your data again."
+								"点击时必选网格数据将上传至服务器，服务器将缓存您的数据24小时，所以您不需要频繁上传数据。但是如果你重新启动Unity，你的数据可能与服务器端的缓存不匹配，如果发生这种情况，你必须再次上传你的数据。"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
@@ -94,7 +90,7 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"When Clicked, save the meshes of current quality as LOD files."
+								"单击保存当前质量的网格LOD文件。"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
@@ -103,7 +99,7 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"When checked, all open boundaries will be protected; Otherwise, some smooth parts of open boundaries will be smartly merged. Both way, uv boundaries and material boundaries will be protected."
+								"勾选时，所有开放边界将受到保护;否则，开放边界的一些平滑部分将被巧妙地合并。两种方式：UV边界和材质边界将得到保护。"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
@@ -112,7 +108,7 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"When checked, more details will be preserved, you should check it only if you are making the highest LOD; Otherwise, please leave it unchecked to get best results."
+								"勾选时，更多的模型细节将被保留（在使用比较高的LOD时使用），否则不受限制，以获得最佳结果"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
@@ -121,7 +117,7 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"When checked, all symmetric uv mapping will be preserved, you should check it only if you are making the higher LODs; Otherwise, please leave it unchecked to get best results."
+								"勾选时，所有的对称uv映射将被保留（较高的LODs时使用）;否则，不勾选，以获得最佳结果。"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
@@ -130,7 +126,7 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"When checked, all hard edges will be preserved; If you want to get maximum decimation, please leave it unchecked."
+								"勾选时, 所有的硬边都会被保留;如果您想获得最大的抽取，请不选中它。"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
@@ -139,14 +135,14 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"When checked, it generates beautiful triangles, but the result may not be better than the tradition method, if this happens, please leave it unchecked."
+								"勾选时, 它生成漂亮的三角形，但结果可能并不比传统方法好，如果发生这种情况，请让它不选中。"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
 						EditorGUILayout.LabelField("Triangles", face_number.ToString() + "/" + origin_face_number.ToString());
 						if(show_help) {
 							GUILayout.Label(
-								"Display current triangle number and total triangle number."
+								"显示当前三角形数和总三角形数。"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
@@ -155,7 +151,7 @@ namespace MantisLODEditor {
 						GUI.enabled = true;
 						if(show_help) {
 							GUILayout.Label(
-								"Drag to change the quality, the mesh will change just in time, be patient to wait for the completion of online operation."
+								"拖动改变质量，网格会及时改变，耐心等待在线操作完成。（第一次需要点击Upload Mesh Data）"
 								, helpStyle
 								, GUILayout.ExpandWidth(true));
 						}
