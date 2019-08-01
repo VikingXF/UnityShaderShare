@@ -1,4 +1,4 @@
-﻿Shader "Hidden/UV/GUI/UVRender"
+﻿Shader "Hidden/Internal/GUI/UVRender"
 {
 	Properties
 	{

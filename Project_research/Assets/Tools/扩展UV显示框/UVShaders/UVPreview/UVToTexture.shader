@@ -1,4 +1,4 @@
-﻿Shader "Hidden/UV/UVPreview/UVToTexture"
+﻿Shader "Hidden/Internal/UVPreview/UVToTexture"
 {
 	Properties
 	{

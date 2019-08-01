@@ -18,13 +18,18 @@ public class UVPreview
     /// </summary>
     private static Mesh sCheckerBoard;
 
+    private const string kCheckerBoardShader = "Hidden/Internal/GUI/CheckerBoard";
+    private const string kUVToTextureShader = "Hidden/Internal/UVPreview/UVToTexture";
+    private const string kUVShader = "Hidden/Internal/GUI/UVRender";
+
     private static Material CheckerBoardMaterial
     {
         get
         {
             if (sCheckerBoardMaterial == null)
             {
-                sCheckerBoardMaterial = new Material(EditorGUIUtility.Load(kCheckerBoardShader) as Shader);
+               // sCheckerBoardMaterial = new Material(EditorGUIUtility.Load(kCheckerBoardShader) as Shader);
+                sCheckerBoardMaterial = new Material(Shader.Find(kCheckerBoardShader));
                 sCheckerBoardMaterial.hideFlags = HideFlags.HideAndDontSave;
             }
 
@@ -38,7 +43,8 @@ public class UVPreview
         {
             if (sUVMaterial == null)
             {
-                sUVMaterial = new Material(EditorGUIUtility.Load(kUVShader) as Shader);
+                //sUVMaterial = new Material(EditorGUIUtility.Load(kUVShader) as Shader);
+                sUVMaterial = new Material(Shader.Find(kUVShader));
                 sUVMaterial.hideFlags = HideFlags.HideAndDontSave;
             }
 
@@ -64,9 +70,9 @@ public class UVPreview
         }
     }
 
-    private const string kCheckerBoardShader = "UV/GUI/CheckerBoard.shader";
-    private const string kUVToTextureShader = "UV/UVPreview/UVToTexture.shader";
-    private const string kUVShader = "UV/GUI/UVRender.shader";
+    //private const string kCheckerBoardShader = "InternalShaders/GUI/CheckerBoard.shader";
+    //private const string kUVToTextureShader = "InternalShaders/UVPreview/UVToTexture.shader";
+    //private const string kUVShader = "InternalShaders/GUI/UVRender.shader";
 
     private class UVPreviewStateInfo
     {
@@ -129,7 +135,8 @@ public class UVPreview
         if (!mesh)
             return null;
 
-        Material renderMat = new Material(EditorGUIUtility.Load(kUVToTextureShader) as Shader);
+       // Material renderMat = new Material(EditorGUIUtility.Load(kUVToTextureShader) as Shader);
+        Material renderMat = new Material(Shader.Find(kUVToTextureShader));
         renderMat.SetColor("_Color", color);
 
         if (!CheckUV(mesh, uvIndex))
@@ -202,6 +209,7 @@ public class UVPreview
     private static void DrawMesh(Rect rect, Vector4 offsetScale, GameObject gameObject, int uvID, bool lightMapLayoutMode, int lightMapIndex, int pass)
     {
         Mesh mesh = GetMesh(gameObject);
+       
         if(!mesh)
             return;
         Renderer renderer = gameObject.GetComponent<Renderer>();
@@ -219,8 +227,15 @@ public class UVPreview
         //非光照贴图布局模式下直接计算绘制矩阵
         if (!lightMapLayoutMode)
             matrix = GetDrawMatrix(rect, offsetScale);
-        UVMaterial.SetPass(pass);
-        
+        if (UVMaterial.SetPass(pass) == false)
+        {
+            UVMaterial.SetPass(1);
+        }
+        else
+        {
+            UVMaterial.SetPass(0);
+        }
+         
 
         if (lightMapLayoutMode)
         {
@@ -254,7 +269,10 @@ public class UVPreview
             UVMaterial.SetFloat("_UVIndex", 0.5f + uvID);
         }
         if (mesh)
+        {        
             Graphics.DrawMeshNow(mesh, matrix);
+        }
+         
         
     }
 

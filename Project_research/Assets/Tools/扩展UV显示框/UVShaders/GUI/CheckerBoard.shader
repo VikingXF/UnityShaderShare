@@ -1,4 +1,4 @@
-﻿Shader "Hidden/UV/GUI/CheckerBoard"
+﻿Shader "Hidden/Internal/GUI/CheckerBoard"
 {
 	Properties
 	{
