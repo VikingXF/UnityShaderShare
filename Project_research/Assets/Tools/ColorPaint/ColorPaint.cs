@@ -638,9 +638,9 @@ namespace xfColorPaint
                         {
                             if (curHit.transform == go.transform)
                             {
-                                Handles.color = new Color(foregroundColor.r, foregroundColor.g, foregroundColor.b, brushOpacity);
-                                Handles.DrawSolidDisc(curHit.point, curHit.normal, orthographicSize);
-                                Handles.color = Color.green;
+                                Handles.color = new Color(foregroundColor.r, foregroundColor.g, foregroundColor.b, 1);
+                               // Handles.DrawSolidDisc(curHit.point, curHit.normal, orthographicSize);
+                               // Handles.color = Color.green;
                                 Handles.DrawWireDisc(curHit.point, curHit.normal, orthographicSize);
 
                             }
