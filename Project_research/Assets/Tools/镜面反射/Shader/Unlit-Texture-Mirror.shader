@@ -5,7 +5,7 @@
 // - no lightmap support
 // - no per-material color
 
-Shader "Babybus/Unlit/Texture" {
+Shader "Babybus/Unlit/Texture Mirror" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}
 	_Ref ("For Mirror reflection,don't set it!", 2D) = "white" {}
@@ -61,7 +61,7 @@ SubShader {
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
+				float2 screenUV = i.screenPos.xy / i.screenPos.w;
 				fixed4 ref = tex2D(_Ref, screenUV);
 				float distance = _Distance;
 				ref += tex2D(_Ref, half2(screenUV.x + distance , screenUV.y + distance ));
