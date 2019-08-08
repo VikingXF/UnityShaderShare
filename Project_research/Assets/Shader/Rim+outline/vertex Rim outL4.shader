@@ -1,5 +1,5 @@
 
-Shader "Babybus/Rim/vertex Rim outL3" {
+Shader "Babybus/Rim/vertex Rim outL4" {
     Properties {
         _MainTex ("Base (RGB)", 2D) = "white" {}		
 		_Color("Main Color", Color) = (1,1,1,1)
