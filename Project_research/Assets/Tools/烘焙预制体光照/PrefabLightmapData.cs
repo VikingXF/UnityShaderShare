@@ -2,120 +2,118 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Babybus.Leo
+
+namespace LightMap
 {
-    namespace LightMap
+    /// <summary>
+    /// 用于烘焙预制体的操作
+    /// </summary>
+    [ExecuteInEditMode]
+    public class PrefabLightmapData : MonoBehaviour
     {
-        /// <summary>
-        /// 用于烘焙预制体的操作
-        /// </summary>
-        [ExecuteInEditMode]
-        public class PrefabLightmapData : MonoBehaviour
+
+        [System.Serializable]
+        struct RendererInfo
         {
+            public Renderer renderer;
+            public int lightmapIndex;
+            public Vector4 lightmapOffsetScale;
+        }
 
-            [System.Serializable]
-            struct RendererInfo
+        [SerializeField] RendererInfo[] m_RendererInfo;
+        [SerializeField] Texture2D[] m_Lightmaps;
+
+        void Awake()
+        {
+            if (m_RendererInfo == null || m_RendererInfo.Length == 0)
+                return;
+
+            var lightmaps = LightmapSettings.lightmaps;
+            var combinedLightmaps = new LightmapData[lightmaps.Length + m_Lightmaps.Length];
+
+            lightmaps.CopyTo(combinedLightmaps, 0);
+            for (int i = 0; i < m_Lightmaps.Length; i++)
             {
-                public Renderer renderer;
-                public int lightmapIndex;
-                public Vector4 lightmapOffsetScale;
+                //combinedLightmaps[i + lightmaps.Length] = new LightmapData();
+                //combinedLightmaps[i + lightmaps.Length].lightmapFar = m_Lightmaps[i];
+                combinedLightmaps[i + lightmaps.Length] = new LightmapData();
+                combinedLightmaps[i + lightmaps.Length].lightmapColor = m_Lightmaps[i];
             }
 
-            [SerializeField] RendererInfo[] m_RendererInfo;
-            [SerializeField] Texture2D[] m_Lightmaps;
+            ApplyRendererInfo(m_RendererInfo, lightmaps.Length);
+            LightmapSettings.lightmaps = combinedLightmaps;
+        }
 
-            void Awake()
+        static void ApplyRendererInfo(RendererInfo[] infos, int lightmapOffsetIndex)
+        {
+            for (int i = 0; i < infos.Length; i++)
             {
-                if (m_RendererInfo == null || m_RendererInfo.Length == 0)
-                    return;
-
-                var lightmaps = LightmapSettings.lightmaps;
-                var combinedLightmaps = new LightmapData[lightmaps.Length + m_Lightmaps.Length];
-
-                lightmaps.CopyTo(combinedLightmaps, 0);
-                for (int i = 0; i < m_Lightmaps.Length; i++)
-                {
-                    //combinedLightmaps[i + lightmaps.Length] = new LightmapData();
-                    //combinedLightmaps[i + lightmaps.Length].lightmapFar = m_Lightmaps[i];
-                    combinedLightmaps[i + lightmaps.Length] = new LightmapData();
-                    combinedLightmaps[i + lightmaps.Length].lightmapColor = m_Lightmaps[i];
-                }
-
-                ApplyRendererInfo(m_RendererInfo, lightmaps.Length);
-                LightmapSettings.lightmaps = combinedLightmaps;
+                var info = infos[i];
+                info.renderer.lightmapIndex = info.lightmapIndex + lightmapOffsetIndex;
+                info.renderer.lightmapScaleOffset = info.lightmapOffsetScale;
             }
-
-            static void ApplyRendererInfo(RendererInfo[] infos, int lightmapOffsetIndex)
-            {
-                for (int i = 0; i < infos.Length; i++)
-                {
-                    var info = infos[i];
-                    info.renderer.lightmapIndex = info.lightmapIndex + lightmapOffsetIndex;
-                    info.renderer.lightmapScaleOffset = info.lightmapOffsetScale;
-                }
-            }
+        }
 
 #if UNITY_EDITOR
-            [UnityEditor.MenuItem("Assets/Bake Prefab Lightmaps")]
-            static void GenerateLightmapInfo()
+        [UnityEditor.MenuItem("Tools/烘培预制体光照/Bake Prefab Lightmaps(场景未烘焙)")]
+        static void GenerateLightmapInfo()
+        {
+            if (UnityEditor.Lightmapping.giWorkflowMode != UnityEditor.Lightmapping.GIWorkflowMode.OnDemand)
             {
-                if (UnityEditor.Lightmapping.giWorkflowMode != UnityEditor.Lightmapping.GIWorkflowMode.OnDemand)
-                {
-                    Debug.LogError(
-                        "ExtractLightmapData requires that you have baked you lightmaps and Auto mode is disabled.");
-                    return;
-                }
-
-                UnityEditor.Lightmapping.Bake();
-
-                PrefabLightmapData[] prefabs = FindObjectsOfType<PrefabLightmapData>();
-
-                foreach (var instance in prefabs)
-                {
-                    var gameObject = instance.gameObject;
-                    var rendererInfos = new List<RendererInfo>();
-                    var lightmaps = new List<Texture2D>();
-
-                    GenerateLightmapInfo(gameObject, rendererInfos, lightmaps);
-
-                    instance.m_RendererInfo = rendererInfos.ToArray();
-                    instance.m_Lightmaps = lightmaps.ToArray();
-
-                    var targetPrefab = UnityEditor.PrefabUtility.GetPrefabParent(gameObject) as GameObject;
-                    if (targetPrefab != null)
-                    {
-                        //UnityEditor.Prefab
-                        UnityEditor.PrefabUtility.ReplacePrefab(gameObject, targetPrefab);
-                    }
-                }
+                Debug.LogError(
+                    "ExtractLightmapData requires that you have baked you lightmaps and Auto mode is disabled.");
+                return;
             }
 
-            static void GenerateLightmapInfo(GameObject root, List<RendererInfo> rendererInfos,
-                List<Texture2D> lightmaps)
+            UnityEditor.Lightmapping.Bake();
+
+            PrefabLightmapData[] prefabs = FindObjectsOfType<PrefabLightmapData>();
+
+            foreach (var instance in prefabs)
             {
-                var renderers = root.GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer renderer in renderers)
+                var gameObject = instance.gameObject;
+                var rendererInfos = new List<RendererInfo>();
+                var lightmaps = new List<Texture2D>();
+
+                GenerateLightmapInfo(gameObject, rendererInfos, lightmaps);
+
+                instance.m_RendererInfo = rendererInfos.ToArray();
+                instance.m_Lightmaps = lightmaps.ToArray();
+
+                var targetPrefab = UnityEditor.PrefabUtility.GetPrefabParent(gameObject) as GameObject;
+                if (targetPrefab != null)
                 {
-                    if (renderer.lightmapIndex != -1)
-                    {
-                        RendererInfo info = new RendererInfo();
-                        info.renderer = renderer;
-                        info.lightmapOffsetScale = renderer.lightmapScaleOffset;
-
-                        Texture2D lightmap = LightmapSettings.lightmaps[renderer.lightmapIndex].lightmapColor;
-
-                        info.lightmapIndex = lightmaps.IndexOf(lightmap);
-                        if (info.lightmapIndex == -1)
-                        {
-                            info.lightmapIndex = lightmaps.Count;
-                            lightmaps.Add(lightmap);
-                        }
-
-                        rendererInfos.Add(info);
-                    }
+                    //UnityEditor.Prefab
+                    UnityEditor.PrefabUtility.ReplacePrefab(gameObject, targetPrefab);
                 }
             }
-#endif
         }
+
+        static void GenerateLightmapInfo(GameObject root, List<RendererInfo> rendererInfos,
+            List<Texture2D> lightmaps)
+        {
+            var renderers = root.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer renderer in renderers)
+            {
+                if (renderer.lightmapIndex != -1)
+                {
+                    RendererInfo info = new RendererInfo();
+                    info.renderer = renderer;
+                    info.lightmapOffsetScale = renderer.lightmapScaleOffset;
+
+                    Texture2D lightmap = LightmapSettings.lightmaps[renderer.lightmapIndex].lightmapColor;
+
+                    info.lightmapIndex = lightmaps.IndexOf(lightmap);
+                    if (info.lightmapIndex == -1)
+                    {
+                        info.lightmapIndex = lightmaps.Count;
+                        lightmaps.Add(lightmap);
+                    }
+
+                    rendererInfos.Add(info);
+                }
+            }
+        }
+#endif
     }
 }
