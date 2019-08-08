@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "\u82F1\u8BED-\u89D2\u8272-Bobby\u59341"
-  m_Shader: {fileID: 4800000, guid: 70e30eb6399852b47978cfee4e1ff387, type: 3}
+  m_Shader: {fileID: 4800000, guid: 3cb2e112104b74e4a9bf27c8215d279c, type: 3}
   m_ShaderKeywords: _OUTL_ON _RIM_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -60,15 +60,17 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Factor: 0.355
+    - _Factor: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Offset1: 0
+    - _Offset2: 0
     - _Outl: 1
-    - _Outline: 0.02
+    - _Outline: 0.0032
     - _Parallax: 0.02
     - _Rim: 1
     - _RimIntensity: 0.19

@@ -110,16 +110,23 @@ Shader "Babybus/Rim/vertex Rim outL4" {
 			v2f vert(appdata_base v)
 			{
 				v2f o;
-				o.pos = UnityObjectToClipPos(v.vertex);
+				
+				
+				
+				
+				//o.pos = UnityObjectToClipPos(v.vertex);
 				
 				#if _OUTL_ON
-				float3 dir = normalize(v.vertex.xyz);
-				float3 dir2 = normalize(v.normal);
-				dir = lerp(dir, dir2,_Factor);
-				dir = mul((float3x3)UNITY_MATRIX_IT_MV, dir);	
-				float2 offset = TransformViewToProjection(dir.xy);
-				offset = normalize(offset);
-				o.pos.xy += offset * o.pos.z * _Outline;				
+				
+					float3 dir = normalize(v.vertex.xyz);
+					float3 dir2 = normalize(v.normal);
+					dir = lerp(dir, dir2,_Factor);
+					float4 pos = mul( UNITY_MATRIX_MV, v.vertex + float4(dir,0) * _Outline );
+					o.pos = mul(UNITY_MATRIX_P, pos);
+					
+				#else
+					o.pos = UnityObjectToClipPos(v.vertex);
+					
                 #endif
 				
 				return o;
