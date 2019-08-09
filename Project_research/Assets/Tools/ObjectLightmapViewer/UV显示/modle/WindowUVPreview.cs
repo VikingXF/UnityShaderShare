@@ -35,7 +35,7 @@ public class WindowUVPreview : EditorWindow {
         uvPreviewWindow = (WindowUVPreview)EditorWindow.GetWindow(typeof(WindowUVPreview));
         uvPreviewWindow.titleContent = new GUIContent("UV预览");
         uvPreviewWindow.autoRepaintOnSceneChange = true;
-        uvPreviewWindow.minSize = new Vector2(256, 256);
+        uvPreviewWindow.minSize = new Vector2(256, 330);
     }
     
 
@@ -164,7 +164,7 @@ public class WindowUVPreview : EditorWindow {
         BaseTexture = (Texture2D)selectedObject.GetComponent<MeshRenderer>().sharedMaterial.mainTexture;
         //BaseTexture = CreateFillTexture(1, 1, new Color(1, 1, 1, 1f));
         //uvPreviewRect = new Rect(new Rect(sideSpace, ySpace + sideSpace, uvPreviewWindow.position.width - (sideSpace * 2), uvPreviewWindow.position.height - ySpace - (sideSpace * 2)));
-        uvPreviewRect = new Rect(new Rect(sideSpace, ySpace, 256*uvPreviewWindow.position.width/ uvPreviewWindow.position.height, 256 * uvPreviewWindow.position.width / uvPreviewWindow.position.height));
+        uvPreviewRect = new Rect(new Rect(sideSpace, ySpace, uvPreviewWindow.position.width- 10, uvPreviewWindow.position.width- 10));
         //GUI.DrawTexture(new Rect(0, 0, uvPreviewWindow.position.width, ySpace), BaseTexture);
 
         if (canDrawView)
