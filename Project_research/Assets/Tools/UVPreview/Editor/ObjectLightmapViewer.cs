@@ -7,7 +7,7 @@
  * @author    Yaukey
  * @date      2016-04-09
  */
-
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -56,7 +56,7 @@ public class ObjectLightmapViewer : EditorWindow
     private System.Object m_cPreviewResizerInstance = null;
 
     // The init method.
-    [MenuItem("Tools/Object Lightmap Viewer")]
+    [MenuItem("Tools/UVøÚœ‘ æ/Object Lightmap Viewer")]
     private static void Init()
     {
         EditorWindow cWnd = GetWindow(typeof(ObjectLightmapViewer));
@@ -718,3 +718,4 @@ public class ObjectLightmapViewer : EditorWindow
         EditorGUI.DrawRect(rcRight, clrArea);
     }
 }
+#endif

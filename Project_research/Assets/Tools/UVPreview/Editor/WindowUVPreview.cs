@@ -44,7 +44,7 @@ public class WindowUVPreview : EditorWindow {
     private Material CheckerBoardMaterial;
     private Color UVColor = Color.green;
 
-    [MenuItem("Tools/UV Preview")]
+    [MenuItem("Tools/UV框显示/UV Preview")]
     protected static void Start()
     {
         uvPreviewWindow = (WindowUVPreview)EditorWindow.GetWindow(typeof(WindowUVPreview));
