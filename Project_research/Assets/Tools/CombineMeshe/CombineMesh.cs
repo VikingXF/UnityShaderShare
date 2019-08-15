@@ -13,10 +13,8 @@ namespace CombineMeshSpace
         void Start()
         {
             MeshRenderer[] meshRenders = GetComponentsInChildren<MeshRenderer>();
-            MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
-
             List<Material> mats = new List<Material>();
-            List<CombineInstance> combine = new List<CombineInstance>();
+          
             for (int i = 0; i < meshRenders.Length; i++)
             {
 
@@ -31,56 +29,29 @@ namespace CombineMeshSpace
                 }
 
             }
-            foreach (var item in mats)
-            {
-                Debug.Log(item.name);
-            }
-           
-            Debug.Log("==================================");
-            for (int t = 0; t < meshFilters.Length; t++)
-            {
 
-                for (int k = 0; k < meshFilters[t].sharedMesh.subMeshCount; k++)
-                {
-                    Debug.Log(meshFilters[t].sharedMesh.subMeshCount);
-                }
-
-            }
+            MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+            List<CombineInstance> combine = new List<CombineInstance>();
 
 
-
-            //获取MeshRender;
-            //MeshRenderer[] meshRenders = GetComponentsInChildren<MeshRenderer>();
-
-            ////材质;
-            //Material[] mats = new Material[meshRenders.Length];
-
-            //for (int i = 0; i < meshRenders.Length; i++)
-            //{
-
-            //     mats[i] = meshRenders[i].sharedMaterial;
-
-
-            //}
-
-            ////合并Mesh;
+            //合并Mesh;
             //MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
 
             //CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
-            //for (int i = 0; i < meshFilters.Length; i++)
+            //for (int k = 0; k < meshFilters.Length; k++)
             //{
-            //    combine[i].mesh = meshFilters[i].sharedMesh;
-            //    combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-            //    meshFilters[i].gameObject.SetActive(false);
+            //    combine[k].mesh = meshFilters[k].sharedMesh;
+            //    combine[k].transform = meshFilters[k].transform.localToWorldMatrix;
+            //    meshFilters[k].gameObject.SetActive(false);
             //}
 
             //MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
             //MeshFilter mf = gameObject.AddComponent<MeshFilter>();
             //mf.mesh = new Mesh();
-            //mf.mesh.CombineMeshes(combine, false);
+            //mf.mesh.CombineMeshes(combine.ToArray(), false);
             //gameObject.SetActive(true);
-            //mr.sharedMaterials = mats;
+            //mr.sharedMaterials = mats.ToArray();
         }
     }
 }
