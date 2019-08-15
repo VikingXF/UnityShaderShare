@@ -8,7 +8,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace CombineMesh
+namespace CombineMeshSpace
 {
     public class CombineSkinnedMesh : MonoBehaviour
     {
