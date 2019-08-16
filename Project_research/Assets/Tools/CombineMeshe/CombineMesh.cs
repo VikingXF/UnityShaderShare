@@ -1,6 +1,8 @@
 //=======================================================
 // 作者：xuefei
-// 描述：
+// 描述：Mesh 合并
+// 1.实现多个Mesh合并为一个Mesh的多维材质 ==》CombineBasicMesh()
+// 2.实现多个Mesh合并，贴图合并，材质合并为一个
 //=======================================================
 using UnityEngine;
 using System.Collections;
@@ -10,48 +12,62 @@ namespace CombineMeshSpace
 {
     public class CombineMesh : MonoBehaviour
     {
+       
         void Start()
+        {
+
+            CombineBasicMesh();
+
+        }
+
+        //合并共享材质
+        void CombineBasicMesh()
         {
             MeshRenderer[] meshRenders = GetComponentsInChildren<MeshRenderer>();
             List<Material> mats = new List<Material>();
-          
-            for (int i = 0; i < meshRenders.Length; i++)
-            {
-
-                for (int j = 0; j < meshRenders[i].sharedMaterials.Length; j++)
-                {
-                    if (mats.Contains(meshRenders[i].sharedMaterials[j]))
-                    {
-                        continue;
-                    }
-                    mats.Add(meshRenders[i].sharedMaterials[j]);                                     
-                   
-                }
-
-            }
-
             MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
             List<CombineInstance> combine = new List<CombineInstance>();
+            GameObject go = new GameObject();
 
+            for (int i = 0; i < meshRenders.Length; i++)
+            {
+                for (int j = 0; j < meshRenders[i].sharedMaterials.Length; j++)
+                {
+                    CombineInstance com = new CombineInstance();
+                    com.mesh = meshFilters[i].mesh;
+                    com.subMeshIndex = j;
+                    com.transform = meshFilters[i].transform.localToWorldMatrix;
 
-            //合并Mesh;
-            //MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+                    //判断相同材质公用
+                    if (mats.Contains(meshRenders[i].sharedMaterials[j]))
+                    {
+                        var t = mats.IndexOf(meshRenders[i].sharedMaterials[j]);
 
-            //CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+                        CombineInstance[] comM = new CombineInstance[2] { combine.ToArray()[t], com };
+                        Mesh mm = new Mesh();
+                        mm.CombineMeshes(comM, true);
 
-            //for (int k = 0; k < meshFilters.Length; k++)
-            //{
-            //    combine[k].mesh = meshFilters[k].sharedMesh;
-            //    combine[k].transform = meshFilters[k].transform.localToWorldMatrix;
-            //    meshFilters[k].gameObject.SetActive(false);
-            //}
+                        CombineInstance comcom = new CombineInstance();
+                        comcom.mesh = mm;                        
+                        comcom.transform = go.transform.localToWorldMatrix;
+                        combine[t] = comcom;
 
-            //MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
-            //MeshFilter mf = gameObject.AddComponent<MeshFilter>();
-            //mf.mesh = new Mesh();
-            //mf.mesh.CombineMeshes(combine.ToArray(), false);
-            //gameObject.SetActive(true);
-            //mr.sharedMaterials = mats.ToArray();
+                        continue;
+                    }
+
+                    combine.Add(com);
+                    mats.Add(meshRenders[i].sharedMaterials[j]);
+                }
+                meshFilters[i].gameObject.SetActive(false);
+            }
+
+            MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
+            MeshFilter mf = gameObject.AddComponent<MeshFilter>();
+            mf.mesh = new Mesh();
+            mf.mesh.CombineMeshes(combine.ToArray(), false);
+            gameObject.SetActive(true);
+            mr.sharedMaterials = mats.ToArray();
+            Destroy(go);
         }
     }
 }
