@@ -97,7 +97,7 @@ namespace CombineMeshSpace
             MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
             MeshFilter mf = gameObject.AddComponent<MeshFilter>();
             mf.mesh = new Mesh();
-            mf.mesh.CombineMeshes(combine.ToArray(), false);
+            mf.mesh.CombineMeshes(combine.ToArray(), true);
             gameObject.SetActive(true);
             mr.sharedMaterials = mats.ToArray();
 
