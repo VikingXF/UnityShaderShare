@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Babybus_Light_LightColor
+  m_Name: Babybus_Light_LightColor 1
   m_Shader: {fileID: 4800000, guid: 6ccdb7781c06da64bbb6061b93c83727, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -22,4 +22,4 @@ Material:
     m_Floats:
     - _ZTest: 5
     m_Colors:
-    - _Color: {r: 1, g: 0.9333334, b: 0, a: 0.35686275}
+    - _Color: {r: 1, g: 0.9333334, b: 0, a: 0.09803922}
