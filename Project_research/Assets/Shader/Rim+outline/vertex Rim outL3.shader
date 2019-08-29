@@ -13,14 +13,16 @@ Shader "Babybus/Rim/vertex Rim outL3" {
 		_OutlineColor ("Outline Color", Color) = (0,0,0,0)
 		_Outline("Outline", Range(0, .2)) = .01
 		_Factor("Factor", Range(0,1)) = .5
-		//Z Offset
+		//Z Offset		
 		_Offset1 ("Z Offset 1", Float) = 0
-		_Offset2 ("Z Offset 2", Float) = 0		
+		_Offset2 ("Z Offset 2", Float) = 0	
+		_Offset3 ("Z Offset 3", Float) = 0
+		_Offset4 ("Z Offset 4", Float) = 0		
     }
     SubShader {
 	    Pass {
 			Cull Back
-			//Offset 10, 10
+			Offset [_Offset3],[_Offset4]
 			ZWrite On
        		Lighting Off
 			Blend SrcAlpha OneMinusSrcAlpha
@@ -110,17 +112,17 @@ Shader "Babybus/Rim/vertex Rim outL3" {
 			v2f vert(appdata_base v)
 			{
 				v2f o;
-				o.pos = UnityObjectToClipPos(v.vertex);
+				float4 pos = mul(UNITY_MATRIX_MV, v.vertex);
 				
 				#if _OUTL_ON
-				float3 dir = normalize(v.vertex.xyz);
-				float3 dir2 = normalize(v.normal);
-				dir = lerp(dir, dir2,_Factor);
-				dir = mul((float3x3)UNITY_MATRIX_IT_MV, dir);	
-				float2 offset = TransformViewToProjection(dir.xy);
-				offset = normalize(offset);
-				o.pos.xy += offset * o.pos.z * _Outline;				
-                #endif
+				float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);
+				normal.z = -0.5;
+				float3 dir = mul((float3x3)UNITY_MATRIX_IT_MV, v.vertex);
+				dir = lerp(dir, normal, _Factor);
+
+				pos = pos + float4(normalize(dir), 0)*_Outline;
+				#endif
+				o.pos = mul(UNITY_MATRIX_P, pos);
 				
 				return o;
 			}
