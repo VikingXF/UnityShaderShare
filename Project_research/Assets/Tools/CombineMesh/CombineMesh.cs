@@ -3,6 +3,7 @@
 // 描述：Mesh 合并
 // 1.实现多个Mesh合并为一个Mesh的多维材质 ==》CombineBasicMesh()
 // 2.实现多个Mesh合并，贴图合并，材质合并为一个  ==》CombineMeshTexture()
+// 3.实现多个SkinnedMesh合并为一个SkinnedMesh的多维材质  ==》CombineBasicSkinnedMesh()
 //=======================================================
 using UnityEngine;
 using System.Collections;
@@ -213,6 +214,159 @@ namespace CombineMeshSpace
             saveTextures = true;
 
             Save(go);
+        }
+
+        //3.实现多个SkinnedMesh合并为一个SkinnedMesh的多维材质
+
+
+        public static int VERTEX_NUMBER; //所有顶点数
+        public static int BONE_NUMBER;     //bones总数
+
+        public void CombineBasicSkinnedMesh()
+        {
+ 
+            SkinnedMeshRenderer[] skinmeshRenders = GetComponentsInChildren<SkinnedMeshRenderer>();
+            List<Material> mats = new List<Material>();
+            List<CombineInstance> combine = new List<CombineInstance>();
+
+
+            Transform[] totalBones = new Transform[BONE_NUMBER];
+            Matrix4x4[] totalBindPoses = new Matrix4x4[BONE_NUMBER];
+            BoneWeight[] totalBoneWeight = new BoneWeight[VERTEX_NUMBER];
+            int offset = 0;
+            int b_offset = 0;
+            Transform[] usedBones = new Transform[totalBones.Length];
+            Hashtable boneHash = new Hashtable();
+
+            GameObject go = new GameObject();
+            go.name = CombineName;
+
+            for (int i = 0; i < skinmeshRenders.Length; i++)
+            {
+                for (int j = 0; j < skinmeshRenders[i].sharedMaterials.Length; j++)
+                {
+                    CombineInstance com = new CombineInstance();
+                    com.mesh = skinmeshRenders[i].sharedMesh;
+                    com.subMeshIndex = j;
+                    com.transform = skinmeshRenders[i].transform.localToWorldMatrix;
+
+                    //判断相同材质公用
+                    if (mats.Contains(skinmeshRenders[i].sharedMaterials[j]))
+                    {
+                        var t = mats.IndexOf(skinmeshRenders[i].sharedMaterials[j]);
+
+                        CombineInstance[] comM = new CombineInstance[2] { combine.ToArray()[t], com };
+                        Mesh mm = new Mesh();
+                        mm.CombineMeshes(comM, true);
+
+                        CombineInstance comcom = new CombineInstance();
+                        comcom.mesh = mm;
+                        comcom.transform = go.transform.localToWorldMatrix;
+                        combine[t] = comcom;
+
+                        continue;
+                    }
+
+                    combine.Add(com);
+                    
+                    //拷贝Bones
+                    for (int x = 0; x < skinmeshRenders[i].bones.Length; x++)
+                    {
+
+                        bool flag = false;
+                        for (int kk = 0; kk < totalBones.Length; kk++)
+                        {
+                            if (usedBones[kk] != null)
+                                //如果bone已经插入
+                                if ((skinmeshRenders[i].bones[x] == usedBones[kk]))
+                                {
+                                    flag = true;
+                                    break;
+                                }
+                        }
+
+                        //If Bone is New ...
+                        if (!flag)
+                        {
+                            //Debug.Log("Inserted bone:"+smrenderer.bones[x].name);
+                            for (int f = 0; f < totalBones.Length; f++)
+                            {
+                                //在第一free position插入bone
+                                if (usedBones[f] == null)
+                                {
+                                    usedBones[f] = skinmeshRenders[i].bones[x];
+                                    break;
+                                }
+                            }
+                            //在totalBones中插入bones
+                            totalBones[offset] = skinmeshRenders[i].bones[x];
+                            //HashTable参考
+                            boneHash.Add(skinmeshRenders[i].bones[x].name, offset);
+
+                            //重新计算BindPoses
+                            //totalBindPoses[offset] = smrenderer.sharedMesh.bindposes[x] ;						
+                            totalBindPoses[offset] = skinmeshRenders[i].bones[x].worldToLocalMatrix * transform.localToWorldMatrix;
+                            offset++;
+                        }
+                    }
+
+                    //重新计算BoneWeights
+                    for (int x = 0; x < skinmeshRenders[i].sharedMesh.boneWeights.Length; x++)
+                    {
+                        //只是复制和更改骨骼索引 !!						
+                        totalBoneWeight[b_offset] = recalculateIndexes(skinmeshRenders[i].sharedMesh.boneWeights[x], boneHash, skinmeshRenders[i].bones);
+                        b_offset++;
+                    }
+
+
+                    Debug.Log(skinmeshRenders[i].name+ ":"+skinmeshRenders[i].bones.Length);
+                   
+
+                    mats.Add(skinmeshRenders[i].sharedMaterials[j]);
+                }
+
+                skinmeshRenders[i].gameObject.SetActive(false);
+            }
+
+            SkinnedMeshRenderer mr = go.AddComponent<SkinnedMeshRenderer>();
+
+            mr.sharedMesh = new Mesh();
+            mr.sharedMesh.name = CombineName;
+            mr.sharedMesh.CombineMeshes(combine.ToArray(), false);
+            gameObject.SetActive(true);
+            mr.sharedMaterials = mats.ToArray();
+
+            //设置Bindposes
+            mr.sharedMesh.bindposes = totalBindPoses;
+
+            // 设置BoneWeights
+            mr.sharedMesh.boneWeights = totalBoneWeight;
+
+            //设置bones
+            mr.bones = totalBones;
+
+            mr.sharedMesh.RecalculateNormals();
+            mr.sharedMesh.RecalculateBounds();
+
+            go.transform.parent = gameObject.transform;
+
+            //savePrefabs = true;
+            //saveMesh = true;
+            //saveMaterials = false;
+            //saveTextures = false;
+            //Save(go);
+            //Destroy(go);
+        }
+
+        //为新骨头设置索引
+        static BoneWeight recalculateIndexes(BoneWeight bw, Hashtable boneHash, Transform[] meshBones)
+        {
+            BoneWeight retBw = bw;
+            retBw.boneIndex0 = (int)boneHash[meshBones[bw.boneIndex0].name];
+            retBw.boneIndex1 = (int)boneHash[meshBones[bw.boneIndex1].name];
+            retBw.boneIndex2 = (int)boneHash[meshBones[bw.boneIndex2].name];
+            retBw.boneIndex3 = (int)boneHash[meshBones[bw.boneIndex3].name];
+            return retBw;
         }
 
 

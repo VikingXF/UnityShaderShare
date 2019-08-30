@@ -12,8 +12,8 @@ namespace CombineMeshSpace
         private enum CombineMode
         {
             CombineBasicMesh,
-            CombineMeshTexture
-
+            CombineMeshTexture,
+            CombineBasicSkinnedMesh
         }
         //private bool savebool =false;
         private CombineMode CombineMeshtype ;
@@ -58,6 +58,11 @@ namespace CombineMeshSpace
                 {
                     combinemesh.CombineMeshTexture();
                    
+                }
+                if (CombineMeshtype == CombineMode.CombineBasicSkinnedMesh)
+                {
+                    combinemesh.CombineBasicSkinnedMesh();
+
                 }
             }
 
