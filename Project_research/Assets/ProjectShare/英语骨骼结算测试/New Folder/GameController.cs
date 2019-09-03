@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
     void Start () {
 
         if (!is_CombineMeshes)
-        {         
+        {
             GameObject player = Instantiate(m_player);
             return;
         }
@@ -27,13 +27,12 @@ public class GameController : MonoBehaviour {
 
         SkinnedMeshRenderer[] skinnedMeshs = playerClone.GetComponentsInChildren<SkinnedMeshRenderer>();
         Transform[] transforms = playerClone.GetComponentsInChildren<Transform>();
-       
+
         for(int num=0; num < skinnedMeshs.Length; num++)
         {
             SkinnedMeshRenderer temp = skinnedMeshs[num];
             if (material == null)
-            {
-                //返回分配给渲染器的第一个材质
+            {//返回分配给渲染器的第一个材质
                 material = temp.sharedMaterial;
             }
 
