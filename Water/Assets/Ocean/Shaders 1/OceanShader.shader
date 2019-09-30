@@ -101,8 +101,6 @@
             uniform float   ot_DeepWaterIntensityHorizon;
             uniform float   ot_DeepWaterIntensityDark;
 
-
-
             struct VertOutput
             {
                 float4 position : SV_POSITION;
