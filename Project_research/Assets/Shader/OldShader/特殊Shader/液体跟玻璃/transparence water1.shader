@@ -23,6 +23,7 @@ Shader "Babybus/Water/transparence water1"
         _FresnelColor ("FresnelColor", Color) = (0.5,0.5,0.5,1)
         _remap1_oMax ("remap1_oMax", Range(0, 30)) = 11.16234   //振幅1
         _remap2_oMax ("remap2_oMax", Range(0, 30)) = 6.8  //振幅2
+		_Scale("Scale", Float) = 900  //振幅2
 	}
 	SubShader
 	{
@@ -64,7 +65,7 @@ Shader "Babybus/Water/transparence water1"
             float4 _FresnelColor;
             float _remap1_oMax;
             float _remap2_oMax,_Speed;
-			
+			float _Scale;
 			v2f vert (appdata v)
 			{
 				v2f o;
@@ -86,7 +87,7 @@ Shader "Babybus/Water/transparence water1"
 				float rim = 1.0 - saturate(dot(normalize(i.normalDir), viewDirection)); 
 				float3 rimColor = _FresnelColor.rgb * pow (rim, _Fresnel); 
 							
-				clip((saturate(objPos.g-i.posWorld.g+_high+0.5)+(_amplitude*(sin(i.uv0.r * _remap1_oMax+_Time.y*_Speed)
+				clip((saturate((objPos.g-i.posWorld.g)/_Scale+_high+0.5)+(_amplitude*(sin(i.uv0.r * _remap1_oMax+_Time.y*_Speed)
 				+sin( i.uv0.r  * _remap2_oMax +_Time.y*_Speed)))) - 0.5);
 				
 				float4 Color = _Color;
@@ -127,6 +128,7 @@ Shader "Babybus/Water/transparence water1"
             float _remap1_oMax;
             float _remap2_oMax;
 			float _Intensity,_Speed;
+			float _Scale;
 			v2f vert (appdata v)
 			{
 				v2f o;
@@ -143,7 +145,7 @@ Shader "Babybus/Water/transparence water1"
 			fixed4 frag (v2f i) : SV_Target
 			{
 				float4 objPos = mul ( unity_ObjectToWorld, float4(0,0,0,1) );              							              		
-				clip((saturate(objPos.g-i.posWorld.g+_high+0.5)+(_amplitude*(sin(i.uv0.r * _remap1_oMax+_Time.y*_Speed)
+				clip((saturate((objPos.g-i.posWorld.g)/_Scale+_high+0.5)+(_amplitude*(sin(i.uv0.r * _remap1_oMax+_Time.y*_Speed)
 				+sin( i.uv0.r  * _remap2_oMax +_Time.y*_Speed)))) - 0.5);
 				float4 Color = _Color;
 				Color.rgb +=_Intensity;

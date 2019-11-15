@@ -61,9 +61,9 @@ Shader "Babybus/Unlit/matcap Rim"
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				
 				half2 capCoord;
-                capCoord.x = dot(UNITY_MATRIX_IT_MV[0].xyz,v.normal);
-                capCoord.y = dot(UNITY_MATRIX_IT_MV[1].xyz,v.normal);
-                o.cap = capCoord * 0.5 + 0.5;
+                float3 worldNorm = normalize(unity_WorldToObject[0].xyz * v.normal.x + unity_WorldToObject[1].xyz * v.normal.y + unity_WorldToObject[2].xyz * v.normal.z);
+				worldNorm = mul((float3x3)UNITY_MATRIX_V, worldNorm);
+				o.cap.xy = worldNorm.xy * 0.5 + 0.5;
 				
 				
 				return o;
