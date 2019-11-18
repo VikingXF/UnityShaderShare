@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 1
-  m_Shader: {fileID: 4800000, guid: 43ebadb05c684c7459311a94c43ceb63, type: 3}
-  m_ShaderKeywords: _STEPS_FIRST
+  m_Shader: {fileID: 4800000, guid: dfdd7f3618f53034db31c380e677d964, type: 3}
+  m_ShaderKeywords: _STEPS_THIRD
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -25,6 +25,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Decals:
+        m_Texture: {fileID: 8400000, guid: 048ec3afca6f00e4cabdf82cc443e156, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -48,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FlowerTex:
-        m_Texture: {fileID: 2800000, guid: eca21910b4527f6429545733a2cb49cd, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3c8d270416470cf4d9b40cdac906732f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LerpTex:
@@ -60,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: eca21910b4527f6429545733a2cb49cd, type: 3}
+        m_Texture: {fileID: 2800000, guid: a888539376064e744a86c7bd6bc876a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -88,11 +92,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
-        m_Texture: {fileID: 2800000, guid: 23a99b54c27fc6e438b151f9670ca320, type: 3}
+        m_Texture: {fileID: 2800000, guid: 355426bb6fa4cc74499843f79369b0fd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SmoothTex:
-        m_Texture: {fileID: 2800000, guid: 3fb07c93a9fad56459bc013370965b2a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8f0d1d51c03ef0f4d9beaf2c24bccdd0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _highlights:
@@ -118,7 +122,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Steps: 0
+    - _Steps: 2
     - _Switch: 1
     - _UVSec: 0
     - _ZWrite: 1
@@ -126,5 +130,5 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FirstColor: {r: 0.54509807, g: 0.2509804, b: 0.227451, a: 1}
-    - _FlowerColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+    - _FlowerColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
     - _ShadowColor: {r: 0.9960785, g: 0.7843138, b: 0.6745098, a: 0.44705883}
