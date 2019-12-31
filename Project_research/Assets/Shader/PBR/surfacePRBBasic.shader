@@ -1,6 +1,6 @@
-﻿Shader "Unlit/surfacePRB"
+﻿Shader "Unlit/surfacePRBBasic"
 {
- Properties {
+	Properties {
 
 	//[Header(SURFACE PROPERTICE)]这个表示分类，里面不可以有中文
 
@@ -259,5 +259,4 @@
 	}
 
 	FallBack "Diffuse"
-
 }
