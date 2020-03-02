@@ -14,7 +14,7 @@ Shader "Babybus/Special/Shutters"
 		
 		_Dissolution_Tex ("Dissolution_Tex", 2D) = "white" {}
 		[KeywordEnum(First,Second,Third)]_Style("样式" , Float) = 0
-		_Dissolution("变化",Range(0,1)) = 1
+		_Dissolution("变化",Range(0,1)) = 0
 		
 		_line("百叶窗行数",float ) = 5
 		_Column("百叶窗列数",float ) = 5
@@ -72,10 +72,10 @@ Shader "Babybus/Special/Shutters"
 				fixed4 col = tex2D(_MainTex, i.uv);	
 				
 				#if _STYLE_FIRST
-				col.a = step( i.uv.x % (1/_Column) ,_Dissolution/_Column);
+				col.a = 1-step( i.uv.x % (1/_Column) ,_Dissolution/_Column);
 				
 				#elif _STYLE_SECOND
-				col.a = step( i.uv.y % (1/_line) ,_Dissolution/_line);
+				col.a = 1-step( i.uv.y % (1/_line) ,_Dissolution/_line);
 				
 				#elif _STYLE_THIRD
 				
