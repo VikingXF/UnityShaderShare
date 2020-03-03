@@ -72,16 +72,16 @@ Shader "Babybus/Special/Shutters"
 				fixed4 col = tex2D(_MainTex, i.uv);	
 				
 				#if _STYLE_FIRST
-				col.a = 1-step( i.uv.x % (1/_Column) ,_Dissolution/_Column);
+				col.a -= 1-step( i.uv.x % (1/_Column) ,_Dissolution/_Column);
 				
 				#elif _STYLE_SECOND
-				col.a = 1-step( i.uv.y % (1/_line) ,_Dissolution/_line);
+				col.a -= 1-step( i.uv.y % (1/_line) ,_Dissolution/_line);
 				
 				#elif _STYLE_THIRD
 				
 				fixed4 Discol = tex2D(_Dissolution_Tex, i.uv*float2(_line,_Column));	
 				float Dis = (_Dissolution*-2.0+1.5);
-                col.a = step(Discol.r,Dis)+step(Discol.g,Dis);
+                col.a -= step(Discol.r,Dis)+step(Discol.g,Dis);
 
 				//float2 ce1= i.uv*2 -1;
 				//float2 ce2= (1-i.uv)*2 -1;
