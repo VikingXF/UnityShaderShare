@@ -15,7 +15,7 @@ public class FBXExporterUI : EditorWindow
     private bool nameSetByUser = false;
 	#endregion
 
-	[ MenuItem( "导出FBX/FBX Exporter" ) ]
+	[ MenuItem( "Tools/导出FBX/FBX Exporter" ) ]
 	public static void ShowWindow()
 	{
         FBXExporterUI window = (FBXExporterUI)EditorWindow.GetWindow( typeof( FBXExporterUI ), false, "FBX Exporter");
@@ -24,7 +24,7 @@ public class FBXExporterUI : EditorWindow
 
 	void OnEnable()
 	{
-        pathForFBX = "Assets/导出FBX/models/"+fbxName+".fbx";
+        pathForFBX = "Assets/Tools/导出FBX/models/"+fbxName+".fbx";
         nameSetByUser = false;
 	}
 	
@@ -89,7 +89,7 @@ public class FBXExporterUI : EditorWindow
              if(actualObjects.Length>0)
                     fbxName = actualObjects[0].name;
         }
-        pathForFBX = "Assets/导出FBX/models/"+fbxName+".fbx";
+        pathForFBX = "Assets/Tools/导出FBX/models/"+fbxName+".fbx";
     }
 
 	private string GetFilePath()
