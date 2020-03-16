@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Unlit_FlipBook
-  m_Shader: {fileID: 4800000, guid: 968d6b7ad8ab8e547bf5ebd69f76cc49, type: 3}
+  m_Shader: {fileID: 4800000, guid: db2ae730467348243a17b83be6ca3f16, type: 3}
   m_ShaderKeywords: _DIRECTION_TURNLEFT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,15 +20,16 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainPage1:
-        m_Texture: {fileID: 2800000, guid: fa5bb3f7d203689419ada816ab78e3c0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3c02a21694825cc42b6ad37781189a49, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainPage2:
-        m_Texture: {fileID: 2800000, guid: fa5bb3f7d203689419ada816ab78e3c0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 47e811f3f7f84214eb306976f485c9a8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _CurPageAngle: 0.256
+    - _Cutoff: 0.32
     - _Direction: 0
     - _PageAngle: 0
     m_Colors: []

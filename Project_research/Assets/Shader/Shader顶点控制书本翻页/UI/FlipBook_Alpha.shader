@@ -1,18 +1,23 @@
-﻿Shader "Babybus/Special/FlipBook"
+﻿Shader "Babybus/Special/FlipBook_Alpha"
 {
 	Properties
 	{
 		_MainPage1 ("Page1", 2D) = "white" {}
 		_MainPage2 ("Page2", 2D) = "white" {}
-		_PageAngle ("CurPageAngle", Range(0,1)) = 0 
+		_PageAngle ("CurPageAngle", Range(0,1)) = 0
 		[KeywordEnum(TurnLeft,TurnRight)]_Direction("Direction" , Float) = 0	
+		_Cutoff ("Base Alpha cutoff", Range (0,0.98)) = .5
 	}
 
 	SubShader
 	{
-			
-		Tags { "RenderType"="Opaque" }
+		Tags {"Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="TransparentCutout"}
+    
+		 //Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		LOD 100
+
+		//ZWrite Off
+		//Blend SrcAlpha OneMinusSrcAlpha
 
 		CGINCLUDE
 
@@ -27,7 +32,7 @@
 		float4 _MainPage2_ST;
 
 		float _PageAngle;
-
+		float _Cutoff;
 		struct appdata
 		{
 			float4 vertex : POSITION;
@@ -45,6 +50,8 @@
 		float4 flip_book(float4 vertex)
 		{
 			float4 temp = vertex;
+
+			
 
 			#if _DIRECTION_TURNLEFT
 			float theta = _PageAngle * pi;
@@ -92,6 +99,7 @@
 		{
 			fixed4 col = tex2D(_MainPage1, i.uv);
 			//UNITY_APPLY_FOG(i.fogCoord, col);
+			clip(col.a - _Cutoff);
 			return col;
 		}
 
@@ -99,6 +107,7 @@
 		{
 			i.uv.x = 1 - i.uv.x;
 			fixed4 col = tex2D(_MainPage2, i.uv);
+			clip(col.a - _Cutoff);
 			return col;
 		}
 
@@ -109,6 +118,7 @@
 		//第一页
 		Pass
 		{
+			
 			Cull Back
 
 			CGPROGRAM
