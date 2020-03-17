@@ -636,7 +636,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1796821865}
-        m_MethodName: Rightflip
+        m_MethodName: RButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -822,7 +822,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -450, y: 9}
+  m_AnchoredPosition: {x: -449, y: 9}
   m_SizeDelta: {x: 108, y: 169}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1036142604
@@ -901,7 +901,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1796821865}
-        m_MethodName: Leftflip
+        m_MethodName: LButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1307,7 +1307,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3c02a21694825cc42b6ad37781189a49, type: 3}
   - {fileID: 2800000, guid: 47e811f3f7f84214eb306976f485c9a8, type: 3}
   - {fileID: 2800000, guid: dddc663e8b1f887479eecaf62f76b662, type: 3}
-  speed: 0.5
+  speed: 1
 --- !u!4 &2134811238 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400018, guid: 0ae7a8b77422a8445a60d9c21bbf31b2,
