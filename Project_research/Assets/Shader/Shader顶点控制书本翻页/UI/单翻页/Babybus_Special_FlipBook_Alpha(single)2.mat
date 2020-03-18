@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Babybus_Special_FlipBook_Alpha(single)
-  m_Shader: {fileID: 4800000, guid: f081d0f0c15896549a361cc8062a86e9, type: 3}
+  m_Name: Babybus_Special_FlipBook_Alpha(single)2
+  m_Shader: {fileID: 4800000, guid: 16bc188612b6335428d870cfc56584cf, type: 3}
   m_ShaderKeywords: _DIRECTION_TURNLEFT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,13 +20,21 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainPage1:
+        m_Texture: {fileID: 2800000, guid: 85ca08975f9603a4aacc36cdad5fb167, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: -0.0025, y: 0}
+    - _MainPage2:
         m_Texture: {fileID: 2800000, guid: 143ff65e41ef5424fa2b5b8f6cd10023, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainPage2:
+        m_Offset: {x: 0.0025, y: 0}
+    - _MainPage3:
         m_Texture: {fileID: 2800000, guid: 6b361c41b27ad9d488ba21e62e390d14, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: -0.0025, y: 0}
+    - _MainPage4:
+        m_Texture: {fileID: 2800000, guid: 1634cc3ab81b64f459cc42e9e6ad6721, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0.0025, y: 0}
     m_Floats:
     - _Cutoff: 0.5
     - _Direction: 0

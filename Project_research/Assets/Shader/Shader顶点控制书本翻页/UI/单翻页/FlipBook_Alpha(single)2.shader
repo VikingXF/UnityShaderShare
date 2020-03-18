@@ -1,9 +1,11 @@
-﻿Shader "Babybus/Special/FlipBook_Alpha(single)"
+﻿Shader "Babybus/Special/FlipBook_Alpha(single)2"
 {
 	Properties
 	{
 		_MainPage1 ("Page1", 2D) = "white" {}
 		_MainPage2 ("Page2", 2D) = "white" {}
+		_MainPage3 ("Page3", 2D) = "white" {}
+		_MainPage4 ("Page4", 2D) = "white" {}
 		_PageAngle ("CurPageAngle", Range(0,1)) = 0
 		[KeywordEnum(TurnLeft,TurnRight)]_Direction("Direction" , Float) = 0	
 		_Cutoff ("Base Alpha cutoff", Range (0,0.98)) = .5
@@ -30,7 +32,13 @@
 
 		sampler2D _MainPage2;
 		float4 _MainPage2_ST;
-
+		
+		sampler2D _MainPage3;
+		float4 _MainPage3_ST;
+		
+		sampler2D _MainPage4;
+		float4 _MainPage4_ST;
+		
 		float _PageAngle;
 		float _Cutoff;
 		struct appdata
@@ -51,19 +59,21 @@
 		{
 			float4 temp = vertex;
 
+			
+
 			#if _DIRECTION_TURNLEFT
 			float theta = _PageAngle * pi;
-			float flipCurve = exp(-0.01 * pow(vertex.x + 0.5, 2)) * _PageAngle;
+			float flipCurve = exp(-0.1 * pow(vertex.x - 0.5, 2)) * _PageAngle;
 			theta += flipCurve;
 			
 			#elif _DIRECTION_TURNRIGHT
-			float theta = (1-_PageAngle) * pi;
-			float flipCurve = exp(-0.01 * pow(vertex.x + 0.5, 2)) * _PageAngle;
+			float theta = abs(1-_PageAngle) * pi;
+			float flipCurve = exp(-0.1 * pow(vertex.x - 0.5, 2)) * _PageAngle;
 			theta -= flipCurve;
 			#endif
 
-			temp.x = -vertex.x * cos(clamp(theta, 0, pi));
-			temp.y = -vertex.x * sin(clamp(theta, 0, pi));
+			temp.x = vertex.x * cos(clamp(theta, 0, pi));
+			temp.y = vertex.x * sin(clamp(theta, 0, pi));
 
 			vertex = temp;
 
@@ -73,19 +83,32 @@
 		v2f vert_flip (appdata v)
 		{
 			v2f o;
-			o.uv = TRANSFORM_TEX(v.uv, _MainPage1);
-			o.uv.xy = 1 - o.uv.xy;			
-			float4 vertex = flip_book(v.vertex);
+			o.uv =v.uv;
+			o.uv.xy = 1 - o.uv.xy;
+
+			float4 vertex = o.uv.x <= 0.5 ? v.vertex : flip_book(v.vertex);
 			o.vertex = UnityObjectToClipPos(vertex);
 
 			return o;
 		}
 
+		v2f vert_next_page(appdata v)
+		{
+		    v2f o;
+		    o.uv =v.uv;
+		    o.uv.y = 1 - o.uv.y;
 
+			o.vertex = UnityObjectToClipPos(v.vertex);
+
+		    return o;
+		}
 		
 		fixed4 frag_flip (v2f i) : SV_Target
 		{
-			fixed4 col = tex2D(_MainPage2, i.uv);
+			fixed4 col = tex2D(_MainPage1, i.uv*float2(2,1)*_MainPage1_ST.xy+ _MainPage1_ST.zw);
+		    fixed4 col2 = tex2D(_MainPage2, i.uv*float2(2,1)*_MainPage2_ST.xy -float2(1,0)+_MainPage2_ST.zw);
+			col = lerp(col, col2, 1-col.a);
+
 			//UNITY_APPLY_FOG(i.fogCoord, col);
 			clip(col.a - _Cutoff);
 			return col;
@@ -94,7 +117,11 @@
 		fixed4 frag_flip_back (v2f i) : SV_Target
 		{
 			i.uv.x = 1 - i.uv.x;
-			fixed4 col = tex2D(_MainPage1, i.uv);
+			
+			fixed4 col = tex2D(_MainPage3, i.uv*float2(2,1)*_MainPage3_ST.xy + _MainPage3_ST.zw);
+			fixed4 col4 = tex2D(_MainPage4, i.uv*float2(2, 1)*_MainPage4_ST.xy - float2(1, 0) + _MainPage4_ST.zw);
+			col = lerp(col, col4, 1 - col.a);
+
 			clip(col.a - _Cutoff);
 			return col;
 		}
@@ -102,7 +129,7 @@
 		ENDCG
 
 
-		//用2个pass来实现翻书的效果
+		//用3个pass来实现翻书的效果
 		//第一页
 		Pass
 		{
@@ -128,7 +155,19 @@
 			ENDCG
 		}
 
-		
+		//第二页
+		Pass
+		{
+			Cull Back
+			Offset 1, 1
+
+			CGPROGRAM
+
+			#pragma vertex vert_next_page
+			#pragma fragment frag_flip_back
+
+			ENDCG
+		}
 
 	}
 }
