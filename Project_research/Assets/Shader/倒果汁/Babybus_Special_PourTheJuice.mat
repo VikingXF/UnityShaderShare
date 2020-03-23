@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Babybus_Special_PourTheJuice
+  m_Shader: {fileID: 4800000, guid: e39da4ff9e782d04497910c75b29230f, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 6b693d24103cfa845a6b8769f541e625, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCap:
+        m_Texture: {fileID: 2800000, guid: 94604f71c53416f489488b4b3f8a0972, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _ShadowAmount: 1
+    - _TimeScale: 5
+    - _amplitude: 0.003
+    - _offsetScale: 35.95
+    - _remap: 23.8
+    m_Colors:
+    - _Color1: {r: 0.81960785, g: 0.44457057, b: 0.26666662, a: 1}
+    - _Color2: {r: 0.8862745, g: 0.23921566, b: 0.66191286, a: 1}
+    - _Maincol: {r: 1, g: 1, b: 1, a: 1}
+    - _StartPoint: {r: 0, g: 0, b: 0, a: 0}
