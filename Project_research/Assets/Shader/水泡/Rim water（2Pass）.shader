@@ -1,4 +1,4 @@
-﻿Shader "Babybus/Particles/Rim water"
+﻿Shader "Babybus/Particles/Rim water（2Pass）"
 {
     Properties
     {
@@ -7,7 +7,7 @@
 		_MaskTex("Pass2MaskTex", 2D) = "white" {}
 		_Alpha("Base Alpha", Range(0,1)) = 1
 		_Watertime("水流速度", float) = 1
-
+		//_offsetScale("波偏移", float) = 1
 		_TimeScale("波速", float) = 1
 		_remap("振幅", Range(0, 100)) = 6.8  //振幅
 		_amplitude("振幅强度", Range(0, 10)) = 0   //振幅强度
@@ -30,7 +30,7 @@
 			float _RimPower, _RimIntensity;
 			float _Alpha;
 			half _TimeScale, _remap, _amplitude, _Watertime;
-
+			//half _offsetScale;
 			struct appdata_t
 			{
 				float4 vertex : POSITION;
@@ -68,6 +68,14 @@
 				return o;
 			};
 
+			v2f vertbase(appdata_t v)
+			{
+				v2f o;
+				o.vertex = UnityObjectToClipPos(v.vertex*0.8);
+				o.uv.xy = TRANSFORM_TEX(v.texcoord, _MainTex);
+				return o;
+			};
+
 			fixed4 fragRim(v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex2,i.uv.xy);
@@ -81,8 +89,28 @@
 				return col;
 			};
 
+			fixed4 fragbase(v2f i) : SV_Target
+			{
+
+				fixed4 col = tex2D(_MainTex, i.uv.xy);
+				col.a *= _Alpha;
+				return col;
+			}
 
 		ENDCG
+        Pass
+        {
+			//cull back
+			ZWrite Off
+			Blend SrcAlpha OneMinusSrcAlpha
+			//Blend One One
+			//Blend DstColor SrcColor
+			//Blend OneMinusDstColor One
+            CGPROGRAM
+            #pragma vertex vertbase
+            #pragma fragment fragbase       
+            ENDCG
+        }
 
 		Pass
         {

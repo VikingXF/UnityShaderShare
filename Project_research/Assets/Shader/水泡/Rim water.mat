@@ -36,6 +36,7 @@ Material:
     - _RimIntensity: 2.6
     - _RimPower: 1.02
     - _TimeScale: 2
+    - _Watertime: -1
     - _amplitude: 0.05
     - _offsetScale: 1
     - _remap: 8
