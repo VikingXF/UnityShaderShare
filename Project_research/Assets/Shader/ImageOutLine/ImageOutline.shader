@@ -62,8 +62,8 @@ SubShader {
 
 				#if _SMOOTH_LEVEL0
 
-				float4 uv01 = i.uv.xyxy + float4(0, _OutL, 0, -_OutL);
-				float4 uv10 = i.uv.xyxy + float4(_OutL, 0, -_OutL, 0);
+				float4 uv01 = i.uv.xyxy + float4(0, 1, 0, -1)*_OutL;
+				float4 uv10 = i.uv.xyxy + float4(1, 0, -1, 0)*_OutL;
 				c += tex2D(_MainTex, uv01.xy);
 				c += tex2D(_MainTex, uv01.zw);
 				c += tex2D(_MainTex, uv10.xy);
@@ -71,11 +71,11 @@ SubShader {
 
 				#elif _SMOOTH_LEVEL1
 
-				float4 uv01 = i.uv.xyxy + float4(0, _OutL, 0, -_OutL);
-				float4 uv10 = i.uv.xyxy + float4(_OutL, 0, -_OutL, 0);
+				float4 uv01 = i.uv.xyxy + float4(0, 1, 0, -1)*_OutL;
+				float4 uv10 = i.uv.xyxy + float4(1, 0, -1, 0)*_OutL;
 				
-				float4 uv23 = i.uv.xyxy + float4(_OutL/2, _OutL / 2, -_OutL / 2, -_OutL / 2);
-				float4 uv32 = i.uv.xyxy + float4(_OutL / 2, -_OutL / 2, -_OutL / 2, _OutL / 2);
+				float4 uv23 = i.uv.xyxy + float4(1/2, 1/2, -1/2, -1/2)*_OutL;
+				float4 uv32 = i.uv.xyxy + float4(1/2, -1/2, -1/ 2, 1/2)*_OutL;
 				
 				c += tex2D(_MainTex, uv01.xy);
 				c += tex2D(_MainTex, uv01.zw);
@@ -89,14 +89,14 @@ SubShader {
 
 				#elif _SMOOTH_LEVEL2
 
-				float4 uv01 = i.uv.xyxy + float4(0, _OutL, 0, -_OutL);
-				float4 uv10 = i.uv.xyxy + float4(_OutL, 0, -_OutL, 0);
+				float4 uv01 = i.uv.xyxy + float4(0, 1, 0, -1)*_OutL;
+				float4 uv10 = i.uv.xyxy + float4(1, 0, -1, 0)*_OutL;
+				
+				float4 uv23 = i.uv.xyxy + float4(1/2, 1/2, -1/2, -1/2)*_OutL;
+				float4 uv32 = i.uv.xyxy + float4(1/2, -1/2, -1/ 2, 1/2)*_OutL;
 
-				float4 uv23 = i.uv.xyxy + float4(_OutL / 2, _OutL / 2, -_OutL / 2, -_OutL / 2);
-				float4 uv32 = i.uv.xyxy + float4(_OutL / 2, -_OutL / 2, -_OutL / 2, _OutL / 2);
-
-				float4 uv45 = i.uv.xyxy + float4(_OutL / 1.7, _OutL / 1.7, -_OutL / 1.7, -_OutL / 1.7);
-				float4 uv54 = i.uv.xyxy + float4(_OutL / 1.7, -_OutL / 1.7, -_OutL / 1.7, _OutL / 1.7);
+				float4 uv45 = i.uv.xyxy + float4(1/1.7, 1/1.7, -1/1.7, -1/1.7)*_OutL;
+				float4 uv54 = i.uv.xyxy + float4(1/1.7, -1/1.7, -1/1.7, 1/1.7)*_OutL;
 
 				c += tex2D(_MainTex, uv01.xy);
 				c += tex2D(_MainTex, uv01.zw);
@@ -113,12 +113,8 @@ SubShader {
 				c += tex2D(_MainTex, uv54.xy);
 				c += tex2D(_MainTex, uv54.zw);
 
-				
-
 				#endif
-
-				c.rgb = _OutLcolor.rgb;
-			
+				c.rgb = _OutLcolor.rgb;			
 				c.a *= _OutLcolor.a;
 
 				return c;

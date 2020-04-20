@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ImageOutline
-  m_Shader: {fileID: 4800000, guid: 7625d3a317a054a42b3936a6c631b722, type: 3}
+  m_Shader: {fileID: 4800000, guid: 62cac371f97a6fd4e97bf4c79d2bfdd6, type: 3}
   m_ShaderKeywords: _SMOOTH_LEVEL2
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,9 +40,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: 03ee58dfe726df5418a86b61e2a29a11, type: 2}
+        m_Texture: {fileID: 2800000, guid: 688551f037bc3a84c8ce0dac53645e46, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 1, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -74,7 +74,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _lineWidth: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutLcolor: {r: 1, g: 0.9768828, b: 0, a: 1}
+    - _lineColor: {r: 0, g: 0, b: 0, a: 1}

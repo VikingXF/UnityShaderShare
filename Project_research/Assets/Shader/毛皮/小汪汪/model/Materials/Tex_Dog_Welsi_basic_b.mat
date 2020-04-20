@@ -8,17 +8,21 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Tex_Dog_Welsi_basic_b
-  m_Shader: {fileID: 4800000, guid: 245298378986f3546bb55a23deca899b, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7d44983479399a94ca9b1c43f856fac9, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BRDFTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -47,12 +51,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FurTex:
+        m_Texture: {fileID: 2800000, guid: deeae506de89d514ab33c12d76c4a6a6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerTex:
+        m_Texture: {fileID: 2800000, guid: 10b51fa511546f044b7886f8687be353, type: 3}
+        m_Scale: {x: 3, y: 3}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 429f4c2670e3989438bf77cb1a8c5200, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 8858ea96b532cc94ba7ef75ff892b1a5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -67,31 +83,52 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SSSTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - FUR_OFFSET: 0.01
     - _BumpScale: 1
-    - _Cutoff: 0.5
+    - _CurvatureScale: 1
+    - _Cutoff: 0
+    - _CutoffEnd: 1
     - _DetailNormalMapScale: 1
     - _Displacement: 0.963
-    - _DstBlend: 0
-    - _EdgeFade: 0.172
-    - _FurLength: 0.269
+    - _Distortion: 0
+    - _DstBlend: 10
+    - _EdgeFade: 0.42
+    - _FabricScatterScale: 0
+    - _FurAOInstensity: 0.1
+    - _FurDensity: 0.42
+    - _FurLength: 0.02
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0
     - _GlossyReflections: 1
+    - _GravityStrength: 0.36
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Power: 100
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
+    - _ThicknessScale: 0.5
+    - _Thinkness: 26.7
     - _UVSec: 0
+    - _Wind: 0.78
+    - _WindSpeed: 0.1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FabricScatterColor: {r: 0.6037736, g: 0.26486292, b: 0.26486292, a: 1}
+    - _Gravity: {r: 0, g: 1, b: 0, a: 0}
     - _LightDirection0: {r: 1, g: 0, b: 0, a: 1}
     - _LightDirection1: {r: 1, g: 0, b: 0, a: 1}
     - _MyLightColor0: {r: 1, g: 1, b: 1, a: 1}
     - _MyLightColor1: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _SubColor: {r: 1, g: 0.4, b: 0.25, a: 1}
+    - _UVoffset: {r: 0, g: 0, b: 0.2, a: 0.2}
