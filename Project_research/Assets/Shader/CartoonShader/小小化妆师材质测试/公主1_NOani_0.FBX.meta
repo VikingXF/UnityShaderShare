@@ -1,0 +1,512 @@
+fileFormatVersion: 2
+guid: 30cb6392ee7aa5444a30606ecf556033
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Bip001
+    100002: Bip001 Head
+    100004: Bip001 HeadNub
+    100006: Bip001 L Calf
+    100008: Bip001 L Clavicle
+    100010: Bip001 L Finger0
+    100012: Bip001 L Finger01
+    100014: Bip001 L Finger02
+    100016: Bip001 L Finger0Nub
+    100018: Bip001 L Finger1
+    100020: Bip001 L Finger11
+    100022: Bip001 L Finger12
+    100024: Bip001 L Finger1Nub
+    100026: Bip001 L Finger2
+    100028: Bip001 L Finger21
+    100030: Bip001 L Finger22
+    100032: Bip001 L Finger2Nub
+    100034: Bip001 L Finger3
+    100036: Bip001 L Finger31
+    100038: Bip001 L Finger32
+    100040: Bip001 L Finger3Nub
+    100042: Bip001 L Finger4
+    100044: Bip001 L Finger41
+    100046: Bip001 L Finger42
+    100048: Bip001 L Finger4Nub
+    100050: Bip001 L Foot
+    100052: Bip001 L Forearm
+    100054: Bip001 L ForeTwist
+    100056: Bip001 L Hand
+    100058: Bip001 L Thigh
+    100060: Bip001 L Toe0
+    100062: Bip001 L Toe0Nub
+    100064: Bip001 L UpperArm
+    100066: Bip001 LUpArmTwist
+    100068: Bip001 Neck
+    100070: Bip001 Pelvis
+    100072: Bip001 R Calf
+    100074: Bip001 R Clavicle
+    100076: Bip001 R Finger0
+    100078: Bip001 R Finger01
+    100080: Bip001 R Finger02
+    100082: Bip001 R Finger0Nub
+    100084: Bip001 R Finger1
+    100086: Bip001 R Finger11
+    100088: Bip001 R Finger12
+    100090: Bip001 R Finger1Nub
+    100092: Bip001 R Finger2
+    100094: Bip001 R Finger21
+    100096: Bip001 R Finger22
+    100098: Bip001 R Finger2Nub
+    100100: Bip001 R Finger3
+    100102: Bip001 R Finger31
+    100104: Bip001 R Finger32
+    100106: Bip001 R Finger3Nub
+    100108: Bip001 R Finger4
+    100110: Bip001 R Finger41
+    100112: Bip001 R Finger42
+    100114: Bip001 R Finger4Nub
+    100116: Bip001 R Foot
+    100118: Bip001 R Forearm
+    100120: Bip001 R ForeTwist
+    100122: Bip001 R Hand
+    100124: Bip001 R Thigh
+    100126: Bip001 R Toe0
+    100128: Bip001 R Toe0Nub
+    100130: Bip001 R UpperArm
+    100132: Bip001 RUpArmTwist
+    100134: Bip001 Spine
+    100136: Bip001 Spine1
+    100138: Bip001 Spine2
+    100140: "\u4E0B\u5DF4-ctrl"
+    100142: "\u516C\u4E3B1-\u5218\u6D77\u53D1\u7B8D\u8033\u73AF"
+    100144: "\u516C\u4E3B1-\u5934\u53D1-ctrl00"
+    100146: "\u516C\u4E3B1-\u5934\u53D1-ctrl01"
+    100148: "\u516C\u4E3B1-\u5934\u53D1-ctrl02"
+    100150: "\u516C\u4E3B1-\u5934\u53D1-ctrl03"
+    100152: "\u516C\u4E3B1-\u5934\u53D1-ctrl04"
+    100154: "\u516C\u4E3B1-\u5934\u53D1-ctrl05"
+    100156: "\u516C\u4E3B1-\u5934\u53D1-ctrl06"
+    100158: "\u516C\u4E3B1-\u5934\u53D1-ctrl07"
+    100160: "\u516C\u4E3B1-\u5934\u53D1-ctrl08"
+    100162: "\u516C\u4E3B1-\u5934\u53D1-ctrl09"
+    100164: "\u516C\u4E3B1-\u5934\u53D1-ctrl10"
+    100166: "\u516C\u4E3B1-\u5934\u53D1-ctrl11"
+    100168: "\u516C\u4E3B1-\u5934\u53D1-ctrl12"
+    100170: "\u516C\u4E3B1-\u5934\u53D1-ctrl13"
+    100172: "\u516C\u4E3B1-\u624B\u73AF-ctrl"
+    100174: "\u516C\u4E3B1-\u624B\u73AF-ctrl02"
+    100176: "\u516C\u4E3B1-\u8033\u73AF-ctrl"
+    100178: "\u516C\u4E3B1-\u8033\u73AF-ctrl01"
+    100180: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl00"
+    100182: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl01"
+    100184: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl02"
+    100186: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl03"
+    100188: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl04"
+    100190: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl05"
+    100192: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl06"
+    100194: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl07"
+    100196: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl08"
+    100198: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl09"
+    100200: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl10"
+    100202: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl11"
+    100204: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl12"
+    100206: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl13"
+    100208: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl14"
+    100210: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl15"
+    100212: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl16"
+    100214: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl17"
+    100216: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl18"
+    100218: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl19"
+    100220: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl20"
+    100222: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl21"
+    100224: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl22"
+    100226: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl23"
+    100228: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl24"
+    100230: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl25"
+    100232: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl26"
+    100234: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl27"
+    100236: //RootNode
+    100238: "\u53F3\u5634\u89D2-ctrl"
+    100240: "\u53F3\u773C-ctrl"
+    100242: "\u53F3\u773C-\u4E0A\u773C\u76AE-ctrl"
+    100244: "\u53F3\u773C-\u4E0A\u773C\u76AE-ctrl001"
+    100246: "\u53F3\u773C-\u4E0B\u773C\u76AE-ctrl"
+    100248: "\u53F3\u773C-\u4E0B\u773C\u76AE-ctrl001"
+    100250: "\u53F3\u773C-\u5185\u773C\u76AE-ctrl"
+    100252: "\u53F3\u773C-\u5916\u773C\u76AE-ctrl"
+    100254: "\u53F3\u773C\u7403-ctrl"
+    100256: "\u53F3\u8138\u988A-ctrl"
+    100258: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934_L"
+    100260: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934\u53D1"
+    100262: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB"
+    100264: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B"
+    100266: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u776B\u6BDB"
+    100268: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF"
+    100270: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u820C\u5934"
+    100272: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8863\u670D"
+    100274: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8EAB\u4F53"
+    100276: "\u5DE6\u5634\u89D2-ctrl"
+    100278: "\u5DE6\u7709\u6BDB-ctrl"
+    100280: "\u5DE6\u7709\u6BDB-ctrl001"
+    100282: "\u5DE6\u7709\u6BDB-\u4E2D\u95F4-ctrl"
+    100284: "\u5DE6\u7709\u6BDB-\u4E2D\u95F4-ctrl001"
+    100286: "\u5DE6\u7709\u6BDB-\u5185\u4FA7-ctrl"
+    100288: "\u5DE6\u7709\u6BDB-\u5185\u4FA7-ctrl001"
+    100290: "\u5DE6\u7709\u6BDB-\u5916\u4FA7-ctrl"
+    100292: "\u5DE6\u7709\u6BDB-\u5916\u4FA7-ctrl001"
+    100294: "\u5DE6\u773C-ctrl"
+    100296: "\u5DE6\u773C-\u4E0A\u773C\u76AE-ctrl"
+    100298: "\u5DE6\u773C-\u4E0A\u773C\u76AE-ctrl001"
+    100300: "\u5DE6\u773C-\u4E0B\u773C\u76AE-ctrl"
+    100302: "\u5DE6\u773C-\u4E0B\u773C\u76AE-ctrl001"
+    100304: "\u5DE6\u773C-\u5185\u773C\u76AE-ctrl"
+    100306: "\u5DE6\u773C-\u5916\u773C\u76AE-ctrl"
+    100308: "\u5DE6\u773C\u7403-ctrl"
+    100310: "\u5DE6\u8138\u988A-ctrl"
+    100312: "\u820C\u5934-ctrl01"
+    100314: "\u820C\u5934-ctrl02"
+    100316: "\u820C\u5934-ctrl03"
+    100318: "\u820C\u5934-ctrl04"
+    100320: "\u820C\u5934-\u6839\u90E8-ctrl"
+    100322: "\u9F3B\u5B50-ctrl"
+    100324: "\u9F3B\u5B50-ctrlL"
+    100326: "\u9F3B\u5B50-ctrlR"
+    400000: Bip001
+    400002: Bip001 Head
+    400004: Bip001 HeadNub
+    400006: Bip001 L Calf
+    400008: Bip001 L Clavicle
+    400010: Bip001 L Finger0
+    400012: Bip001 L Finger01
+    400014: Bip001 L Finger02
+    400016: Bip001 L Finger0Nub
+    400018: Bip001 L Finger1
+    400020: Bip001 L Finger11
+    400022: Bip001 L Finger12
+    400024: Bip001 L Finger1Nub
+    400026: Bip001 L Finger2
+    400028: Bip001 L Finger21
+    400030: Bip001 L Finger22
+    400032: Bip001 L Finger2Nub
+    400034: Bip001 L Finger3
+    400036: Bip001 L Finger31
+    400038: Bip001 L Finger32
+    400040: Bip001 L Finger3Nub
+    400042: Bip001 L Finger4
+    400044: Bip001 L Finger41
+    400046: Bip001 L Finger42
+    400048: Bip001 L Finger4Nub
+    400050: Bip001 L Foot
+    400052: Bip001 L Forearm
+    400054: Bip001 L ForeTwist
+    400056: Bip001 L Hand
+    400058: Bip001 L Thigh
+    400060: Bip001 L Toe0
+    400062: Bip001 L Toe0Nub
+    400064: Bip001 L UpperArm
+    400066: Bip001 LUpArmTwist
+    400068: Bip001 Neck
+    400070: Bip001 Pelvis
+    400072: Bip001 R Calf
+    400074: Bip001 R Clavicle
+    400076: Bip001 R Finger0
+    400078: Bip001 R Finger01
+    400080: Bip001 R Finger02
+    400082: Bip001 R Finger0Nub
+    400084: Bip001 R Finger1
+    400086: Bip001 R Finger11
+    400088: Bip001 R Finger12
+    400090: Bip001 R Finger1Nub
+    400092: Bip001 R Finger2
+    400094: Bip001 R Finger21
+    400096: Bip001 R Finger22
+    400098: Bip001 R Finger2Nub
+    400100: Bip001 R Finger3
+    400102: Bip001 R Finger31
+    400104: Bip001 R Finger32
+    400106: Bip001 R Finger3Nub
+    400108: Bip001 R Finger4
+    400110: Bip001 R Finger41
+    400112: Bip001 R Finger42
+    400114: Bip001 R Finger4Nub
+    400116: Bip001 R Foot
+    400118: Bip001 R Forearm
+    400120: Bip001 R ForeTwist
+    400122: Bip001 R Hand
+    400124: Bip001 R Thigh
+    400126: Bip001 R Toe0
+    400128: Bip001 R Toe0Nub
+    400130: Bip001 R UpperArm
+    400132: Bip001 RUpArmTwist
+    400134: Bip001 Spine
+    400136: Bip001 Spine1
+    400138: Bip001 Spine2
+    400140: "\u4E0B\u5DF4-ctrl"
+    400142: "\u516C\u4E3B1-\u5218\u6D77\u53D1\u7B8D\u8033\u73AF"
+    400144: "\u516C\u4E3B1-\u5934\u53D1-ctrl00"
+    400146: "\u516C\u4E3B1-\u5934\u53D1-ctrl01"
+    400148: "\u516C\u4E3B1-\u5934\u53D1-ctrl02"
+    400150: "\u516C\u4E3B1-\u5934\u53D1-ctrl03"
+    400152: "\u516C\u4E3B1-\u5934\u53D1-ctrl04"
+    400154: "\u516C\u4E3B1-\u5934\u53D1-ctrl05"
+    400156: "\u516C\u4E3B1-\u5934\u53D1-ctrl06"
+    400158: "\u516C\u4E3B1-\u5934\u53D1-ctrl07"
+    400160: "\u516C\u4E3B1-\u5934\u53D1-ctrl08"
+    400162: "\u516C\u4E3B1-\u5934\u53D1-ctrl09"
+    400164: "\u516C\u4E3B1-\u5934\u53D1-ctrl10"
+    400166: "\u516C\u4E3B1-\u5934\u53D1-ctrl11"
+    400168: "\u516C\u4E3B1-\u5934\u53D1-ctrl12"
+    400170: "\u516C\u4E3B1-\u5934\u53D1-ctrl13"
+    400172: "\u516C\u4E3B1-\u624B\u73AF-ctrl"
+    400174: "\u516C\u4E3B1-\u624B\u73AF-ctrl02"
+    400176: "\u516C\u4E3B1-\u8033\u73AF-ctrl"
+    400178: "\u516C\u4E3B1-\u8033\u73AF-ctrl01"
+    400180: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl00"
+    400182: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl01"
+    400184: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl02"
+    400186: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl03"
+    400188: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl04"
+    400190: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl05"
+    400192: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl06"
+    400194: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl07"
+    400196: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl08"
+    400198: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl09"
+    400200: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl10"
+    400202: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl11"
+    400204: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl12"
+    400206: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl13"
+    400208: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl14"
+    400210: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl15"
+    400212: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl16"
+    400214: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl17"
+    400216: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl18"
+    400218: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl19"
+    400220: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl20"
+    400222: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl21"
+    400224: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl22"
+    400226: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl23"
+    400228: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl24"
+    400230: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl25"
+    400232: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl26"
+    400234: "\u516C\u4E3B1-\u88D9\u5B50-\u9AA8\u9ABC-ctrl27"
+    400236: //RootNode
+    400238: "\u53F3\u5634\u89D2-ctrl"
+    400240: "\u53F3\u773C-ctrl"
+    400242: "\u53F3\u773C-\u4E0A\u773C\u76AE-ctrl"
+    400244: "\u53F3\u773C-\u4E0A\u773C\u76AE-ctrl001"
+    400246: "\u53F3\u773C-\u4E0B\u773C\u76AE-ctrl"
+    400248: "\u53F3\u773C-\u4E0B\u773C\u76AE-ctrl001"
+    400250: "\u53F3\u773C-\u5185\u773C\u76AE-ctrl"
+    400252: "\u53F3\u773C-\u5916\u773C\u76AE-ctrl"
+    400254: "\u53F3\u773C\u7403-ctrl"
+    400256: "\u53F3\u8138\u988A-ctrl"
+    400258: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934_L"
+    400260: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934\u53D1"
+    400262: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB"
+    400264: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B"
+    400266: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u776B\u6BDB"
+    400268: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF"
+    400270: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u820C\u5934"
+    400272: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8863\u670D"
+    400274: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8EAB\u4F53"
+    400276: "\u5DE6\u5634\u89D2-ctrl"
+    400278: "\u5DE6\u7709\u6BDB-ctrl"
+    400280: "\u5DE6\u7709\u6BDB-ctrl001"
+    400282: "\u5DE6\u7709\u6BDB-\u4E2D\u95F4-ctrl"
+    400284: "\u5DE6\u7709\u6BDB-\u4E2D\u95F4-ctrl001"
+    400286: "\u5DE6\u7709\u6BDB-\u5185\u4FA7-ctrl"
+    400288: "\u5DE6\u7709\u6BDB-\u5185\u4FA7-ctrl001"
+    400290: "\u5DE6\u7709\u6BDB-\u5916\u4FA7-ctrl"
+    400292: "\u5DE6\u7709\u6BDB-\u5916\u4FA7-ctrl001"
+    400294: "\u5DE6\u773C-ctrl"
+    400296: "\u5DE6\u773C-\u4E0A\u773C\u76AE-ctrl"
+    400298: "\u5DE6\u773C-\u4E0A\u773C\u76AE-ctrl001"
+    400300: "\u5DE6\u773C-\u4E0B\u773C\u76AE-ctrl"
+    400302: "\u5DE6\u773C-\u4E0B\u773C\u76AE-ctrl001"
+    400304: "\u5DE6\u773C-\u5185\u773C\u76AE-ctrl"
+    400306: "\u5DE6\u773C-\u5916\u773C\u76AE-ctrl"
+    400308: "\u5DE6\u773C\u7403-ctrl"
+    400310: "\u5DE6\u8138\u988A-ctrl"
+    400312: "\u820C\u5934-ctrl01"
+    400314: "\u820C\u5934-ctrl02"
+    400316: "\u820C\u5934-ctrl03"
+    400318: "\u820C\u5934-ctrl04"
+    400320: "\u820C\u5934-\u6839\u90E8-ctrl"
+    400322: "\u9F3B\u5B50-ctrl"
+    400324: "\u9F3B\u5B50-ctrlL"
+    400326: "\u9F3B\u5B50-ctrlR"
+    2100000: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8EAB\u4F53"
+    2100002: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934"
+    2100004: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B\u53F3"
+    2100006: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B\u5DE6"
+    2100008: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934\u53D1"
+    2100010: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB\u53F3"
+    2100012: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB\u5DE6"
+    2100014: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF\u5DE6"
+    2100016: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF\u53F3"
+    2100018: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u776B\u6BDB\u53F3"
+    2100020: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u776B\u6BDB\u5DE6"
+    2100022: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8863\u670D"
+    4300000: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8EAB\u4F53"
+    4300002: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B"
+    4300004: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934\u53D1"
+    4300006: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB"
+    4300008: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934_L"
+    4300010: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF"
+    4300012: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u776B\u6BDB"
+    4300014: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8863\u670D"
+    4300016: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u820C\u5934"
+    4300018: "\u516C\u4E3B1-\u5218\u6D77\u53D1\u7B8D\u8033\u73AF"
+    9500000: //RootNode
+    13700000: "\u516C\u4E3B1-\u5218\u6D77\u53D1\u7B8D\u8033\u73AF"
+    13700002: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934_L"
+    13700004: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934\u53D1"
+    13700006: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB"
+    13700008: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B"
+    13700010: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u776B\u6BDB"
+    13700012: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF"
+    13700014: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u820C\u5934"
+    13700016: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8863\u670D"
+    13700018: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8EAB\u4F53"
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934"
+    second: {fileID: 2100000, guid: d0a0836c2c3ff9e49a4d301f5f269218, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u5934\u53D1"
+    second: {fileID: 2100000, guid: cc4a83e0829abb44297484458a92135e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB\u53F3"
+    second: {fileID: 2100000, guid: a66837c471e48c440876636d24dfb444, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u7709\u6BDB\u5DE6"
+    second: {fileID: 2100000, guid: a66837c471e48c440876636d24dfb444, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B\u53F3"
+    second: {fileID: 2100000, guid: 476941b4136978042a28a4677926a3c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u775B\u5DE6"
+    second: {fileID: 2100000, guid: 476941b4136978042a28a4677926a3c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF\u53F3"
+    second: {fileID: 2100000, guid: 3c1eb7c238a5127438602aeacede09e5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u773C\u7EBF\u5DE6"
+    second: {fileID: 2100000, guid: 3c1eb7c238a5127438602aeacede09e5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u776B\u6BDB\u53F3"
+    second: {fileID: 2100000, guid: 0633dc15a0558e5418f754f190c374e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u776B\u6BDB\u5DE6"
+    second: {fileID: 2100000, guid: 0633dc15a0558e5418f754f190c374e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8863\u670D"
+    second: {fileID: 2100000, guid: 9c2edf9c9079dd74b8eae433665b9590, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5C0F\u5C0F\u5316\u5986\u5E08-\u516C\u4E3B1-\u8EAB\u4F53"
+    second: {fileID: 2100000, guid: cbe9a019cab72c54aa8a6568b4be2960, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
