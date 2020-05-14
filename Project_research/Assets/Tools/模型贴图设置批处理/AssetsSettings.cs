@@ -201,31 +201,32 @@ public class AssetsSettings : EditorWindow
             {
                 case TextureType.Default:
                     textureImporter.textureType = TextureImporterType.Default;
+                    //2的N次方设置
+                    if (IsPowerof2 == true)
+                    {
+                        switch (npotScaleNum)
+                        {
+                            case NpotScaleNum.None:
+                                textureImporter.npotScale = TextureImporterNPOTScale.None;
+                                break;
+                            case NpotScaleNum.ToNearest:
+                                textureImporter.npotScale = TextureImporterNPOTScale.ToNearest;
+                                break;
+                            case NpotScaleNum.ToLarger:
+                                textureImporter.npotScale = TextureImporterNPOTScale.ToLarger;
+                                break;
+                            case NpotScaleNum.ToSmaller:
+                                textureImporter.npotScale = TextureImporterNPOTScale.ToSmaller;
+                                break;
+                        }
+                    }
                     break;
                 case TextureType.Sprite:
                     textureImporter.textureType = TextureImporterType.Sprite;
+                    textureImporter.alphaIsTransparency = true;
                     break;
             }
-
-            //2的N次方设置
-            if (IsPowerof2 == true)
-            {
-                switch(npotScaleNum)
-                { 
-                    case NpotScaleNum.None:
-                        textureImporter.npotScale = TextureImporterNPOTScale.None;
-                        break;
-                    case NpotScaleNum.ToNearest:
-                        textureImporter.npotScale = TextureImporterNPOTScale.ToNearest;
-                        break;
-                    case NpotScaleNum.ToLarger:
-                        textureImporter.npotScale = TextureImporterNPOTScale.ToLarger;
-                        break;
-                    case NpotScaleNum.ToSmaller:
-                        textureImporter.npotScale = TextureImporterNPOTScale.ToSmaller;
-                        break;
-                }               
-            }
+           
             //MipMaop设置
             textureImporter.mipmapEnabled = IsMipMaps;
 
