@@ -5,11 +5,11 @@
 // - no lightmap support
 // - no per-material color
 
-Shader "Babybus/CutFruit/CutFruit" {
+Shader "Babybus/CutFruit/CutFruit2" {
 Properties {
 	_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
 	_Color ("Main Color", Color) = (1,1,1,1)
-	_Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
+	_Cutoff ("Alpha cutoff", Range(-2,2)) = 0.5
 }
 SubShader {
 	Tags {"Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="TransparentCutout"}
@@ -46,7 +46,8 @@ SubShader {
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord.xy = TRANSFORM_TEX(v.texcoord, _MainTex);
-				o.texcoord.zw = v.texcoord1;
+				//o.texcoord.zw = v.texcoord1;
+				o.texcoord.zw = v.vertex.xy;
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
@@ -54,7 +55,7 @@ SubShader {
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.texcoord.xy)*_Color;
-				col.a = i.texcoord.z;
+				col.a = i.texcoord.z+0.5;
 				clip(col.a - _Cutoff);
 				UNITY_APPLY_FOG(i.fogCoord, col);
 				return col;
