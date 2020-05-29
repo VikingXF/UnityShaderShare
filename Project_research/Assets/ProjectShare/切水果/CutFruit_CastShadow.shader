@@ -62,35 +62,52 @@ SubShader {
 			}
 		ENDCG
 	}
-	//Cast Shadow
-		Pass
-        {
-			Tags { "LightMode"="ShadowCaster" }
-			
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-			#pragma multi_compile_shadowcaster
-            #include "UnityCG.cginc"
+	// shadow caster Alpha
+    Pass {
+        Name "Caster"
+        Tags { "LightMode" = "ShadowCaster" }
 
-            struct v2f
-            {
-                V2F_SHADOW_CASTER;
-            };
+		CGPROGRAM
+		#pragma vertex vert
+		#pragma fragment frag
+		#pragma target 2.0
+		#pragma multi_compile_shadowcaster
+		#pragma multi_compile_instancing // allow instanced shadow pass for most of the shaders
+		#include "UnityCG.cginc"
 
-            v2f vert (appdata_base v)
-            {
-                v2f o;
-				TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
-                return o;
-            }
+		struct v2f {			
+			V2F_SHADOW_CASTER;
+			float4  uv : TEXCOORD1;
+			UNITY_VERTEX_OUTPUT_STEREO
+		};
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-               SHADOW_CASTER_FRAGMENT(i)
-            }
-            ENDCG
-        }
+		uniform float4 _MainTex_ST;
+
+		v2f vert( appdata_base v )
+		{
+			v2f o;
+			UNITY_SETUP_INSTANCE_ID(v);
+			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+			TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+			o.uv.xy = TRANSFORM_TEX(v.texcoord, _MainTex);
+			o.uv.zw = v.vertex.xy;
+			return o;
+		}
+
+		uniform sampler2D _MainTex;
+		uniform fixed _Cutoff;
+		uniform fixed4 _Color;
+
+		float4 frag( v2f i ) : SV_Target
+		{
+			fixed4 col = tex2D( _MainTex, i.uv.xy );			
+			col.a = i.uv.z+0.5;
+			clip(col.a - _Cutoff);
+			SHADOW_CASTER_FRAGMENT(i)
+		}
+		ENDCG
+
+    }
 }
 
 }

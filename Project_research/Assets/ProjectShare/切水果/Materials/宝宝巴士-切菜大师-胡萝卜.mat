@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "\u5B9D\u5B9D\u5DF4\u58EB-\u5207\u83DC\u5927\u5E08-\u80E1\u841D\u535C"
-  m_Shader: {fileID: 51, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 02ae842f7e52081498ea5e01fc8b693e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -65,7 +65,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _Cutoff: 0.544
+    - _Cutoff: 0.14
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
