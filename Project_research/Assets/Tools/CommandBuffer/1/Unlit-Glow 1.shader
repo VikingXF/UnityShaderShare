@@ -1,4 +1,4 @@
-﻿Shader "MK/Glow/Selective/Legacy/Unlit/Unlit-Glow"
+﻿Shader "MK/Glow/Selective/Legacy/Unlit/Unlit-Glow 1"
 {
     Properties
     {
