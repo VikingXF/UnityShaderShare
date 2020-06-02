@@ -20,29 +20,30 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BasicColAndRoughnessTex:
-        m_Texture: {fileID: 2800000, guid: 0bc73bfdd9be6db49bbe5d0c263dbe06, type: 3}
+        m_Texture: {fileID: 2800000, guid: 451f5a4981f15574ebe5cc1e759754b4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _InteriorColAndSpecularTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 633815183ca229c438d9b5053548f067, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b56d5a42b37b1544eb08ff6cd5da4cd5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RimLightSampler:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 81a1dcc9ee4795e4aa26bab76f5266dd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BackSssDistortion: 0.5
     - _BackSssIntensity: 0.5
-    - _FresnelIntensity: 0.2
-    - _FresnelPower: 0.1
-    - _FrontSssDistortion: 0.5
+    - _FresnelIntensity: 0.15
+    - _FresnelPower: 1.7
+    - _FrontSssDistortion: 0.18
     - _FrontSssIntensity: 0.5
-    - _InteriorColorPower: 0.5
+    - _InteriorColorPower: 0.83
+    - _Noiseiling: 4
     - _RimIntensity: 0.2
     - _SpecularRate: 1
     - _UnlitRate: 0.5

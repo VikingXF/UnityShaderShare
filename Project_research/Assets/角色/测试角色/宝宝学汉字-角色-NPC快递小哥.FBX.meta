@@ -1,84 +1,24 @@
 fileFormatVersion: 2
-guid: 2832e6e6528942847b88c0f13880eac5
+guid: 75e8a7c3502fe7740a98d4cfc8895bdb
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: "\u4E50\u9AD8_ArmL"
-    100004: "\u4E50\u9AD8_ArmR"
-    100006: "\u4E50\u9AD8_body"
-    100008: "\u4E50\u9AD8_foot"
-    100010: "\u4E50\u9AD8_footR"
-    100012: "\u4E50\u9AD8_footR001"
-    100014: "\u4E50\u9AD8_HandL"
-    100016: "\u4E50\u9AD8_HandR"
-    100018: "\u4E50\u9AD8_head"
-    100020: "\u4E50\u9AD8_Waist"
-    100022: Sphere001
     400000: //RootNode
-    400002: "\u4E50\u9AD8_ArmL"
-    400004: "\u4E50\u9AD8_ArmR"
-    400006: "\u4E50\u9AD8_body"
-    400008: "\u4E50\u9AD8_foot"
-    400010: "\u4E50\u9AD8_footR"
-    400012: "\u4E50\u9AD8_footR001"
-    400014: "\u4E50\u9AD8_HandL"
-    400016: "\u4E50\u9AD8_HandR"
-    400018: "\u4E50\u9AD8_head"
-    400020: "\u4E50\u9AD8_Waist"
-    400022: Sphere001
-    2100000: 'Material #2'
+    2100000: "\u5B9D\u5B9D\u5B66\u6C49\u5B57-\u89D2\u8272-NPC\u5FEB\u9012\u5C0F\u54E5"
     2300000: //RootNode
-    2300002: "\u4E50\u9AD8_ArmL"
-    2300004: "\u4E50\u9AD8_ArmR"
-    2300006: "\u4E50\u9AD8_body"
-    2300008: "\u4E50\u9AD8_foot"
-    2300010: "\u4E50\u9AD8_footR"
-    2300012: "\u4E50\u9AD8_footR001"
-    2300014: "\u4E50\u9AD8_HandL"
-    2300016: "\u4E50\u9AD8_HandR"
-    2300018: "\u4E50\u9AD8_head"
-    2300020: "\u4E50\u9AD8_Waist"
-    2300022: Sphere001
     3300000: //RootNode
-    3300002: "\u4E50\u9AD8_ArmL"
-    3300004: "\u4E50\u9AD8_ArmR"
-    3300006: "\u4E50\u9AD8_body"
-    3300008: "\u4E50\u9AD8_foot"
-    3300010: "\u4E50\u9AD8_footR"
-    3300012: "\u4E50\u9AD8_footR001"
-    3300014: "\u4E50\u9AD8_HandL"
-    3300016: "\u4E50\u9AD8_HandR"
-    3300018: "\u4E50\u9AD8_head"
-    3300020: "\u4E50\u9AD8_Waist"
-    3300022: Sphere001
-    4300000: "\u4E50\u9AD8"
-    4300002: "\u4E50\u9AD8_ArmR"
-    4300004: "\u4E50\u9AD8_head"
-    4300006: "\u4E50\u9AD8_footR001"
-    4300008: "\u4E50\u9AD8_Waist"
-    4300010: "\u4E50\u9AD8_body"
-    4300012: "\u4E50\u9AD8_footR"
-    4300014: "\u4E50\u9AD8_foot"
-    4300016: "\u4E50\u9AD8_ArmL"
-    4300018: "\u4E50\u9AD8_HandL"
-    4300020: "\u4E50\u9AD8_HandR"
-    4300022: Sphere001
+    4300000: "\u5B9D\u5B9D\u5B66\u6C49\u5B57-\u89D2\u8272-NPC\u5FEB\u9012\u5C0F\u54E5"
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: 'Material #2'
-    second: {fileID: 2100000, guid: c9136301c213d0e44981143a4ac11afb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: e373cc5a6b2087b43ae1fee98c6bbe5e, type: 2}
+      name: "\u5B9D\u5B9D\u5B66\u6C49\u5B57-\u89D2\u8272-NPC\u5FEB\u9012\u5C0F\u54E5"
+    second: {fileID: 2100000, guid: 2a02175949adb1c47be13bd3b3dc6a2b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 2
+    materialSearch: 1
     materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
@@ -130,8 +70,8 @@ ModelImporter:
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
-    tangentImportMode: 3
+    normalImportMode: 1
+    tangentImportMode: 2
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1

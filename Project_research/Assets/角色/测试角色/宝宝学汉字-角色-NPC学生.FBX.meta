@@ -1,20 +1,25 @@
 fileFormatVersion: 2
-guid: a191e7d6bfd82b24fb1ccb8531ecba9a
+guid: f473c315accbbc749b2dbaaa4a64f574
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: No Name
+    2100000: "\u5B9D\u5B9D\u5B66\u6C49\u5B57-\u89D2\u8272-NPC\u5B66\u751F"
     2300000: //RootNode
     3300000: //RootNode
-    4300000: 1
-  externalObjects: {}
+    4300000: "\u5B9D\u5B9D\u5B66\u6C49\u5B57-\u89D2\u8272-NPC\u5B66\u751F"
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u5B9D\u5B9D\u5B66\u6C49\u5B57-\u89D2\u8272-NPC\u5B66\u751F"
+    second: {fileID: 2100000, guid: 8e05a53cf2ce2e14ea954aba2246d6b5, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -65,8 +70,8 @@ ModelImporter:
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
-    tangentImportMode: 3
+    normalImportMode: 1
+    tangentImportMode: 2
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
