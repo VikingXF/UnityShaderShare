@@ -1,6 +1,6 @@
 //=======================================================
 // 作者：xuefei
-// 描述：1.选择地块，随机赋予材质，2.选择格子数新建随机材质地形
+// 描述：1.选择地块，随机赋予材质，2.选择格子数新建随机材质地形 3.固定贴图生成格子地块
 //=======================================================
 #if UNITY_EDITOR
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace Babybus.Tiyong.English
     {
 
         int toolbarInt = 0;
-        string[] toolbarStrings = new string[] { "地块随机材质", "新建地块" };
+        string[] toolbarStrings = new string[] { "地块随机材质", "新建地块","固定Map地块" };
 
         //随机材质========================================
         #region
@@ -73,6 +73,27 @@ namespace Babybus.Tiyong.English
         #endregion
         //===========================================
 
+        #region
+
+        public int TexWidth = 19;
+        public int TexHeight = 12;
+        private bool FixedisDebug = false;
+        private bool HeightB = false;
+
+        [SerializeField]
+        protected Texture2D NoiseMap;
+
+        [SerializeField]
+        protected GameObject Fixeobject;
+
+        //序列化对象
+        protected SerializedObject _serializedNoiseMap;
+        protected SerializedObject _serializedFixeobject;
+        //序列化属性
+        protected SerializedProperty _NoiseMapassetLstProperty;
+        protected SerializedProperty _FixeobjectassetLstProperty;
+        #endregion
+        //===========================================
 
         [MenuItem("Tools/地块随机")]
         public static void ShowWindow()
@@ -95,8 +116,12 @@ namespace Babybus.Tiyong.English
 
             _serializedobject = new SerializedObject(this);       
             _objectassetLstProperty = _serializedobject.FindProperty("Robjects");
-			
 
+            _serializedNoiseMap = new SerializedObject(this);
+            _NoiseMapassetLstProperty = _serializedNoiseMap.FindProperty("NoiseMap");
+
+            _serializedFixeobject = new SerializedObject(this);
+            _FixeobjectassetLstProperty = _serializedFixeobject.FindProperty("Fixeobject");
         }
         void OnDestroy()
         {
@@ -174,8 +199,37 @@ namespace Babybus.Tiyong.English
                         Randomobject();
                     }
                     break;
+                    case 2:
+                    GUILayout.BeginVertical("box", GUILayout.Width(400));
+                    GUILayout.Label("固定Map地块");
+                    TexWidth = EditorGUILayout.IntField("贴图横排格子数", TexWidth);
+                    HeightB = EditorGUILayout.Toggle("等比例缩放", HeightB);
+                    if (!HeightB)
+                    {
+                        TexHeight = EditorGUILayout.IntField("贴图竖排格子数", TexHeight);
+                    }                   
+                    FixedisDebug = EditorGUILayout.Toggle("调试模式删除旧地形", FixedisDebug);
 
+                    _serializedNoiseMap.Update();
+                    _serializedFixeobject.Update();
+                    EditorGUI.BeginChangeCheck();
+                    EditorGUILayout.PropertyField(_NoiseMapassetLstProperty, true);
+                    EditorGUILayout.PropertyField(_FixeobjectassetLstProperty, true);
 
+                    //结束检查是否有修改
+                    if (EditorGUI.EndChangeCheck())
+                    {//提交修改
+                        _serializedNoiseMap.ApplyModifiedProperties();
+                        _serializedFixeobject.ApplyModifiedProperties();
+
+                    }
+
+                    if (GUILayout.Button("固定贴图生成格子地块"))
+                    {
+                        FixedMapMaker();
+                    }
+
+                    break;
             }
         }
 
@@ -267,7 +321,7 @@ namespace Babybus.Tiyong.English
                 float xSample = (plot.transform.localPosition.x + _seedX) / _relief;
                 float zSample = (plot.transform.localPosition.z + _seedZ) / _relief;
                 float noise = Mathf.PerlinNoise(xSample, zSample);
-               // Debug.Log(noise);
+                //Debug.Log(noise);
                 if (noise > Randomnum)
                 {
                     //y = lenY;
@@ -298,6 +352,88 @@ namespace Babybus.Tiyong.English
 
             //全是0则随机返回一个
             return UnityEngine.Random.Range(0, weights.Length);
+        }
+
+        private void FixedMapMaker()
+        {
+            Texture2D FixedTex;
+            Debug.Log((float)NoiseMap.height / ((float)NoiseMap.width / (float)TexWidth));
+            if (HeightB)
+            {
+                FixedTex = Process(NoiseMap, TexWidth, (int)((float)NoiseMap.height / ((float)NoiseMap.width / (float)TexWidth)));
+            }
+            else
+            {
+                FixedTex = Process(NoiseMap, TexWidth, TexHeight);
+            }
+            Debug.Log(FixedTex.width +"===="+ FixedTex.height);
+            if (FixedisDebug)
+            {
+                DestroyImmediate(GameObject.Find("地块"));
+            }
+            GameObject go = new GameObject("地块");
+            float objectX = Fixeobject.GetComponent<MeshFilter>().sharedMesh.bounds.max.x - Fixeobject.GetComponent<MeshFilter>().sharedMesh.bounds.min.x;
+            float objectZ = Fixeobject.GetComponent<MeshFilter>().sharedMesh.bounds.max.z - Fixeobject.GetComponent<MeshFilter>().sharedMesh.bounds.min.z;
+            for (int i = 0; i < FixedTex.width; i++)
+            {
+                for (int j = 0; j < FixedTex.height; j++)
+                {
+                    if (FixedTex.GetPixel(i, j).a > 0)
+                    {
+                        GameObject plot = Instantiate(Fixeobject);
+                        plot.transform.localPosition = new Vector3(i * objectX, 0, j * objectZ);
+                        plot.name = Fixeobject.name + "("+ i + ")"+ "(" + j + ")";
+                        plot.transform.SetParent(go.transform);
+                    }
+                   
+                }
+
+            }
+        }
+
+        public static Texture2D Process(Texture tex, int width, int height)
+        {
+            
+            var rendTex = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32);
+            rendTex.Create();
+
+            Graphics.SetRenderTarget(rendTex);
+            GL.PushMatrix();
+            GL.Clear(true, true, Color.clear);
+            GL.PopMatrix();
+
+            var mat = new Material(Shader.Find("Unlit/Transparent"));
+            mat.mainTexture = tex;
+
+            Graphics.SetRenderTarget(rendTex);
+
+            GL.PushMatrix();
+            GL.LoadOrtho();
+
+            mat.SetPass(0);
+
+            GL.Begin(GL.QUADS);
+            GL.TexCoord2(0, 0);
+            GL.Vertex3(0, 0, 0);
+
+            GL.TexCoord2(0, 1);
+            GL.Vertex3(0, 1, 0);
+
+            GL.TexCoord2(1, 1);
+            GL.Vertex3(1, 1, 0);
+
+            GL.TexCoord2(1, 0);
+            GL.Vertex3(1, 0, 0);
+
+            GL.End();
+            GL.PopMatrix();
+
+            var finalTex = new Texture2D(rendTex.width, rendTex.height, TextureFormat.ARGB32, false);
+            RenderTexture.active = rendTex;
+            finalTex.ReadPixels(new Rect(0, 0, finalTex.width, finalTex.height), 0, 0);
+            finalTex.Apply();
+            RenderTexture.active = null;//绘制完毕需要移除,否则有内存泄漏的嫌疑,在Editor中也会报错
+            return finalTex;
         }
 
     }
