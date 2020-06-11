@@ -20,14 +20,17 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 24ea88826dbd0694598030847d84de4c, type: 3}
+        m_Texture: {fileID: 2800000, guid: bd7b53fc29f144647a037df771e047ad, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap:
-        m_Texture: {fileID: 2800000, guid: 4adab500608aea842bbc4571bbdb9081, type: 3}
+        m_Texture: {fileID: 2800000, guid: cb2e8d3f68ff77e4eb9b9ee3b81563f4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _MatCapAlpha: 1
+    - _OutLstrength: 1
+    - _RimIntensity: 1
     - _RimPower: 0.7
     - _Rimstrength: 0.001
     m_Colors:
