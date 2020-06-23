@@ -24,11 +24,11 @@ Shader "Babybus/Particles/MaskTexture Dissolve Add" {
 		[Header(Diffuse Texture)]_MainTex("Diffuse Texture", 2D) = "white" {}
 		[Toggle] _ScaleOnCenter("Scale On Center", Float) = 1
 		_AngleSpeed("Angle Speed" , Range(0, 10)) = 0
-		_MainUV("X&Y(Diffuse Texture UV),Z&W(null)",vector) = (1,1,1,1)	
+		_MainUV("X&Y(Diffuse Texture UV),Z&W(null)",vector) = (0,0,0,0)	
 		
 		[Header(MaskTex)]_MaskTex("MaskTex", 2D) = "white" {}	
 		[Header(T_mask)]_T_mask("T_mask", 2D) = "white" {}		
-		[Header(XY MaskTex UV    ZW T_mask UV)]_MaskUV("X&Y(MaskTex UV),Z&W(T_mask UV)",vector) = (1,1,1,1)
+		[Header(XY MaskTex UV    ZW T_mask UV)]_MaskUV("X&Y(MaskTex UV),Z&W(T_mask UV)",vector) = (0,0,0,0)
 		
 		_Dissolve("Dissolve", Range(0, 1)) = 1
 		
