@@ -71,9 +71,8 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 				struct VertexOutput {
 					float4 pos : SV_POSITION;
 					float4 uv0 : TEXCOORD0;
-					float4 maskuv : TEXCOORD1;
+					float2 maskuv : TEXCOORD1;
 					float4 vertexColor : TEXCOORD2;
-
 
 				};
 				
@@ -102,10 +101,9 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 			
 				VertexOutput vert(VertexInput v) {
 					VertexOutput o = (VertexOutput)0;
-					o.uv0.xy = TRANSFORM_TEX(v.texcoord0, _MainTex);
+					o.uv0.xy = TransfromUV(v.texcoord0, _MainTex_ST ,(_Time.y*100*_AngleSpeed)%360);
 					o.uv0.zw = TRANSFORM_TEX(v.texcoord0, _MaskTex);
-					o.maskuv.xy = TRANSFORM_TEX(v.texcoord0, _T_mask);				
-					o.maskuv.zw = TransfromUV(v.texcoord0, _MainTex_ST ,(_Time.y*100*_AngleSpeed)%360);
+					o.maskuv = TRANSFORM_TEX(v.texcoord0, _T_mask);									
 					o.vertexColor = v.vertexColor;
 	
 					
@@ -114,9 +112,9 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 				}
 				float4 frag(VertexOutput i) : SV_Target {
 
-					fixed4 MainCol = tex2D(_MainTex, i.maskuv.zw + _MainUV.xy*_Time.y);
+					fixed4 MainCol = tex2D(_MainTex, i.uv0.xy + _MainUV.xy*_Time.y);
 					fixed4 _MaskTexCol = tex2D(_MaskTex, i.uv0.zw +_MaskUV.xy*_Time.y);					
-					fixed4 _T_mask_Col = tex2D(_T_mask, i.maskuv.xy+ _MaskUV.zw*_Time.y);
+					fixed4 _T_mask_Col = tex2D(_T_mask, i.maskuv+ _MaskUV.zw*_Time.y);
 										
 					MainCol.rgb *=2.0* _TintColor.rgb*i.vertexColor.rgb;					
 					_T_mask_Col = saturate(_T_mask_Col*_Solfvalue-lerp(_Solfvalue,(-1.5),_Dissolve));
