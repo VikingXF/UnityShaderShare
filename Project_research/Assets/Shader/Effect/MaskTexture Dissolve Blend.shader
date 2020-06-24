@@ -32,7 +32,8 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 		
 		_Dissolve("Dissolve", Range(0, 1)) = 1
 		
-		_Solfvalue ("Solf value", Float ) = 1		
+		_Solfvalue ("Solf value", Float ) = 1
+		[Enum(Off, 0, On, 1)]_ZWriteMode ("ZWriteMode", float) = 0		
 		[Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("ZTest", Float) = 4  //声明外部控制开关
 	}
 		SubShader{
@@ -48,7 +49,8 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 				//	"LightMode" = "ForwardBase"
 				//}
 				Blend SrcAlpha OneMinusSrcAlpha
-				Cull Off Lighting Off ZWrite off
+				Cull Off Lighting Off 
+				ZWrite[_ZWriteMode]
 				ZTest[_ZTest] //获取值应用
 				CGPROGRAM
 				#pragma vertex vert

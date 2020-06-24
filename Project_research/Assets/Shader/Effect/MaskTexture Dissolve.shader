@@ -1,5 +1,6 @@
 
 /*
+
 _MainTex : Diffuse Texture主纹理
 _ScaleOnCenter ：_MainTex旋转中心&非中心
 _AngleSpeed : _MainTex旋转速度
@@ -15,12 +16,15 @@ _MainTex  UV : _MainUV.xy
 _MaskTex  UV : _MaskUV.xy
 _T_mask   UV : _MaskUV.zw
 
-
 */
 
-Shader "Babybus/Particles/MaskTexture Dissolve Add" {
+Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 	Properties{
 		_TintColor("Color&Alpha", Color) = (1,1,1,1)
+		
+		[Enum(UnityEngine.Rendering.CullMode)]_CullMode ("CullMode", float) = 2
+		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("SrcBlend", Float) = 1
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("DstBlend", Float) = 0	
 		[Header(Diffuse Texture)]_MainTex("Diffuse Texture", 2D) = "white" {}
 		[Toggle] _ScaleOnCenter("Scale On Center", Float) = 1
 		_AngleSpeed("Angle Speed" , Range(0, 10)) = 0
@@ -33,7 +37,7 @@ Shader "Babybus/Particles/MaskTexture Dissolve Add" {
 		_Dissolve("Dissolve", Range(0, 1)) = 1
 		
 		_Solfvalue ("Solf value", Float ) = 1
-		[Enum(Off, 0, On, 1)]_ZWriteMode ("ZWriteMode", float) = 0		
+		[Enum(Off, 0, On, 1)]_ZWriteMode ("ZWriteMode", float) = 0				
 		[Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("ZTest", Float) = 4  //声明外部控制开关
 	}
 		SubShader{
@@ -43,13 +47,10 @@ Shader "Babybus/Particles/MaskTexture Dissolve Add" {
 				"RenderType" = "Transparent"
 				"PreviewType" = "Plane"
 			}
-			Pass {
-				//Name "FORWARD"
-				//Tags {
-				//	"LightMode" = "ForwardBase"
-				//}
-				Blend SrcAlpha One
-				Cull Off Lighting Off 
+			Pass {				
+				Blend [_SrcBlend] [_DstBlend]
+				Cull [_CullMode] 
+				Lighting Off 
 				ZWrite[_ZWriteMode]
 				ZTest[_ZTest] //获取值应用
 				CGPROGRAM
@@ -75,7 +76,6 @@ Shader "Babybus/Particles/MaskTexture Dissolve Add" {
 					float4 uv0 : TEXCOORD0;
 					float2 maskuv : TEXCOORD1;
 					float4 vertexColor : TEXCOORD2;
-
 
 				};
 				
@@ -106,8 +106,7 @@ Shader "Babybus/Particles/MaskTexture Dissolve Add" {
 					VertexOutput o = (VertexOutput)0;
 					o.uv0.xy = TransfromUV(v.texcoord0, _MainTex_ST ,(_Time.y*100*_AngleSpeed)%360);
 					o.uv0.zw = TRANSFORM_TEX(v.texcoord0, _MaskTex);
-					o.maskuv = TRANSFORM_TEX(v.texcoord0, _T_mask);				
-					
+					o.maskuv = TRANSFORM_TEX(v.texcoord0, _T_mask);									
 					o.vertexColor = v.vertexColor;
 	
 					
@@ -120,7 +119,7 @@ Shader "Babybus/Particles/MaskTexture Dissolve Add" {
 					fixed4 _MaskTexCol = tex2D(_MaskTex, i.uv0.zw +_MaskUV.xy*_Time.y);					
 					fixed4 _T_mask_Col = tex2D(_T_mask, i.maskuv+ _MaskUV.zw*_Time.y);
 										
-					MainCol.rgb *=2.0*_TintColor.rgb*i.vertexColor.rgb;					
+					MainCol.rgb *=2.0* _TintColor.rgb*i.vertexColor.rgb;					
 					_T_mask_Col = saturate(_T_mask_Col*_Solfvalue-lerp(_Solfvalue,(-1.5),_Dissolve));
 					MainCol.a = saturate(MainCol.a*_TintColor.a*_T_mask_Col.r*_MaskTexCol.r*i.vertexColor.a);
 
