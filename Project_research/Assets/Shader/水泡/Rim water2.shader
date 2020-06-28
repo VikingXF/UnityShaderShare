@@ -6,8 +6,8 @@
 		_MaskTex("Mask Tex", 2D) = "white" {}
 		_MaskColor("Mask Color", Color) = (1,1,1,1)
 		_Alpha("Base Alpha", Range(0,5)) = 1
-		_Watertime("水流速度", float) = 1
-
+		_WatertimeX("水流速度X", float) = 1
+		_WatertimeY("水流速度Y", float) = 1	
 		_TimeScale("波速", float) = 1
 		_remap("振幅", Range(0, 100)) = 6.8  //振幅
 		_amplitude("振幅强度", Range(0, 10)) = 0   //振幅强度
@@ -29,7 +29,7 @@
 			float4 _RimColor,_MaskColor;
 			float _RimPower, _RimIntensity;
 			float _Alpha;
-			half _TimeScale, _remap, _amplitude, _Watertime;
+			half _TimeScale, _remap, _amplitude, _WatertimeX,_WatertimeY;
 
 			struct appdata_t
 			{
@@ -60,7 +60,7 @@
 				//o.vertex = UnityObjectToClipPos(v.vertex);
 
 				o.uv.xy = TRANSFORM_TEX(v.texcoord, _MainTex);
-				o.uv.zw = TRANSFORM_TEX(v.texcoord1, _MaskTex)+float2(0,_Time.y*_Watertime);
+				o.uv.zw = TRANSFORM_TEX(v.texcoord1, _MaskTex)+float2(_Time.y*_WatertimeX,_Time.y*_WatertimeY);
 
 				float3 normalDirection = normalize(WorldSpaceViewDir(v.vertex));
 				float3 normalDir = normalize(mul(float4(v.normal, 0.0), unity_WorldToObject).xyz);
