@@ -1,4 +1,3 @@
-
 /*
 
 _MainTex : Diffuse Texture主纹理
@@ -18,7 +17,7 @@ _T_mask   UV : _MaskUV.zw
 
 */
 
-Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
+Shader "Babybus/Particles/MaskTexture Dissolve" {
 	Properties{
 		_TintColor("Color&Alpha", Color) = (1,1,1,1)
 		
@@ -58,7 +57,8 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 				#pragma fragment frag
 				#include "UnityCG.cginc"
 				#pragma shader_feature __ _SCALEONCENTER_ON
-				
+				//#pragma shader_feature CS_BOOL
+
 				sampler2D _MainTex, _T_mask,_MaskTex;
 				float4 _MainTex_ST,_T_mask_ST,_MaskTex_ST;
 				float4 _TintColor;
@@ -118,8 +118,9 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 					fixed4 MainCol = tex2D(_MainTex, i.uv0.xy + _MainUV.xy*_Time.y);
 					fixed4 _MaskTexCol = tex2D(_MaskTex, i.uv0.zw +_MaskUV.xy*_Time.y);					
 					fixed4 _T_mask_Col = tex2D(_T_mask, i.maskuv+ _MaskUV.zw*_Time.y);
-										
-					MainCol.rgb *=2.0* _TintColor.rgb*i.vertexColor.rgb;					
+				
+					MainCol.rgb *=2.0* _TintColor.rgb*i.vertexColor.rgb;
+
 					_T_mask_Col = saturate(_T_mask_Col*_Solfvalue-lerp(_Solfvalue,(-1.5),_Dissolve));
 					MainCol.a = saturate(MainCol.a*_TintColor.a*_T_mask_Col.r*_MaskTexCol.r*i.vertexColor.a);
 
@@ -128,6 +129,7 @@ Shader "Babybus/Particles/MaskTexture Dissolve Blend" {
 				  }
 				  ENDCG
 			  }
-		}
-			FallBack "Babybus/Particles/Alpha Blended"
+		}	
+	FallBack "Babybus/Particles/Alpha Blended"
+	CustomEditor "BabybusParticlesShaderGUI"
 }
