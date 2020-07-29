@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d11778bad74204e9c01f08640f58fd, type: 3}
+  m_Name: "\u6750\u8D28\u914D\u7F6E"
+  m_EditorClassIdentifier: 
+  _assetLst:
+  - RoleName: "\u5947\u5947"
+    roleParts:
+    - RolePartsName: qiqi_hudiejie
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 7f8534aed063af84cb7551b65490b497, type: 2}
+    - RolePartsName: qiqi_shenti
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 7f8534aed063af84cb7551b65490b497, type: 2}
+    - RolePartsName: qiqi_tou
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 51fd5eaf138b85545b349ef1f105967d, type: 2}
+  - RoleName: "\u5999\u5999"
+    roleParts:
+    - RolePartsName: miaomiao_hudiejie
+      RolePartMaterials:
+      - {fileID: 2100000, guid: f886b0aa587ad6e478095f8f90232ade, type: 2}
+    - RolePartsName: miaomiao_shenti
+      RolePartMaterials:
+      - {fileID: 2100000, guid: f886b0aa587ad6e478095f8f90232ade, type: 2}
+    - RolePartsName: miaomiao_tou
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 4ca954edf5e89524cbfa53f1951e6b2a, type: 2}
+  - RoleName: "\u957F\u9888\u9E7F"
+    roleParts:
+    - RolePartsName: changjinglu
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 8c58c45b6c50e0c4382ec5dc14896d95, type: 2}
+    - RolePartsName: changjinglu_base
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 8c58c45b6c50e0c4382ec5dc14896d95, type: 2}
+    - RolePartsName: changjinglu_hua
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 8c58c45b6c50e0c4382ec5dc14896d95, type: 2}
+    - RolePartsName: changjinglu_qunzi
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 46b12f61144a09d41b1c830367020eb4, type: 2}
+    - RolePartsName: changjinglu_yanl
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 8c58c45b6c50e0c4382ec5dc14896d95, type: 2}
+    - RolePartsName: changjinglu_yanr
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 8c58c45b6c50e0c4382ec5dc14896d95, type: 2}
+    - RolePartsName: js_changjinglu_shetou
+      RolePartMaterials:
+      - {fileID: 2100000, guid: 8c58c45b6c50e0c4382ec5dc14896d95, type: 2}
+  - RoleName: "\u677E\u9F20"
+    roleParts:
+    - RolePartsName: tbdxt_songshu
+      RolePartMaterials:
+      - {fileID: 2100000, guid: b524dff120160ee4eafa2a5af204afde, type: 2}
+    - RolePartsName: tbdxt_songshu_shenti
+      RolePartMaterials:
+      - {fileID: 2100000, guid: b524dff120160ee4eafa2a5af204afde, type: 2}
