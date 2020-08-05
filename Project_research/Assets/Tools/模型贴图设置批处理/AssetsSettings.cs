@@ -12,6 +12,10 @@ using System.Collections.Generic;
 
 public class AssetsSettings : EditorWindow
 {
+    int MainToolbar = 0;
+    string[] MainToolbarStrings = new string[] { "游戏资源批处理", "动画资源批处理" };
+    int toolbarInt = 0;
+    string[] toolbarStrings = new string[] { "贴图/UI", "模型", "材质批处理" };
 
     //贴图变量
     #region
@@ -19,9 +23,6 @@ public class AssetsSettings : EditorWindow
     static bool IsMipMaps = false;
     static bool RWenabled = false;
     static bool IsCompression = true;
-
-    int toolbarInt = 0;
-    string[] toolbarStrings = new string[] { "贴图/UI", "模型" ,"材质批处理"};
 
     // 2的N次方设置枚举
     public enum NpotScaleNum
@@ -72,7 +73,7 @@ public class AssetsSettings : EditorWindow
         EditorWindow editorWindow = EditorWindow.GetWindow(typeof(AssetsSettings));
         editorWindow.autoRepaintOnSceneChange = true;
         editorWindow.Show();
-        editorWindow.titleContent.text = "资源设批处理1.0";
+        editorWindow.titleContent.text = "资源批处理2.0";
     }
 
     void OnEnable()
@@ -96,87 +97,138 @@ public class AssetsSettings : EditorWindow
     private void OnGUI()
     {
         GUILayout.Space(10f);
-        toolbarInt = GUILayout.Toolbar(toolbarInt, toolbarStrings);
+        MainToolbar = GUILayout.Toolbar(MainToolbar, MainToolbarStrings, GUILayout.Height(28));
         
-        switch (toolbarInt)      
+
+        switch (MainToolbar)
         {
             case 0:
-                GUILayout.BeginVertical("box", GUILayout.Width(200));
-                GUILayout.Label("贴图设置");
-
-                GUILayout.BeginHorizontal();
-                textureType = (TextureType)EditorGUILayout.EnumPopup(new GUIContent("Texture Type"), textureType);
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();   
-                IsPowerof2 = GUILayout.Toggle(IsPowerof2, "");
-                npotScaleNum = (NpotScaleNum)EditorGUILayout.EnumPopup(new GUIContent("Non Power of 2"), npotScaleNum);
-                GUILayout.EndHorizontal();
-
-                IsMipMaps = GUILayout.Toggle(IsMipMaps, "    Generate Mip Maps");
-
-                RWenabled = GUILayout.Toggle(RWenabled, "    Read/Write Enabled");
-
-                IsCompression = GUILayout.Toggle(IsCompression, "    Compression(Max Size:1024)");
-
-
-                if (GUILayout.Button("贴图批处理", GUILayout.Width(240), GUILayout.Height(30)))
-                {
-
-                    SelectedTexChange();
-
-                }
-                GUILayout.EndVertical();
+                GameResourceBatchingUI();
+                
                 break;
-
             case 1:
-                GUILayout.BeginVertical("box", GUILayout.Width(200));
-                GUILayout.Label("模型设置");
+                AnimationResourceBatchingUI();
+                break;
+        }
 
-                MeshCom = GUILayout.Toggle(MeshCom, "    Mesh Compression");
-                MeshRW  = GUILayout.Toggle(MeshRW, "    Read/Write Enabled");
-                MeshOpt = GUILayout.Toggle(MeshOpt, "    Optimze Mesh");
-                MeshGC = GUILayout.Toggle(MeshGC, "    Generate Colliders");
-                MeshKQ = GUILayout.Toggle(MeshKQ, "    Keep Quads");
-                MeshIA = GUILayout.Toggle(MeshIA, "    Import Animation");
-                MeshAnimCompression = GUILayout.Toggle(MeshAnimCompression, "    Anim Compression()");
-                MeshImportMaterials = GUILayout.Toggle(MeshImportMaterials, "    Import Materials");
+        
 
-                if (GUILayout.Button("模型批处理", GUILayout.Width(240), GUILayout.Height(30)))
-                {
+    }
+    //游戏资源批处理UI
+    #region
+    private void GameResourceBatchingUI()
+    {
+        toolbarInt = GUILayout.Toolbar(toolbarInt, toolbarStrings);
+        switch (toolbarInt)
+        {
+            case 0:
 
-                    SelectedMeshChange();
-                    
-                }
-
-                GUILayout.EndVertical();
+                MapProcessingUI();
+                break;
+            case 1:
+                ModelProcessingUI();
                 break;
             case 2:
-                GUILayout.BeginVertical("box", GUILayout.Width(200));
-                GUILayout.Label("材质设置");
-                GUILayout.BeginHorizontal();
-                MaterilasType = (MaterilaType)EditorGUILayout.EnumPopup(new GUIContent("材质选项是否受光"), MaterilasType);
-            
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginVertical("box", GUILayout.Width(200));
-                GUILayout.Label("说明：Unlit不接受光，mobile接受光           ");
-                GUILayout.EndVertical();
-
-                if (GUILayout.Button("材质处理", GUILayout.Width(240), GUILayout.Height(30)))
-                {
-
-                   SelectedMaterilasChange();
-
-                }
-
-                GUILayout.EndVertical();
+                MaterialProcessingUI();
                 break;
 
+        }
+    }
+
+    #endregion
+
+    //动画资源批处理UI
+    #region
+    private void AnimationResourceBatchingUI()
+    {
+    }
+    #endregion
+
+    //贴图处理UI
+    #region
+    private void MapProcessingUI()
+    {
+        GUILayout.BeginVertical("box", GUILayout.Width(200));
+        GUILayout.Label("贴图设置");
+
+        GUILayout.BeginHorizontal();
+        textureType = (TextureType)EditorGUILayout.EnumPopup(new GUIContent("Texture Type"), textureType);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        IsPowerof2 = GUILayout.Toggle(IsPowerof2, "");
+        npotScaleNum = (NpotScaleNum)EditorGUILayout.EnumPopup(new GUIContent("Non Power of 2"), npotScaleNum);
+        GUILayout.EndHorizontal();
+
+        IsMipMaps = GUILayout.Toggle(IsMipMaps, "    Generate Mip Maps");
+
+        RWenabled = GUILayout.Toggle(RWenabled, "    Read/Write Enabled");
+
+        IsCompression = GUILayout.Toggle(IsCompression, "    Compression(Max Size:1024)");
+
+
+        if (GUILayout.Button("贴图批处理", GUILayout.Width(240), GUILayout.Height(30)))
+        {
+
+            SelectedTexChange();
 
         }
-        
+        GUILayout.EndVertical();
     }
+    #endregion
+
+    //模型处理UI
+    #region
+    private void ModelProcessingUI()
+    {
+        GUILayout.BeginVertical("box", GUILayout.Width(200));
+        GUILayout.Label("模型设置");
+
+        MeshCom = GUILayout.Toggle(MeshCom, "    Mesh Compression");
+        MeshRW = GUILayout.Toggle(MeshRW, "    Read/Write Enabled");
+        MeshOpt = GUILayout.Toggle(MeshOpt, "    Optimze Mesh");
+        MeshGC = GUILayout.Toggle(MeshGC, "    Generate Colliders");
+        MeshKQ = GUILayout.Toggle(MeshKQ, "    Keep Quads");
+        MeshIA = GUILayout.Toggle(MeshIA, "    Import Animation");
+        MeshAnimCompression = GUILayout.Toggle(MeshAnimCompression, "    Anim Compression()");
+        MeshImportMaterials = GUILayout.Toggle(MeshImportMaterials, "    Import Materials");
+
+        if (GUILayout.Button("模型批处理", GUILayout.Width(240), GUILayout.Height(30)))
+        {
+
+            SelectedMeshChange();
+
+        }
+
+        GUILayout.EndVertical();
+    }
+    #endregion
+
+    //材质球处理UI
+    #region
+    private void MaterialProcessingUI()
+    {
+        GUILayout.BeginVertical("box", GUILayout.Width(200));
+        GUILayout.Label("材质设置");
+        GUILayout.BeginHorizontal();
+        MaterilasType = (MaterilaType)EditorGUILayout.EnumPopup(new GUIContent("材质选项是否受光"), MaterilasType);
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginVertical("box", GUILayout.Width(200));
+        GUILayout.Label("说明：Unlit不接受光，mobile接受光           ");
+        GUILayout.EndVertical();
+
+        if (GUILayout.Button("材质处理", GUILayout.Width(240), GUILayout.Height(30)))
+        {
+
+            SelectedMaterilasChange();
+
+        }
+
+        GUILayout.EndVertical();
+    }
+    #endregion
 
     //贴图处理
     #region
