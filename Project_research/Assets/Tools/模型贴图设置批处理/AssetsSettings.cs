@@ -14,6 +14,17 @@ public class AssetsSettings : EditorWindow
 {
     int MainToolbar = 0;
     string[] MainToolbarStrings = new string[] { "游戏资源批处理", "动画资源批处理" };
+
+    //动画批处理变量
+    #region
+    int AnimationtoolbarInt = 0;
+    string[] AnimationtoolbarStrings = new string[] { "贴图", "模型", "材质" };
+
+    
+    #endregion
+
+    //游戏批处理变量
+    #region
     int toolbarInt = 0;
     string[] toolbarStrings = new string[] { "贴图/UI", "模型", "材质批处理" };
 
@@ -66,6 +77,8 @@ public class AssetsSettings : EditorWindow
     static private MaterilaType MaterilasType = MaterilaType.Unlit;
     #endregion
 
+    #endregion
+
     [MenuItem("Tools/资源设置批处理工具")]
     public static void ShowWindow()
     {
@@ -114,8 +127,159 @@ public class AssetsSettings : EditorWindow
         
 
     }
+
+    //动画资源
+    #region
+    //动画资源批处理UI
+    #region
+    private void AnimationResourceBatchingUI()
+    {
+        AnimationtoolbarInt = GUILayout.Toolbar(AnimationtoolbarInt, AnimationtoolbarStrings);
+        switch (AnimationtoolbarInt)
+        {
+            case 0:
+                AnimationMapProcessingUI();
+                break;
+            case 1:
+                AnimationModelProcessingUI();
+                break;
+            case 2:
+               
+                break;
+
+        }
+
+    }
+    #endregion
+
+    //动画贴图处理UI
+    #region
+    private void AnimationMapProcessingUI()
+    {
+        GUILayout.BeginVertical("box", GUILayout.Width(200));
+        GUILayout.Label("贴图处理");
+        GUILayout.BeginHorizontal();
+       
+        if (GUILayout.Button("动画贴图批处理", GUILayout.Width(240), GUILayout.Height(30)))
+        {
+
+            SelectedAnimationTexChange();
+
+        }
+        GUILayout.EndVertical();
+    }
+    #endregion
+
+    //动画模型处理UI
+    #region
+    private void AnimationModelProcessingUI()
+    {
+        GUILayout.BeginVertical("box", GUILayout.Width(200));
+        GUILayout.Label("动画模型设置");
+        if (GUILayout.Button("动画模型批处理", GUILayout.Width(240), GUILayout.Height(30)))
+        {
+
+            SelectedAnimationMeshChange();
+
+        }
+
+        GUILayout.EndVertical();
+    }
+    #endregion
+
+    //动画贴图处理
+    #region
+
+    static void SelectedAnimationTexChange()
+    {
+
+        Object[] textures = GetSelectedTextures();
+
+        if (textures.Length == 0)
+        {
+            EditorUtility.DisplayDialog("警告", "选择一个包含贴图的文件夹或者单独贴图！", "OK");
+            return;
+        }
+
+        foreach (Texture2D texture in textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+            TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+
+            //MipMaop设置
+            textureImporter.mipmapEnabled = false;
+
+            //贴图可读写设置
+            textureImporter.isReadable = false;
+
+            //贴图压缩设置
+            if (!textureImporter.DoesSourceTextureHaveAlpha())//不带alpha通道的
+            {
+                textureImporter.alphaIsTransparency = false;
+                textureImporter.SetPlatformTextureSettings("PC", 4096, TextureImporterFormat.RGB24);
+
+            }
+            else  //带alpha通道的
+            {
+                textureImporter.alphaIsTransparency = true;
+                textureImporter.SetPlatformTextureSettings("PC", 4096, TextureImporterFormat.RGBA32);
+
+            }
+
+
+            AssetDatabase.ImportAsset(path);
+        }
+    }
+
+    #endregion
+
+    
+
+    //动画模型处理
+    #region
+    static void SelectedAnimationMeshChange()
+    {
+        Object[] meshs = GetSelectedModels();
+
+        if (meshs.Length == 0)
+        {
+            EditorUtility.DisplayDialog("警告", "选择一个包含模型的文件夹或者单独模型！", "OK");
+            return;
+        }
+
+        for (int i = 0; i < meshs.Length; i++)
+        {
+            var a = meshs[i] as GameObject;
+            if (a != null)
+            {
+                string path = AssetDatabase.GetAssetPath(a);
+                ModelImporter modelImporter = AssetImporter.GetAtPath(path) as ModelImporter;
+
+                //Materials
+                modelImporter.useSRGBMaterialColor = true;
+                modelImporter.materialLocation = ModelImporterMaterialLocation.External;
+                modelImporter.materialName = ModelImporterMaterialName.BasedOnTextureName;
+                modelImporter.materialSearch = ModelImporterMaterialSearch.RecursiveUp;
+
+
+                AssetDatabase.ImportAsset(path);
+            }
+
+        }
+
+
+    }
+
+    #endregion
+
+    #endregion
+
+    //游戏资源
+    #region
+
     //游戏资源批处理UI
     #region
+
     private void GameResourceBatchingUI()
     {
         toolbarInt = GUILayout.Toolbar(toolbarInt, toolbarStrings);
@@ -136,14 +300,7 @@ public class AssetsSettings : EditorWindow
     }
 
     #endregion
-
-    //动画资源批处理UI
-    #region
-    private void AnimationResourceBatchingUI()
-    {
-    }
-    #endregion
-
+    
     //贴图处理UI
     #region
     private void MapProcessingUI()
@@ -230,7 +387,7 @@ public class AssetsSettings : EditorWindow
     }
     #endregion
 
-    //贴图处理
+    //游戏贴图处理
     #region
     static void SelectedTexChange()
     {
@@ -318,7 +475,7 @@ public class AssetsSettings : EditorWindow
     #endregion
 
 
-    //模型处理
+    //游戏模型处理
     #region
     static void SelectedMeshChange()
     {
@@ -387,7 +544,7 @@ public class AssetsSettings : EditorWindow
     #endregion
 
 
-    //材质球处理
+    //游戏材质球处理
     #region
     static void SelectedMaterilasChange()
     {
@@ -452,9 +609,9 @@ public class AssetsSettings : EditorWindow
     }
 
     #endregion
-
+    
+    #endregion
 
 }
-
 
 #endif
