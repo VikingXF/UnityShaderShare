@@ -144,7 +144,7 @@ public class AssetsSettings : EditorWindow
                 AnimationModelProcessingUI();
                 break;
             case 2:
-               
+                AnimationMaterilasProcessingUI();
                 break;
 
         }
@@ -169,7 +169,9 @@ public class AssetsSettings : EditorWindow
         GUILayout.EndVertical();
     }
     #endregion
-
+	
+	
+	
     //动画模型处理UI
     #region
     private void AnimationModelProcessingUI()
@@ -183,6 +185,24 @@ public class AssetsSettings : EditorWindow
 
         }
 
+        GUILayout.EndVertical();
+    }
+    #endregion
+
+    //动画材质处理UI
+    #region
+    private void AnimationMaterilasProcessingUI()
+    {
+        GUILayout.BeginVertical("box", GUILayout.Width(200));
+        GUILayout.Label("材质处理");
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("动画材质批处理", GUILayout.Width(240), GUILayout.Height(30)))
+        {
+
+            SelectedAnimationMaterilasChange();
+
+        }
         GUILayout.EndVertical();
     }
     #endregion
@@ -232,9 +252,7 @@ public class AssetsSettings : EditorWindow
     }
 
     #endregion
-
     
-
     //动画模型处理
     #region
     static void SelectedAnimationMeshChange()
@@ -272,7 +290,53 @@ public class AssetsSettings : EditorWindow
 
     #endregion
 
+    
+	//动画材质球处理
+    #region
+    static void SelectedAnimationMaterilasChange()
+    {
+        Object[] Materilas = GetSelectedMaterilas();
+        if (Materilas.Length == 0)
+        {
+            EditorUtility.DisplayDialog("警告", "选择一个包含材质球的文件夹或者单独材质球！", "OK");
+            return;
+        }
+        foreach (Material material in Materilas)
+        {
+            if (material.shader == Shader.Find("HDRP/Lit"))
+            {
+                material.SetColor("_BaseColor", Color.white);
+                material.SetFloat("_Metallic", 0f);
+                material.SetFloat("_Smoothness", 0f);
+
+                if (material.GetTexture("_BaseColorMap") != null)
+                {
+
+                    string path = AssetDatabase.GetAssetPath(material.GetTexture("_BaseColorMap"));
+                    TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+
+                    if (textureImporter.DoesSourceTextureHaveAlpha())//带alpha通道的
+                    {
+                        material.SetFloat("_SurfaceType", 1f);
+                    }
+                    else  //不带alpha通道的
+                    {
+                        material.SetFloat("_SurfaceType", 0f);
+
+                    }
+                }
+
+            }
+    
+        }
+
+    }
+
+
     #endregion
+	
+	
+	#endregion
 
     //游戏资源
     #region
