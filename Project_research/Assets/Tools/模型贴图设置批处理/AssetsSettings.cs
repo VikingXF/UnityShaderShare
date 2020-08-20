@@ -271,16 +271,29 @@ public class AssetsSettings : EditorWindow
             if (a != null)
             {
                 string path = AssetDatabase.GetAssetPath(a);
-                ModelImporter modelImporter = AssetImporter.GetAtPath(path) as ModelImporter;
+                string FBXpath = path.Substring(path.Length - 4, 4);
+                if (FBXpath == ".FBX")
+                {
+                    ModelImporter modelImporter = AssetImporter.GetAtPath(path) as ModelImporter;
 
-                //Materials
-                modelImporter.useSRGBMaterialColor = true;
-                modelImporter.materialLocation = ModelImporterMaterialLocation.External;
-                modelImporter.materialName = ModelImporterMaterialName.BasedOnTextureName;
-                modelImporter.materialSearch = ModelImporterMaterialSearch.RecursiveUp;
+                    //Animation
+                    modelImporter.importAnimation = true;
+
+                    modelImporter.animationCompression = ModelImporterAnimationCompression.Off;
 
 
-                AssetDatabase.ImportAsset(path);
+
+                    //Materials
+                    modelImporter.useSRGBMaterialColor = true;
+                    modelImporter.materialLocation = ModelImporterMaterialLocation.External;
+                    modelImporter.materialName = ModelImporterMaterialName.BasedOnTextureName;
+                    modelImporter.materialSearch = ModelImporterMaterialSearch.RecursiveUp;
+
+
+
+                    AssetDatabase.ImportAsset(path);
+                }
+                
             }
 
         }
