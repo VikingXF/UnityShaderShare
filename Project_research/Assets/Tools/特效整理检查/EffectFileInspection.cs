@@ -21,7 +21,13 @@ namespace OptimizationTools
         string[] toolbarStrings = new string[] { "特效贴图尺寸分类", "特效检查", "shader检查","数据保存读取" };
         public string Effectpath = "Assets/Effect/Texture/";
         private int texSize;
-
+        private float sliderValue = 0f;
+        Vector2 scrollPosition;
+        Vector2 scrollPosition1;
+        Vector2 scrollPosition2;
+        Vector2 scrollPosition3;
+        Vector2 scrollPosition4;
+        Vector2 scrollPosition5;
         //shader列表
         #region 
         [SerializeField]//必须要加  
@@ -194,16 +200,18 @@ namespace OptimizationTools
 
             //===============================
             GUILayout.BeginVertical("box", GUILayout.Width(420));
+
             GUILayout.Label("问题shader材质列表");
             //更新  
             _serializedMaterial.Update();
 
             //开始检查是否有修改  
             EditorGUI.BeginChangeCheck();
+            scrollPosition1 = GUILayout.BeginScrollView(scrollPosition1);
             //显示属性  
             //第二个参数必须为true，否则无法显示子节点即List内容  
             EditorGUILayout.PropertyField(_MaterialAssetLstProperty, true);
-
+            GUILayout.EndScrollView();
             //结束检查是否有修改  
             if (EditorGUI.EndChangeCheck())
             {
@@ -221,10 +229,11 @@ namespace OptimizationTools
 
             //开始检查是否有修改  
             EditorGUI.BeginChangeCheck();
+            scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2);
             //显示属性  
             //第二个参数必须为true，否则无法显示子节点即List内容  
             EditorGUILayout.PropertyField(_TexResultsAssetLstProperty, true);
-
+            GUILayout.EndScrollView();
             //结束检查是否有修改  
             if (EditorGUI.EndChangeCheck())
             {
@@ -243,10 +252,13 @@ namespace OptimizationTools
 
             //开始检查是否有修改  
             EditorGUI.BeginChangeCheck();
+ 
+            scrollPosition3 = GUILayout.BeginScrollView(scrollPosition3);
             //显示属性  
             //第二个参数必须为true，否则无法显示子节点即List内容  
             EditorGUILayout.PropertyField(_TexOldAssetLstProperty, true);
 
+            GUILayout.EndScrollView();
             //结束检查是否有修改  
             if (EditorGUI.EndChangeCheck())
             {
@@ -255,6 +267,7 @@ namespace OptimizationTools
 
             GUILayout.EndVertical();
             //===================================================
+
 
         }
         #endregion
@@ -284,10 +297,11 @@ namespace OptimizationTools
 
             //开始检查是否有修改  
             EditorGUI.BeginChangeCheck();
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
             //显示属性  
             //第二个参数必须为true，否则无法显示子节点即List内容  
             EditorGUILayout.PropertyField(_MaterialAssetLstProperty, true);
-
+            GUILayout.EndScrollView();
             //结束检查是否有修改  
             if (EditorGUI.EndChangeCheck())
             {
@@ -307,8 +321,8 @@ namespace OptimizationTools
         private void SaveDataUI()
         {
             //===============================
-            GUILayout.BeginVertical();
-            //GUILayout.BeginVertical("box", GUILayout.Width(420));
+            //GUILayout.BeginVertical();
+            GUILayout.BeginVertical("box", GUILayout.Width(420));
             GUILayout.Label("高分辨率贴图备份数据");
             //更新  
             _serializedObject.Update();
@@ -336,10 +350,11 @@ namespace OptimizationTools
             }
 
             GUILayout.EndHorizontal();
+            scrollPosition4 = GUILayout.BeginScrollView(scrollPosition4);
             //显示属性  
             //第二个参数必须为true，否则无法显示子节点即List内容  
             EditorGUILayout.PropertyField(_EffectTexAssetLstProperty, true);
-
+            GUILayout.EndScrollView();
             //结束检查是否有修改  
             if (EditorGUI.EndChangeCheck())
             {
@@ -350,8 +365,8 @@ namespace OptimizationTools
             //===================================================
 
             //===============================
-            GUILayout.BeginVertical();
-            //GUILayout.BeginVertical("box", GUILayout.Width(420));
+            //GUILayout.BeginVertical();
+            GUILayout.BeginVertical("box", GUILayout.Width(420));
             GUILayout.Label("shader备份数据");
             //更新  
             _serializedShader.Update();
@@ -379,10 +394,11 @@ namespace OptimizationTools
             }
 
             GUILayout.EndHorizontal();
+            scrollPosition5 = GUILayout.BeginScrollView(scrollPosition5);
             //显示属性  
             //第二个参数必须为true，否则无法显示子节点即List内容  
             EditorGUILayout.PropertyField(_ShaderAssetLstProperty, true);
-
+            GUILayout.EndScrollView();
             //结束检查是否有修改  
             if (EditorGUI.EndChangeCheck())
             {
