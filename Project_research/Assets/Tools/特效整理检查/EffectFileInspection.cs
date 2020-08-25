@@ -21,7 +21,7 @@ namespace OptimizationTools
         string[] toolbarStrings = new string[] { "特效贴图尺寸分类", "特效检查", "shader检查","数据保存读取" };
         public string Effectpath = "Assets/Effect/Texture/";
         private int texSize;
-        private float sliderValue = 0f;
+
         Vector2 scrollPosition;
         Vector2 scrollPosition1;
         Vector2 scrollPosition2;
