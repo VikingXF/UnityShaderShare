@@ -18,7 +18,7 @@ namespace OptimizationTools
     public class EffectFileInspection : EditorWindow
     {
         int toolbarInt = 0;
-        string[] toolbarStrings = new string[] { "特效贴图尺寸分类", "特效检查", "shader检查","数据保存读取" };
+        string[] toolbarStrings = new string[] { "特效贴图尺寸分类", "特效检查", "shader检查", "数据保存读取", "相同名字shader切换" };
         public string Effectpath = "Assets/Effect/Texture/";
         private int texSize;
 
@@ -32,6 +32,10 @@ namespace OptimizationTools
         #region 
         [SerializeField]//必须要加  
         public List<Shader> _EffectshaderAssetLst = new List<Shader>();
+
+        [SerializeField]//必须要加  
+        public List<Shader> _ChangeshaderAssetLst = new List<Shader>();
+
         [SerializeField]
         public List<Material> _EffectMaterialAssetLst = new List<Material>();
 
@@ -39,6 +43,11 @@ namespace OptimizationTools
         protected SerializedObject _serializedShader;
         //序列化属性  
         protected SerializedProperty _ShaderAssetLstProperty;
+
+        //序列化对象  
+        protected SerializedObject _serializedChangeShader;
+        //序列化属性  
+        protected SerializedProperty _ChangeShaderAssetLstProperty;
 
         //序列化对象  
         protected SerializedObject _serializedMaterial;
@@ -116,9 +125,15 @@ namespace OptimizationTools
             _ShaderAssetLstProperty = _serializedShader.FindProperty("_EffectshaderAssetLst");
 
             //使用当前类初始化
+            _serializedChangeShader = new SerializedObject(this);
+            //获取当前类中可序列话的属性
+            _ChangeShaderAssetLstProperty = _serializedChangeShader.FindProperty("_ChangeshaderAssetLst");
+
+
+            //使用当前类初始化
             _serializedMaterial = new SerializedObject(this);
             //获取当前类中可序列话的属性        
-             _MaterialAssetLstProperty = _serializedMaterial.FindProperty("_EffectMaterialAssetLst");
+            _MaterialAssetLstProperty = _serializedMaterial.FindProperty("_EffectMaterialAssetLst");
 
 
         }
@@ -152,9 +167,131 @@ namespace OptimizationTools
                 case 3:
                     SaveDataUI();
                     break;
+                case 4:
+                    ChangeshaderUI();
+                    break;
             }
 
         }
+        //相同名字shader切换
+        #region
+        private void ChangeshaderUI()
+        {
+            GUILayout.BeginVertical("box", GUILayout.Width(420));
+            GUILayout.Label("相同名字shader切换");
+
+            if (GUILayout.Button("相同名字shader切换", GUILayout.Width(400), GUILayout.Height(30)))
+            {
+
+                Changeshader();
+            }
+
+            GUILayout.EndVertical();
+            //===============================
+            GUILayout.BeginVertical("box", GUILayout.Width(420));
+            GUILayout.Label("shader列表");
+            //更新  
+            _serializedChangeShader.Update();
+
+            //开始检查是否有修改  
+            EditorGUI.BeginChangeCheck();
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+            //显示属性  
+            //第二个参数必须为true，否则无法显示子节点即List内容  
+            EditorGUILayout.PropertyField(_ChangeShaderAssetLstProperty, true);
+            GUILayout.EndScrollView();
+            //结束检查是否有修改  
+            if (EditorGUI.EndChangeCheck())
+            {
+                _serializedChangeShader.ApplyModifiedProperties();
+            }
+
+            GUILayout.EndVertical();
+            //===================================================
+            
+            //===============================
+            GUILayout.BeginVertical("box", GUILayout.Width(420));
+            if (GUILayout.Button("查找引用列表中shader的材质", GUILayout.Width(400), GUILayout.Height(30)))
+            {
+
+                shaderFindMaterial();
+            }
+            GUILayout.Label("材质列表");
+            //更新  
+            _serializedMaterial.Update();
+
+            //开始检查是否有修改  
+            EditorGUI.BeginChangeCheck();
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+            //显示属性  
+            //第二个参数必须为true，否则无法显示子节点即List内容  
+            EditorGUILayout.PropertyField(_MaterialAssetLstProperty, true);
+            GUILayout.EndScrollView();
+            //结束检查是否有修改  
+            if (EditorGUI.EndChangeCheck())
+            {
+                _serializedMaterial.ApplyModifiedProperties();
+            }
+
+            GUILayout.EndVertical();
+            //===================================================
+        }
+
+        private void shaderFindMaterial()
+        {
+            Object[] Materilas = GetSelectedMaterilas();
+            if (Materilas.Length == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "选择一个包含材质球的文件夹或者单独材质球！", "OK");
+                return;
+            }
+            List<Material> ErrShaderMaterial = new List<Material>();
+            foreach (Material material in Materilas)
+            {
+                for (int i = 0; i < _ChangeshaderAssetLst.Count; i++)
+                {
+                    if (material.shader == _ChangeshaderAssetLst[i])
+                    {
+                        ErrShaderMaterial.Add(material);
+
+                    }
+
+                }
+            }
+            _EffectMaterialAssetLst = ErrShaderMaterial;
+        }
+
+        private void Changeshader()
+        {
+            Object[] Materilas = GetSelectedMaterilas();
+            if (Materilas.Length == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "选择一个包含材质球的文件夹或者单独材质球！", "OK");
+                return;
+            }
+            foreach (Material material in Materilas)
+            {
+               
+                for (int i = 0; i < _ChangeshaderAssetLst.Count; i++)
+                {
+                    if (material.shader.name == _ChangeshaderAssetLst[i].name)
+                    {
+                        if (material.shader != _ChangeshaderAssetLst[i])
+                        {
+                            int RenderQueueint = material.renderQueue;
+                            material.shader = _ChangeshaderAssetLst[i];
+                            material.renderQueue = RenderQueueint;
+                        }
+                       
+                    }
+                    
+                }                
+                
+            }
+        }
+
+
+        #endregion
 
         //特效贴图整理UI
         #region
