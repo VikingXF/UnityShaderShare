@@ -334,15 +334,24 @@ namespace OptimizationTools
                 EditorUtility.DisplayDialog("警告", "列表中shader是空的！", "OK");
                 return;
             }
-            foreach(Shader shader in _OldshaderAssetLst)
+            bool boolshader = true;
+
+            foreach (Shader shader in _OldshaderAssetLst)
             {
+                boolshader = true;
                 for (int i = 0; i < _ChangeshaderAssetLst.Count; i++)
                 {
-                    if (shader != _ChangeshaderAssetLst[i])
+                    if (shader.name == _ChangeshaderAssetLst[i].name)
                     {
-                        DifferentShader.Add(shader);
+                        boolshader = false;
+                        break;
                     }
                 }
+                if (boolshader)
+                {
+                    DifferentShader.Add(shader);
+                }         
+
             }
             _ResultshaderAssetLst = DifferentShader;
         }
@@ -359,11 +368,13 @@ namespace OptimizationTools
             {
                 for (int i = 0; i < _OldshaderAssetLst.Count; i++)
                 {
+
                     if (material.shader == _OldshaderAssetLst[i])
                     {
                         ErrShaderMaterial.Add(material);
 
                     }
+
 
                 }
             }
