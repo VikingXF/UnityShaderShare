@@ -22,8 +22,8 @@ Shader "Babybus/Particles/MaskTexture Dissolve" {
 		_TintColor("Color&Alpha", Color) = (1,1,1,1)
 		
 		[Enum(UnityEngine.Rendering.CullMode)]_CullMode ("CullMode", float) = 2
-		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("SrcBlend", Float) = 1
-        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("DstBlend", Float) = 0	
+		[HideInInspector] _SrcBlend ("SrcBlend", Float) = 1
+        [HideInInspector] _DstBlend ("DstBlend", Float) = 0	
 		[Header(Diffuse Texture)]_MainTex("Diffuse Texture", 2D) = "white" {}
 		[Toggle] _ScaleOnCenter("Scale On Center", Float) = 1
 		_AngleSpeed("Angle Speed" , Range(0, 10)) = 0
