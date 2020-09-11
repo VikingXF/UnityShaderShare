@@ -57,7 +57,7 @@
 
             fixed4 frag1 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.95;
+				fixed4 col = _MainColor*0.95;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -74,7 +74,7 @@
 
             fixed4 frag2 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.94;
+				fixed4 col = _MainColor*0.94;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -91,7 +91,7 @@
 
             fixed4 frag3 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.93;
+				fixed4 col =_MainColor*0.93;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -107,7 +107,7 @@
 
             fixed4 frag4 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.92;
+				fixed4 col = _MainColor*0.92;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -123,7 +123,7 @@
 
             fixed4 frag5 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.89;
+				fixed4 col = _MainColor*0.89;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -139,7 +139,7 @@
 
             fixed4 frag6 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.89;
+				fixed4 col = _MainColor*0.89;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -155,7 +155,7 @@
 
             fixed4 frag7 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.86;
+				fixed4 col = _MainColor*0.86;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -171,7 +171,7 @@
 
             fixed4 frag8 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.86;
+				fixed4 col = _MainColor*0.86;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -187,7 +187,7 @@
 
             fixed4 frag9 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.84;
+				fixed4 col = _MainColor*0.84;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
@@ -203,7 +203,7 @@
 
             fixed4 frag10 (v2f i) : SV_Target
             {
-				fixed4 col = tex2D(_MainTex, i.uv)*_MainColor*0.84;
+				fixed4 col = _MainColor*0.84;
 				fixed4 Maskcol = tex2D(_MaskTex, i.uv);
 				col.a = 1-Maskcol.r;
                 return col;
