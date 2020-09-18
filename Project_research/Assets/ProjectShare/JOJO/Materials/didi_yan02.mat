@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: didi_yan02
-  m_Shader: {fileID: 4800000, guid: 1d1bd6f884db9ba4aa64a8983df3a99c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 38d2e062f09407b4ebe8cbb5c15732db, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BasicColAndRoughnessTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BeckmannTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -43,6 +47,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _InteriorColAndSpecularTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 4882e4aa6fa178c4498bba9bc77ce47e, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -51,7 +59,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -59,43 +75,76 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RampTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RimLightSampler:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ThicknessTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BackSssDistortion: 0.67
-    - _BumpBias: 2
+    - _BackSssDistortion: 0.28
+    - _BackSssIntensity: 0.5
+    - _BumpBias: 2.5
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FresnelIntensity: 0.05
-    - _FresnelPower: 7.1
-    - _FrontSssDistortion: 0.65
+    - _FresnelIntensity: 0.3
+    - _FresnelPower: 14.9
+    - _FrontSssDistortion: 0.26
     - _FrontSssIntensity: 0
-    - _Gloss: 0.13
+    - _Gloss: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.42
     - _GlossyReflections: 1
-    - _InteriorColorPower: 0.5
-    - _Metallic: 0
+    - _InteriorColorPower: 0.38
+    - _Metallic: 0.11
     - _Mode: 0
+    - _Noiseiling: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RollOff: 0.2
+    - _RampSmooth: 0.78
+    - _RampThreshold: 0.35
+    - _RimIntensity: 1.23
+    - _RimPower: 2.1
+    - _RollOff: 1.51
     - _SmoothnessTextureChannel: 0
-    - _SpecBrightness: 0.75
-    - _SpecRoughness: 0.15
-    - _Specular: 0.63
+    - _SpecBrightness: 0.53
+    - _SpecRoughness: 0.54
+    - _Specular: 0
     - _SpecularHighlights: 1
+    - _SpecularRate: 1
+    - _SpecularScopeMax: 0.3
+    - _SpecularScopeMin: 0.95
     - _SrcBlend: 1
     - _UVSec: 0
+    - _UnlitRate: 0.5
     - _ZWrite: 1
+    - fLTDistortion: 0.91
+    - fLTScale: 2
+    - fLightAttentuation: 3.7
+    - iLTPower: 28
     m_Colors:
+    - _AmbientLight: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DiffuseWrap: {r: 0.75, g: 0.375, b: 0.1875, a: 0}
+    - _DiffuseWrap: {r: 0, g: 0, b: 0.09, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _InteriorColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SubsurfaceColor: {r: 1, g: 0.2, b: 0.2, a: 1}
+    - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InteriorColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightDir: {r: 0, g: 0, b: -1, a: 0}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+    - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _lightPosition: {r: 0, g: 0, b: 0, a: 0}
+    - fLTAmbient: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}

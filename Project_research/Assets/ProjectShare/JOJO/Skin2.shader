@@ -24,7 +24,7 @@ Shader "Easy Skin Shading/Skin2" {
 		
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma multi_compile_fwdbase
+			//#pragma multi_compile_fwdbase
 			
 			uniform sampler2D _MainTex;
 			uniform float4 _MainTex_ST;
@@ -44,6 +44,7 @@ Shader "Easy Skin Shading/Skin2" {
 				float2 tex : TEXCOORD0;
 				float3 lit : TEXCOORD1;
 				float3 view : TEXCOORD2;
+				float3 normalDir : TEXCOORD5;
 				LIGHTING_COORDS(3, 4)
 			};
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +58,8 @@ Shader "Easy Skin Shading/Skin2" {
 				
 				o.lit = mul(rotation, ObjSpaceLightDir(v.vertex));
 				o.view = mul(rotation, ObjSpaceViewDir(v.vertex));
-				TRANSFER_VERTEX_TO_FRAGMENT(o);
+				o.normalDir = mul(rotation,v.normal);
+				//TRANSFER_VERTEX_TO_FRAGMENT(o);
 				return o;
 			}
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,9 +92,10 @@ Shader "Easy Skin Shading/Skin2" {
 			}
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			float4 frag (v2f i) : SV_TARGET
-			{
-				float3 N = UnpackNormal(tex2Dbias(_BumpMap, float4(i.tex, 0, _BumpBias)));
-				float specMask = tex2D(_SpecTex, i.tex).r;
+			{				
+				//float3 N = UnpackNormal(tex2Dbias(_BumpMap, float4(i.tex, 0, _BumpBias)));
+				float3 N = normalize(i.normalDir);
+				//float specMask = tex2D(_SpecTex, i.tex).r;
 		
 				float3 L = normalize(i.lit);
 				float3 V = normalize(i.view);
@@ -105,15 +108,16 @@ Shader "Easy Skin Shading/Skin2" {
 				float3 diffColor = diffuseWeight * _LightColor0.rgb;
 			
 				// specular part
-				float specularWeight = SkinSpecular(N, L, V, _SpecRoughness, _SpecBrightness);
-				float3 specColor = specularWeight * _LightColor0.rgb * specMask;
+				//float specularWeight = SkinSpecular(N, L, V, _SpecRoughness, _SpecBrightness);
+				//float3 specColor = specularWeight * _LightColor0.rgb * specMask;
 			
 				// subsurface part
-				float sl = smoothstep(-_RollOff, 1, ldn) - smoothstep(0, 1, ldn);
-				sl = max(0, sl);
-				float3 subsurfaceColor = sl * _SubsurfaceColor;
+				//float sl = smoothstep(-_RollOff, 1, ldn) - smoothstep(0, 1, ldn);
+				//sl = max(0, sl);
+				//float3 subsurfaceColor = sl * _SubsurfaceColor;
 			
-				float3 litColor = (diffColor + subsurfaceColor) * LIGHT_ATTENUATION(i) + specColor;
+				//float3 litColor = (diffColor + subsurfaceColor) * LIGHT_ATTENUATION(i) + specColor;
+				float3 litColor =diffColor;
 				float4 mainColor = tex2D(_MainTex, i.tex);
 				return mainColor * float4(litColor, 1);
 			}

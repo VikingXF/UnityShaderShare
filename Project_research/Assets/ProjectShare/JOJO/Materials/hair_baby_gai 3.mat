@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: babyxinyifu_L 1
+  m_Name: hair_baby_gai 3
   m_Shader: {fileID: 4800000, guid: cc91332cfee216545b2b2989241a4700, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BasicColAndRoughnessTex:
-        m_Texture: {fileID: 2800000, guid: 227153f7cc90916489fc777af8f6eda7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 74abe8ecc4f469b428b3972059696d37, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BeckmannTex:
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2aa7e03ab43e80c4797aaeefcc3a4af9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -48,11 +48,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _InteriorColAndSpecularTex:
-        m_Texture: {fileID: 2800000, guid: 227153f7cc90916489fc777af8f6eda7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 74abe8ecc4f469b428b3972059696d37, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 227153f7cc90916489fc777af8f6eda7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 74abe8ecc4f469b428b3972059696d37, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d6162159e39f8f445a4541b541b1204a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -72,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RimLightSampler:
-        m_Texture: {fileID: 2800000, guid: bb43cabd9d5257f42b686a3df58aa7bb, type: 3}
+        m_Texture: {fileID: 2800000, guid: af1083fc984136d49ba2f2104a7eb156, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecTex:
@@ -80,47 +80,49 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BackSssDistortion: 0.52
+    - _BackSssDistortion: 0.57
     - _BackSssIntensity: 0.5
     - _BumpBias: 2
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FresnelIntensity: 0.39
-    - _FresnelPower: 2.4
-    - _FrontSssDistortion: 0.85
-    - _FrontSssIntensity: 0.22
-    - _Gloss: 0.61
+    - _FresnelIntensity: 0.27
+    - _FresnelPower: 4.8
+    - _FrontSssDistortion: 0.83
+    - _FrontSssIntensity: 0.45
+    - _Gloss: 0.63
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _InteriorColorPower: 0
+    - _InteriorColorPower: 0.46
     - _Metallic: 0
     - _Mode: 0
-    - _Noiseiling: 2
+    - _Noiseiling: 89
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimIntensity: 0.2
+    - _RimIntensity: 0.35
     - _RollOff: 0.2
     - _SmoothnessTextureChannel: 0
     - _SpecBrightness: 0.75
     - _SpecRoughness: 0.15
     - _Specular: 0.22
     - _SpecularHighlights: 1
-    - _SpecularRate: 1
-    - _SpecularScopeMax: 0.3
-    - _SpecularScopeMin: 0.95
+    - _SpecularRate: 0.4
+    - _SpecularScopeMax: 0.78
+    - _SpecularScopeMin: 0.41
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UnlitRate: 0.43
+    - _UnlitRate: 0.5
     - _ZWrite: 1
     m_Colors:
     - _AmbientLight: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseWrap: {r: 0.75, g: 0.375, b: 0.1875, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _InteriorColor: {r: 0.7993938, g: 0.3693485, b: 0.9433962, a: 1}
+    - _InteriorColor: {r: 1, g: 1, b: 1, a: 1}
+    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _LightDir: {r: 0, g: 0, b: -1, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SubsurfaceColor: {r: 1, g: 0.2, b: 0.2, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}

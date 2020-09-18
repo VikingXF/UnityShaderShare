@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: baby_u2_v2
-  m_Shader: {fileID: 4800000, guid: e8b77ae38bd799d45913388191bb4fec, type: 3}
+  m_Shader: {fileID: 4800000, guid: cc91332cfee216545b2b2989241a4700, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -52,14 +52,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BackSssDistortion: 0.5
+    - _BackSssDistortion: 0.52
     - _BackSssIntensity: 0.5
     - _BumpBias: 2
-    - _FresnelIntensity: 0.5
-    - _FresnelPower: 11
-    - _FrontSssDistortion: 0.18
-    - _FrontSssIntensity: 0.5
-    - _InteriorColorPower: 0.83
+    - _FresnelIntensity: 0.57
+    - _FresnelPower: 1.8
+    - _FrontSssDistortion: 0.85
+    - _FrontSssIntensity: 0.28
+    - _InteriorColorPower: 0.75
     - _Noiseiling: 24
     - _RimIntensity: 0.32
     - _RollOff: 0.2
@@ -72,6 +72,7 @@ Material:
     m_Colors:
     - _AmbientLight: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseWrap: {r: 0.75, g: 0.375, b: 0.1875, a: 0}
+    - _InteriorColor: {r: 0.7993938, g: 0.3693485, b: 0.9433962, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SubsurfaceColor: {r: 1, g: 0.2, b: 0.2, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}
