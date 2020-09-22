@@ -225,35 +225,69 @@ public class ChangerShader : EditorWindow
                     Material m = AssetDatabase.LoadAssetAtPath(path, typeof(Material)) as Material;
                     if (m.shader == Shader.Find("Unlit/Texture"))
                     {
-                        m.shader = Shader.Find("Babybus/Unlit/Texture");
+                        int RenderQueueint = m.renderQueue;
+                        m.shader = Shader.Find("Babybus/Unlit/Texture");                        
+                        m.renderQueue = RenderQueueint;
                     }
                     if (m.shader == Shader.Find("Unlit/Transparent"))
                     {
+                        int RenderQueueint = m.renderQueue;
                         m.shader = Shader.Find("Babybus/Unlit/Transparent");
+                        m.renderQueue = RenderQueueint;
                     }
                     if (m.shader == Shader.Find("Unlit/Transparent Cutout"))
                     {
+                        int RenderQueueint = m.renderQueue;
                         m.shader = Shader.Find("Babybus/Unlit/TransparentCutout");
+                        m.renderQueue = RenderQueueint;
                     }
                     if (m.shader == Shader.Find("Legacy Shaders/Transparent/Cutout/Soft Edge Unlit"))
                     {
+                        int RenderQueueint = m.renderQueue;
                         m.shader = Shader.Find("Babybus/Cutout/Color Soft Edge Unlit");
+                        m.renderQueue = RenderQueueint;
                     }
                     if (m.shader == Shader.Find("Mobile/Particles/Additive"))
                     {
+                        int RenderQueueint = m.renderQueue;
                         m.shader = Shader.Find("Babybus/Particles/Additive");
+                        m.renderQueue = RenderQueueint;
                     }
                     if (m.shader == Shader.Find("Mobile/Particles/Alpha Blended"))
                     {
+                        int RenderQueueint = m.renderQueue;
                         m.shader = Shader.Find("Babybus/Particles/Alpha Blended");
+                        m.renderQueue = RenderQueueint;
                     }
                     if (m.shader == Shader.Find("Legacy Shaders/Particles/Additive"))
                     {
+                        int RenderQueueint = m.renderQueue;
                         m.shader = Shader.Find("Babybus/Particles/Additive Color");
+                        m.renderQueue = RenderQueueint;
                     }
                     if (m.shader == Shader.Find("Legacy Shaders/Particles/Alpha Blended"))
                     {
+                        int RenderQueueint = m.renderQueue;
                         m.shader = Shader.Find("Babybus/Particles/Alpha Blended Color");
+                        m.renderQueue = RenderQueueint;
+                    }
+					if (m.shader == Shader.Find("Particles/Alpha Blended"))
+                    {
+                        int RenderQueueint = m.renderQueue;
+                        m.shader = Shader.Find("Babybus/Particles/Alpha Blended Color");
+                        m.renderQueue = RenderQueueint;
+                    }
+					if (m.shader == Shader.Find("Babybus/Particles/Alpha Blended"))
+                    {
+                        int RenderQueueint = m.renderQueue;
+                        m.shader = Shader.Find("Babybus/Particles/Alpha Blended Color");
+                        m.renderQueue = RenderQueueint;
+                    }
+					if (m.shader == Shader.Find("Particles/Additive"))
+                    {
+                        int RenderQueueint = m.renderQueue;
+                        m.shader = Shader.Find("Babybus/Particles/Additive Color");
+                        m.renderQueue = RenderQueueint;
                     }
                 }
                    
@@ -271,35 +305,51 @@ public class ChangerShader : EditorWindow
                             Material m = AssetDatabase.LoadAssetAtPath(path, typeof(Material)) as Material;
                             if (m.shader == Shader.Find("Unlit/Texture"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Unlit/Texture");
+                                m.renderQueue = RenderQueueint;
                             }
                             if (m.shader == Shader.Find("Unlit/Transparent"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Unlit/Transparent");
+                                m.renderQueue = RenderQueueint;
                             }
                             if (m.shader == Shader.Find("Unlit/Transparent Cutout"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Unlit/TransparentCutout");
+                                m.renderQueue = RenderQueueint;
                             }
                             if (m.shader == Shader.Find("Legacy Shaders/Transparent/Cutout/Soft Edge Unlit"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Cutout/Color Soft Edge Unlit");
+                                m.renderQueue = RenderQueueint;
                             }
                             if (m.shader == Shader.Find("Mobile/Particles/Additive"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Particles/Additive");
+                                m.renderQueue = RenderQueueint;
                             }
                             if (m.shader == Shader.Find("Mobile/Particles/Alpha Blended"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Particles/Alpha Blended");
+                                m.renderQueue = RenderQueueint;
                             }
                             if (m.shader == Shader.Find("Legacy Shaders/Particles/Additive"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Particles/Additive Color");
+                                m.renderQueue = RenderQueueint;
                             }
                             if (m.shader == Shader.Find("Legacy Shaders/Particles/Alpha Blended"))
                             {
+                                int RenderQueueint = m.renderQueue;
                                 m.shader = Shader.Find("Babybus/Particles/Alpha Blended Color");
+                                m.renderQueue = RenderQueueint;
                             }
                         }
                     }
