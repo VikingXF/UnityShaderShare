@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tex_Dog_Welsi_basic_b
+  m_Name: "\u5B9D\u5B9D\u5DF4\u58EB-\u5BA0\u7269\u751F\u6D3B-\u67F4\u72AC\u4E2D03\u6BDB\u53D1"
   m_Shader: {fileID: 4800000, guid: 7d44983479399a94ca9b1c43f856fac9, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 92f54365c9fcde44d9e5ebfb6848e740, type: 3}
+        m_Texture: {fileID: 2800000, guid: 32ef3795755cac44ca958d2c8c69d58e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -97,7 +97,7 @@ Material:
     - _Displacement: 0.963
     - _Distortion: 0
     - _DstBlend: 10
-    - _EdgeFade: 0.42
+    - _EdgeFade: 0.916
     - _FabricScatterScale: 0
     - _FurAOInstensity: 0.1
     - _FurDensity: 0.42
@@ -111,7 +111,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Power: 100
-    - _SmoothnessTextureChannel: 1
+    - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _ThicknessScale: 0.5
@@ -124,7 +124,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FabricScatterColor: {r: 0.6037736, g: 0.26486292, b: 0.26486292, a: 1}
-    - _Gravity: {r: 0, g: 1, b: 0, a: 0}
+    - _Gravity: {r: 0.91, g: -1, b: 0, a: 0}
     - _LightDirection0: {r: 1, g: 0, b: 0, a: 1}
     - _LightDirection1: {r: 1, g: 0, b: 0, a: 1}
     - _MyLightColor0: {r: 1, g: 1, b: 1, a: 1}

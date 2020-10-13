@@ -1,9 +1,5 @@
-﻿// Unlit shader. Simplest possible textured shader.
-// - no lighting
-// - no lightmap support
-// - no per-material color
-
-Shader "Unlit/Fur" {
+﻿
+Shader "VikingXF/Fur/Unit_Fur" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_LayerTex("Layer", 2D) = "white" {}
