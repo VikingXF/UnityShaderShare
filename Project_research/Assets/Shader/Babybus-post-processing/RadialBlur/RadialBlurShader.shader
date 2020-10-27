@@ -17,6 +17,28 @@ Shader "Babybus/PostEffect/RadialBlurShader"
 	float4 _MainTex_TexelSize;
 	#include "UnityCG.cginc"
 	//#define SAMPLE_COUNT 3		//迭代次数
+
+	//定义最后插值使用的结构体
+	struct v2f_lerp
+	{
+		float4 pos : SV_POSITION;
+		float2 uv1 : TEXCOORD0; //uv1
+		float2 uv2 : TEXCOORD1; //uv2
+	};
+	v2f_lerp vert_lerp(appdata_img v)
+	{
+		v2f_lerp o;
+		o.pos = UnityObjectToClipPos(v.vertex);
+		o.uv1 = v.texcoord.xy;
+		o.uv2 = v.texcoord.xy;
+		//dx中纹理从左上角为初始坐标，需要反向(在写rt的时候需要注意)
+		#if UNITY_UV_STARTS_AT_TOP
+			if (_MainTex_TexelSize.y < 0)
+				o.uv2.y = 1 - o.uv2.y;
+		#endif
+		return o;
+	}
+
 	fixed4 frag_blur(v2f_img i) : SV_Target
 	{
 		//模糊方向为模糊中点指向边缘（当前像素点），而越边缘该值越大，越模糊
@@ -33,26 +55,7 @@ Shader "Babybus/PostEffect/RadialBlurShader"
 		outColor /= _BlurIteration;
 		return outColor;
 	}
-	//定义最后插值使用的结构体
-	struct v2f_lerp
-	{
-		float4 pos : SV_POSITION;
-		float2 uv1 : TEXCOORD0; //uv1
-		float2 uv2 : TEXCOORD1; //uv2
-	};
-	v2f_lerp vert_lerp(appdata_img v)
-	{
-		v2f_lerp o;
-		o.pos = UnityObjectToClipPos(v.vertex);
-		o.uv1 = v.texcoord.xy;
-		o.uv2 = v.texcoord.xy;
-		//dx中纹理从左上角为初始坐标，需要反向(在写rt的时候需要注意)
-		#if UNITY_UV_STARTS_AT_TOP
-		if (_MainTex_TexelSize.y < 0)
-			o.uv2.y = 1 - o.uv2.y;
-		#endif
-		return o;
-	}
+
 	fixed4 frag_lerp(v2f_lerp i) : SV_Target
 	{
 		float2 dir = i.uv1 - _BlurCenter.xy;
@@ -74,7 +77,8 @@ Shader "Babybus/PostEffect/RadialBlurShader"
 			Fog{Mode off}
 			//调用CG函数	
 			CGPROGRAM
-			//使效率更高的编译宏
+			//使效率更高的编译宏，低精度（一般是指fp16）
+			//ARB_precision_hint_nicest 高精度（一般是指fp32）
 			#pragma fragmentoption ARB_precision_hint_fastest 
 			//vert_img是在UnityCG.cginc中定义好的，当后处理vert阶段计算常规，可以直接使用自带的vert_img
 			#pragma vertex vert_img
@@ -90,9 +94,9 @@ Shader "Babybus/PostEffect/RadialBlurShader"
 			Fog {Mode off}
 			//调用CG函数	
 			CGPROGRAM
-			//使效率更高的编译宏
+			//使效率更高的编译宏，低精度（一般是指fp16）
+			//ARB_precision_hint_nicest 高精度（一般是指fp32）
 			#pragma fragmentoption ARB_precision_hint_fastest 
-			//vert_img是在UnityCG.cginc中定义好的，当后处理vert阶段计算常规，可以直接使用自带的vert_img
 			#pragma vertex vert_lerp
 			#pragma fragment frag_lerp 
 			ENDCG
