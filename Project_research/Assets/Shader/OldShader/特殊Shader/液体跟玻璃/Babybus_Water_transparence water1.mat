@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Babybus_Water_transparence water1
+  m_Shader: {fileID: 4800000, guid: a8589c0ee5973974ea5be57dad1d44cc, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Fresnel: 2
+    - _Intensity: 0.3
+    - _Scale: 2
+    - _Speed: 1
+    - _amplitude: 0.017
+    - _high: -0.15
+    - _remap1_oMax: 7.8
+    - _remap2_oMax: 18.5
+    m_Colors:
+    - _Color: {r: 0.9921569, g: 0.7372549, b: 0.03529412, a: 1}
+    - _Color2: {r: 0.8867924, g: 0.69745237, b: 0.13803846, a: 1}
+    - _FresnelColor: {r: 0.4061054, g: 0.49081624, b: 0.509434, a: 1}

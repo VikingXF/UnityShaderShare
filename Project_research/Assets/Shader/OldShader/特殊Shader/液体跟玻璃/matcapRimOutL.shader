@@ -8,7 +8,7 @@ Rim+matcap效果
 
 **********************************************************************/
 
-Shader "Babybus/Unlit/matcap Rim"
+Shader "Babybus/matcap/matcapRimOutL"
 {
 	Properties
 	{
@@ -16,7 +16,7 @@ Shader "Babybus/Unlit/matcap Rim"
 		_MatCap("Ramp Texture", 2D) = "white" {}			
 		_RimColor("Rim Color" , Color) = (0,0.5,1,1)
 		_RimPower("Rim Power" , Range(0,8)) = 2
-		_Rimstrength("Rim strength" , Range(0,8)) = 1
+		_OutLstrength("OutL strength" , Range(0,8)) = 1
 		
 	}
 	SubShader
@@ -109,11 +109,11 @@ Shader "Babybus/Unlit/matcap Rim"
 			};
 
 			fixed4 _RimColor;
-			half _Rimstrength , _RimPower;
+			half _OutLstrength , _RimPower;
 			v2f vert (appdata v)
 			{
 				v2f o;
-				v.vertex.xyz += v.normal*_Rimstrength;
+				v.vertex.xyz += v.normal*_OutLstrength;
 				o.pos = UnityObjectToClipPos(v.vertex);
 				
 				o.Normal = UnityObjectToWorldNormal(v.normal);
