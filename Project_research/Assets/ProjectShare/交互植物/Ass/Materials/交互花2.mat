@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u4EA4\u4E92\u82B1"
-  m_Shader: {fileID: 4800000, guid: 899b16ed4d9085f4ca67b17ed6a15322, type: 3}
+  m_Name: "\u4EA4\u4E92\u82B12"
+  m_Shader: {fileID: 4800000, guid: e3c45a4bf525d6c458c4bf065575dc2d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Noise:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 58992d808373dc845816b3832d226d96, type: 3}
         m_Scale: {x: 0.01, y: 7.8}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -79,5 +79,5 @@ Material:
     m_Colors:
     - _Color: {r: 0.588, g: 0.588, b: 0.588, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _WaveControl: {r: 2.67, g: 1.59, b: 1, a: 2.44}
-    - _WindControl: {r: 0.03, g: 0.02, b: 0.03, a: 5}
+    - _WaveControl: {r: 1.5, g: 0, b: 1.5, a: 1}
+    - _WindControl: {r: 0.01, g: 0, b: 0.02, a: 5}
