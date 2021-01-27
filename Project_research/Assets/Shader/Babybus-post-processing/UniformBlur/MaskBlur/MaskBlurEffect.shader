@@ -1,4 +1,4 @@
-﻿Shader "Babybus/Screen Effects/MaskBlurEffect"
+﻿Shader "Babybus/ScreenEffects/MaskBlurEffect"
 {
     Properties
     {
