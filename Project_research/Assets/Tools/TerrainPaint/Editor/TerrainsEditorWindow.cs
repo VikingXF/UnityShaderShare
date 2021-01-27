@@ -152,8 +152,8 @@ public class TerrainsEditorWindow : EditorWindow
             if (Selection.activeTransform.gameObject.GetComponent<Terrain>())
             {
                 terrainDat = Selection.activeTransform.gameObject.GetComponent<Terrain>().terrainData;
-                HeightmapWidth = terrainDat.heightmapWidth;
-                HeightmapHeight = terrainDat.heightmapHeight;
+                HeightmapWidth = terrainDat.heightmapResolution;
+                HeightmapHeight = terrainDat.heightmapResolution;
                 EditorGUILayout.Space();
                 GUILayout.Label("Set", EditorStyles.boldLabel);
                 GUILayout.BeginVertical("box");
@@ -252,8 +252,8 @@ public class TerrainsEditorWindow : EditorWindow
 
         terrain = CurrentSelect.GetComponent<Terrain>().terrainData;
 
-        int w = terrain.heightmapWidth;
-        int h = terrain.heightmapHeight;
+        int w = terrain.heightmapResolution;
+        int h = terrain.heightmapResolution;
         //Debug.Log("w："+w);
        //Debug.Log("h：" + h);
         Vector3 meshScale = terrain.size;
