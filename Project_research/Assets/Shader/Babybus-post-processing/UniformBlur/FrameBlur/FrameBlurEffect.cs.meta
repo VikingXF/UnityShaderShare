@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4fe89d2b36080184995ec46cf1b1cff9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BlurCamera: {instanceID: 0}
+  - FrameBlurMaterial: {fileID: 2100000, guid: 3211a9280091e4e48b2546937e3983f8, type: 2}
+  - cam: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
