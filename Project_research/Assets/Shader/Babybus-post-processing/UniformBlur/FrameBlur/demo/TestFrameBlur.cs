@@ -9,7 +9,7 @@ public class TestFrameBlur : MonoBehaviour
     // Start is called before the first frame update
     public void EnblFrameblur()
     {
-        this.GetComponent<BabybusPostProcessing.FrameBlurEffect>().enabled = true;
+        this.gameObject.SetActive(true);
         //this.GetComponent<Image>().enabled = true;
     }
 

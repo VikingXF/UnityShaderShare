@@ -32,7 +32,7 @@ namespace BabybusPostProcessing
         private RenderTexture destRT;
         private RenderTexture sourceRT;
 
-        public Camera BlurCamera;
+        public List<Camera> BlurCameras;
         public Material FrameBlurMaterial;
 
         //=========3D相机创建============
@@ -43,7 +43,7 @@ namespace BabybusPostProcessing
         [Range(0.03f, 100f)]
         public float len = 1f;
         private float camelen;
-        public bool IsUiImage = true;
+        //public bool IsUiImage = false;
 
         #endregion
 
@@ -65,11 +65,13 @@ namespace BabybusPostProcessing
             {
                 scale = TargetCam.orthographicSize * 2f;
             }
-            camelen = TargetCam.transform.position.z + TargetCam.farClipPlane - len;
-            this.GetComponent<Transform>().localPosition = new Vector3(TargetCam.transform.position.x, TargetCam.transform.position.y, camelen);
-            this.GetComponent<Transform>().localScale = new Vector3(scale * TargetCam.pixelWidth / TargetCam.pixelHeight, scale, 1);
-
-
+            camelen = TargetCam.farClipPlane - len;
+            this.GetComponent<Transform>().position = TargetCam.transform.position + TargetCam.transform.forward * camelen;
+            this.GetComponent<Transform>().rotation = TargetCam.transform.rotation;
+            var scaleSize = new Vector3(transform.lossyScale.x / transform.localScale.x,
+                transform.lossyScale.y / transform.localScale.y, transform.lossyScale.z / transform.localScale.z);
+            var tarScale = new Vector3(scale * TargetCam.pixelWidth / TargetCam.pixelHeight /scaleSize.x, scale / scaleSize.y, 1/scaleSize.z);
+            this.GetComponent<Transform>().localScale = tarScale;
         }
         public void SetRenderTextureBlur()
         {
@@ -79,21 +81,27 @@ namespace BabybusPostProcessing
             sourceRT = new RenderTexture((int)Screen.width, (int)Screen.height,16);
             destRT = new RenderTexture((int)Screen.width / DownSampleNum, (int)Screen.height / DownSampleNum,16);
             // 临时设置相关相机的targetTexture为rt, 并手动渲染相关相机
-            BlurCamera.targetTexture = sourceRT;
-            BlurCamera.Render();
+            foreach (var BlurCamera in BlurCameras)
+            {
+                BlurCamera.targetTexture = sourceRT;
+                BlurCamera.Render();
+            }
 
             //RT模糊
             OnRenderTexBlur(sourceRT);
             FrameBlurMaterial.mainTexture = destRT;
 
             //判断3D/UI镜头，在3D非UI镜头创建
-            if (IsUiImage == false)
-            {
+            //if (IsUiImage == false)
+            //{
                 CreatBackground();
-            }
+            //}
 
-            BlurCamera.targetTexture = null;
-            BlurCamera.gameObject.SetActive(false);
+            foreach (var BlurCamera in BlurCameras)
+            {
+                BlurCamera.targetTexture = null;
+                BlurCamera.enabled = false;
+            }
         }
 
         //对RT进行模糊
