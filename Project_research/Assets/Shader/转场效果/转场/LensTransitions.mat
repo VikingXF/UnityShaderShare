@@ -24,13 +24,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: 6b53fb424ad23a0419aff8804fddb3cb, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 9b7e349fed9ab6347855b43d46704048, type: 3}
+        m_Scale: {x: 1.5, y: 1}
+        m_Offset: {x: -0.25, y: 0}
     m_Floats:
     - _Alpha: 0.41
-    - _Dissolution: 0.29
+    - _Dissolution: 0.46
     - _Flip: 1
-    - _PixelSize: 13
+    - _PixelSize: 1
     - _Style: 4
     m_Colors: []

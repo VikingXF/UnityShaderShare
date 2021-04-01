@@ -132,7 +132,7 @@
 		Pass
 		{
 			Cull Front
-			Offset -1, -1
+			Offset -5, -5
 
 			CGPROGRAM
 			#pragma vertex vert_flip
@@ -144,7 +144,7 @@
 		Pass
 		{
 			Cull Back
-			Offset 1, 1
+			Offset 5, 5
 
 			CGPROGRAM
 

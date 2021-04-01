@@ -54,8 +54,8 @@
                 fixed4 col = tex2D(_MainTex, i.uv);
 				
 				float2 uv_center = i.uv*2.0-1;	
-				float2 uv_dir = distance(uv_center,fixed2(0,0)); 
-
+				//float2 uv_dir = distance(uv_center,fixed2(0,0)); 
+				float2 uv_dir = distance(fixed2(0,0),uv_center); 
 				//col.rgb = fixed3(uv_dir.x,uv_dir.x,uv_dir.x);
 				
 				clip((col.a-uv_dir-_Cutoff));

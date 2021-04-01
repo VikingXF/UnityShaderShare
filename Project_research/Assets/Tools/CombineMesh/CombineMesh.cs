@@ -19,27 +19,38 @@ namespace CombineMeshSpace
         // Saving options
         public bool savePrefabs = true;
         public bool saveMesh = true;
-       // public bool saveMeshFbx = true;
+       //public bool saveMeshFbx = true;
         public bool saveMaterials = true;
         public bool saveTextures = true;
         public string folder = "Assets/Tools/CombineMesh/";
+        public List<GameObject> CombineMeshs = new List<GameObject>();
 
-        //1.实现多个Mesh合并为一个Mesh的多维材质
-        public void CombineBasicMesh()
+        public void CombineLightmapMesh()
         {
-            MeshRenderer[] meshRenders = GetComponentsInChildren<MeshRenderer>();
-            List<Material> mats = new List<Material>();
+
+            List<MeshRenderer> meshRenders = new List<MeshRenderer>();
             MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
             List<CombineInstance> combine = new List<CombineInstance>();
+            List<Vector2[]> uvList2 = new List<Vector2[]>();
+
+            List<Material> mats = new List<Material>();
             GameObject go = new GameObject();
             go.name = CombineName;
 
-            for (int i = 0; i < meshRenders.Length; i++)
+            foreach (var CombineMesh in CombineMeshs)
             {
+                meshRenders.Add(CombineMesh.GetComponent<MeshRenderer>());
+            }
+            Debug.Log(meshRenders.Count);
+            for (int i = 0; i < meshRenders.Count; i++)
+            {
+                Vector2 lightmapScale = new Vector2(meshRenders[i].lightmapScaleOffset.x, meshRenders[i].lightmapScaleOffset.y);
+                Vector2 lightmapOffset = new Vector2(meshRenders[i].lightmapScaleOffset.z, meshRenders[i].lightmapScaleOffset.w);
                 for (int j = 0; j < meshRenders[i].sharedMaterials.Length; j++)
                 {
                     CombineInstance com = new CombineInstance();
                     com.mesh = meshFilters[i].sharedMesh;
+                    com.lightmapScaleOffset = meshRenders[i].lightmapScaleOffset;
                     com.subMeshIndex = j;
                     com.transform = meshFilters[i].transform.localToWorldMatrix;
 
@@ -50,20 +61,48 @@ namespace CombineMeshSpace
 
                         CombineInstance[] comM = new CombineInstance[2] { combine.ToArray()[t], com };
                         Mesh mm = new Mesh();
+
                         mm.CombineMeshes(comM, true);
 
+
                         CombineInstance comcom = new CombineInstance();
-                        comcom.mesh = mm;                        
+                        comcom.mesh = mm;
+
                         comcom.transform = go.transform.localToWorldMatrix;
                         combine[t] = comcom;
 
                         continue;
                     }
+                    // com.lightmapScaleOffset = meshRenders[i].lightmapScaleOffset;
 
+                    Vector2[] uvList2Array = new Vector2[com.mesh.uv2.Length];
+                    for (int k = 0; k < com.mesh.uv2.Length; k++)
+                    {
+                        Vector2 uv2scale;
+                        Debug.Log(com.mesh.uv2.Length);
+                        Debug.Log("meshFilters" + meshFilters[i].mesh.uv2[k]);
+                        Debug.Log("com" + com.mesh.uv2[k]);
+                        Debug.Log("x" + com.lightmapScaleOffset.x);
+                        Debug.Log("z" + com.lightmapScaleOffset.z);
+                        Debug.Log("w" + com.lightmapScaleOffset.w);
+                        uv2scale.x = com.mesh.uv2[k].x * lightmapScale.x;
+                        uv2scale.y = com.mesh.uv2[k].y * lightmapScale.y;
+                        uvList2Array[k] = uv2scale + lightmapOffset;
+                        Debug.Log("uvList2Array" + uvList2Array[k]);
+                    }
+
+                    com.mesh.uv2 = uvList2Array;
                     combine.Add(com);
                     mats.Add(meshRenders[i].sharedMaterials[j]);
                 }
-                meshFilters[i].gameObject.SetActive(false);
+
+                //Vector2[] uvList2Array = new Vector2[meshFilters[i].mesh.uv2.Length];
+                //for (int j = 0; j < meshFilters[i].mesh.uv2.Length; j++)
+                //{
+                //    uvList2Array[j] = meshFilters[i].mesh.uv2[j] * new Vector2(meshRenders[i].lightmapScaleOffset.x, meshRenders[i].lightmapScaleOffset.y) + new Vector2(meshRenders[i].lightmapScaleOffset.z, meshRenders[i].lightmapScaleOffset.w);               
+                //}
+                //uvList2.Add(uvList2Array);
+
             }
 
             MeshRenderer mr = go.AddComponent<MeshRenderer>();
@@ -71,9 +110,100 @@ namespace CombineMeshSpace
             mf.sharedMesh = new Mesh();
             mf.sharedMesh.name = CombineName;
             mf.sharedMesh.CombineMeshes(combine.ToArray(), false);
+            //mf.sharedMesh.uv2 = uvList2.ToArray();
+
             gameObject.SetActive(true);
             mr.sharedMaterials = mats.ToArray();
             go.transform.parent = gameObject.transform;
+
+            //====
+            mr.lightmapIndex = 0;
+            mr.lightmapScaleOffset = new Vector4(1, 1, 0, 0);
+            go.isStatic = true;
+            //=====
+
+            savePrefabs = true;
+            saveMesh = true;
+            saveMaterials = false;
+            saveTextures = false;
+            //Save(go);
+        }
+
+
+        //1.实现多个Mesh合并为一个Mesh的多维材质
+        public void CombineBasicMesh()
+        {
+           
+
+            List<MeshRenderer> meshRenders = new List<MeshRenderer>(); 
+            foreach (var CombineMesh in CombineMeshs)
+            {
+                meshRenders.Add(CombineMesh.GetComponent<MeshRenderer>());
+            }
+          
+            List<Material> mats = new List<Material>();
+            //Vector2 Lightuv2 = new Vector2();
+            MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+            List<CombineInstance> combine = new List<CombineInstance>();
+            GameObject go = new GameObject();
+            go.name = CombineName;
+
+            for (int i = 0; i < meshRenders.Count; i++)
+            {
+                for (int j = 0; j < meshRenders[i].sharedMaterials.Length; j++)
+                {
+                    CombineInstance com = new CombineInstance();
+                    com.mesh = meshFilters[i].sharedMesh;
+                    com.subMeshIndex = j;
+                    com.transform = meshFilters[i].transform.localToWorldMatrix;
+                   
+                    //判断相同材质公用
+                    if (mats.Contains(meshRenders[i].sharedMaterials[j]))
+                    {
+                        var t = mats.IndexOf(meshRenders[i].sharedMaterials[j]);
+
+                        CombineInstance[] comM = new CombineInstance[2] { combine.ToArray()[t], com };
+                        Mesh mm = new Mesh();
+ 
+                        mm.CombineMeshes(comM, true);
+
+                        //Vector2 uvscale = new Vector2(com.lightmapScaleOffset.x, com.lightmapScaleOffset.y);
+                        //Vector2 uvoffset = new Vector2(com.lightmapScaleOffset.z, com.lightmapScaleOffset.w);
+ 
+
+                        CombineInstance comcom = new CombineInstance();
+                        comcom.mesh = mm;  
+                        
+                        comcom.transform = go.transform.localToWorldMatrix;
+                        combine[t] = comcom;
+
+                        continue;
+                    }
+                   // com.lightmapScaleOffset = meshRenders[i].lightmapScaleOffset;
+                    combine.Add(com);
+                    mats.Add(meshRenders[i].sharedMaterials[j]);
+                }
+
+                //meshFilters[i].gameObject.SetActive(false);
+            }
+
+
+
+            MeshRenderer mr = go.AddComponent<MeshRenderer>();
+            MeshFilter mf = go.AddComponent<MeshFilter>();
+            mf.sharedMesh = new Mesh();
+            mf.sharedMesh.name = CombineName;
+            mf.sharedMesh.CombineMeshes(combine.ToArray(), false);
+
+            gameObject.SetActive(true);
+            mr.sharedMaterials = mats.ToArray();
+            go.transform.parent = gameObject.transform;
+
+            //====
+            mr.lightmapIndex = 0;
+            mr.lightmapScaleOffset = new Vector4(1, 1, 0, 0);
+            go.isStatic = true;
+            //=====
 
             savePrefabs = true;
             saveMesh = true;
@@ -82,6 +212,10 @@ namespace CombineMeshSpace
             Save(go);
             //Destroy(go);
         }
+
+
+ 
+
 
         //2.实现多个Mesh合并，贴图合并，材质合并为一个
         public void CombineMeshTexture()
@@ -197,11 +331,14 @@ namespace CombineMeshSpace
             mf.sharedMesh.name = CombineName;
             mf.sharedMesh.CombineMeshes(combine.ToArray(), true);
             mf.sharedMesh.uv = atlasUVs;
+            
 
             Material material = new Material(shaders[0]);
             material.name = CombineName;
             TextureAtlas.name = CombineName;
             material.mainTexture = TextureAtlas;
+
+           
             mr.sharedMaterial = material;
 
             gameObject.SetActive(true);

@@ -30,5 +30,5 @@ Material:
     m_Floats:
     - _CurPageAngle: 0.256
     - _Direction: 0
-    - _PageAngle: 0.11
+    - _PageAngle: 0
     m_Colors: []

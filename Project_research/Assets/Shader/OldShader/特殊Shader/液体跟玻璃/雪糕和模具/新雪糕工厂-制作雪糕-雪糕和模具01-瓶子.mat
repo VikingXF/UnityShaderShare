@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: "\u65B0\u96EA\u7CD5\u5DE5\u5382-\u5236\u4F5C\u96EA\u7CD5-\u96EA\u7CD5\u548C\u6A21\u517701-\u74F6\u5B50"
+  m_Shader: {fileID: 4800000, guid: 1a8d9d68bb8059546bf383e5fa5393cb, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3001
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 71c16c5410f99c44da23b5241e143ffd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCap:
+        m_Texture: {fileID: 2800000, guid: cbf33520f7fd8594d87030b797e9d2ec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _MatCapAlpha: 0.196
+    - _OutLstrength: 0
+    - _RimIntensity: 4.54
+    - _RimPower: 0.83
+    - _Rimstrength: 0.001
+    m_Colors:
+    - _RimColor: {r: 0.6921057, g: 0.9278702, b: 0.9716981, a: 0.20784314}

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UnlitTexture 6
+  m_Name: Legacy ShadersParticlesAdditive
   m_Shader: {fileID: 4800000, guid: adfddec53fc719c47b6158c94d9785ae, type: 3}
   m_ShaderKeywords: _AXIALXY_X _DIRECTION_BOTTOM _TRANSFORMPOINT_CENTER _TRANSFORMPOINT_COUNTERCLOCKWISE
   m_LightmapFlags: 5
