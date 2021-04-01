@@ -1,17 +1,25 @@
-﻿Shader "Babybus/Grass/FlowerVertexAni"
+﻿Shader "Babybus/Grass/SeaweedVertexAni"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-      
-        _WindControl("WindControl(x:XSpeed y:YSpeed z:ZSpeed w:windMagnitude)",vector) = (0.02,0.02,0.02,0.5)
+		
+		_TimeScale("波速(x/y/z)",vector) = (1,1,1,1)
+		_remap("振幅(x/y/z)",vector) = (1,1,1,1)
+		_amplitude("振幅强度(x/y/z)",vector) = (1,1,1,1)
+        _WindControl("摆动速度(x/y/z)",vector) = (0.02,0.02,0.02,0.5)
         //前面几个分量表示在各个轴向上自身摆动的速度, w表示摆动的强度
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags
+		{ 
+			"Queue"="Transparent" 
+			"IgnoreProjector"="True" 
+			"RenderType"="Transparent" 
+		}
         LOD 100
-
+		Blend SrcAlpha OneMinusSrcAlpha 
         Pass
         {
             CGPROGRAM
@@ -37,20 +45,27 @@
             };
 
             sampler2D _MainTex;
+			float4 _MainTex_ST;
             
-            half4 _WindControl;
-
-
+			half4 _TimeScale,_remap,_amplitude;
+			half4 _WindControl;
+			
             v2f vert (appdata v)
             {
                 v2f o;
                 UNITY_SETUP_INSTANCE_ID(v);
                 float4 worldPos = mul(unity_ObjectToWorld, v.vertex);
-				worldPos.x += sin(_Time.y)*v.uv2.y*_WindControl.x;
-				worldPos.y += sin(_Time.y)*v.uv2.y*_WindControl.y;
-				worldPos.z += sin(_Time.y)*v.uv2.y*_WindControl.z;
+				half4 offset = half4(1,1,1,1);
+				offset.x = _amplitude.x*sin(v.uv2.y*_remap.x +_Time.y*_TimeScale.x)*v.uv2.y+sin(_Time.y)*v.uv2.y*_WindControl.x;
+				offset.y = _amplitude.y*sin(v.uv2.y*_remap.y +_Time.y*_TimeScale.y)*v.uv2.y+sin(_Time.y)*v.uv2.y*_WindControl.y;
+				offset.z = _amplitude.z*sin(v.uv2.y*_remap.z +_Time.y*_TimeScale.z)*v.uv2.y+sin(_Time.y)*v.uv2.y*_WindControl.z;
+				
+				worldPos.x += offset.x;
+				worldPos.y += offset.y;
+				worldPos.z += offset.z;
+
 				o.pos = mul(UNITY_MATRIX_VP, worldPos);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 //o.tempCol = waveSample;
 
                 return o;

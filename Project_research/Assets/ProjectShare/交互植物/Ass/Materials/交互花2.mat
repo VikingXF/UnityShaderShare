@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "\u4EA4\u4E92\u82B12"
-  m_Shader: {fileID: 4800000, guid: e3c45a4bf525d6c458c4bf065575dc2d, type: 3}
+  m_Shader: {fileID: 4800000, guid: 899b16ed4d9085f4ca67b17ed6a15322, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -80,4 +80,4 @@ Material:
     - _Color: {r: 0.588, g: 0.588, b: 0.588, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _WaveControl: {r: 1.5, g: 0, b: 1.5, a: 1}
-    - _WindControl: {r: 0.01, g: 0, b: 0.02, a: 5}
+    - _WindControl: {r: 0.11, g: 0, b: 0.02, a: 5}
