@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u7A7F\u8D8A\u96A7\u9053 1"
-  m_Shader: {fileID: 4800000, guid: 385707edd044c904a81dc6d1aac5bcd0, type: 3}
+  m_Name: "\u65B0\u96EA\u7CD5\u5DE5\u5382-\u96EA\u7CD5\u539F\u6599\u6DF7\u5408\u673A01-\u73BB\u7483"
+  m_Shader: {fileID: 4800000, guid: 4569dd65658d77f458f7a5036417312d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3001
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -40,20 +40,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 24933678f93aeef418f42dff6f5b2aac, type: 3}
+        m_Texture: {fileID: 2800000, guid: cf2fd1c3e1030874e80d27eea7c795cd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 0}
+    - _MatCap:
+        m_Texture: {fileID: 2800000, guid: 25f8197ce96046f478b2322e6b45c090, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: d050b806bd06139468f12b75d02e185f, type: 3}
-        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
@@ -67,26 +63,23 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DistortedTimeX: 0.05
-    - _DistortedTimeY: 0.03
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0
     - _GlossyReflections: 1
-    - _IntensityX: 0
-    - _IntensityY: 0.03
+    - _MatCapAlpha: 0.193
     - _Metallic: 0
     - _Mode: 0
-    - _MultiplierBrigt: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _RimIntensity: 1.58
+    - _RimPower: 2.26
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.4539427, g: 0.70436466, b: 0.9528302, a: 1}

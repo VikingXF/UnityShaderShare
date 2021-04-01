@@ -8,8 +8,8 @@ public class ModelMeshEditor : MonoBehaviour
 {
 
     //控制点的大小
-    public float pointScale = 1.0f;
-    private float lastPointScale = 1.0f;
+    public float pointScale = 0.1f;
+    private float lastPointScale = 0.1f;
 
     Mesh mesh;
 
