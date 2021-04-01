@@ -526,6 +526,19 @@ public class AssetsSettings : EditorWindow
                 if (!textureImporter.DoesSourceTextureHaveAlpha())//不带alpha通道的
                 {
                     textureImporter.alphaIsTransparency = false;
+
+                    //TextureImporterPlatformSettings AndroidNoAlphatextureSettings = new TextureImporterPlatformSettings();
+                    //AndroidNoAlphatextureSettings.name = "Android";
+                    //AndroidNoAlphatextureSettings.maxTextureSize = 1024;
+                    //AndroidNoAlphatextureSettings.format = TextureImporterFormat.ETC_RGB4;
+
+                    //TextureImporterPlatformSettings iPhoneNoAlphatextureSettings = new TextureImporterPlatformSettings();
+                    //iPhoneNoAlphatextureSettings.name = "iPhone";
+                    //iPhoneNoAlphatextureSettings.maxTextureSize = 1024;
+                    //iPhoneNoAlphatextureSettings.format = TextureImporterFormat.PVRTC_RGB4;
+
+                    //textureImporter.SetPlatformTextureSettings(AndroidNoAlphatextureSettings);
+                    //textureImporter.SetPlatformTextureSettings(iPhoneNoAlphatextureSettings);
                     textureImporter.SetPlatformTextureSettings("Android", 1024, TextureImporterFormat.ETC_RGB4);
                     textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.PVRTC_RGB4);
 
@@ -533,6 +546,20 @@ public class AssetsSettings : EditorWindow
                 else  //带alpha通道的
                 {
                     textureImporter.alphaIsTransparency = true;
+
+                    //TextureImporterPlatformSettings AndroidAlphatextureSettings = new TextureImporterPlatformSettings();
+                    //AndroidAlphatextureSettings.name = "Android";
+                    //AndroidAlphatextureSettings.maxTextureSize = 1024;
+                    //AndroidAlphatextureSettings.format = TextureImporterFormat.ETC2_RGBA8;
+
+                    //TextureImporterPlatformSettings iPhoneAlphatextureSettings = new TextureImporterPlatformSettings();
+                    //iPhoneAlphatextureSettings.name = "iPhone";
+                    //iPhoneAlphatextureSettings.maxTextureSize = 1024;
+                    //iPhoneAlphatextureSettings.format = TextureImporterFormat.PVRTC_RGBA4;
+
+                    //textureImporter.SetPlatformTextureSettings(AndroidAlphatextureSettings);
+                    //textureImporter.SetPlatformTextureSettings(iPhoneAlphatextureSettings);
+
                     textureImporter.SetPlatformTextureSettings("Android", 1024, TextureImporterFormat.ETC2_RGBA8);
                     textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.PVRTC_RGBA4);
                 }
@@ -580,11 +607,19 @@ public class AssetsSettings : EditorWindow
                 }
                
                 modelImporter.isReadable = MeshRW;
-                modelImporter.optimizeMesh = MeshOpt;
+                if (MeshOpt)
+                {
+                    modelImporter.optimizeMeshVertices = true;
+                    modelImporter.optimizeMeshPolygons = true;
+
+                }
+                
+                //modelImporter.optimizeMesh = MeshOpt;
                 modelImporter.addCollider = MeshGC;
                 modelImporter.keepQuads = MeshKQ;
 
                 //Animation
+                Debug.Log("MeshImportMaterials" + MeshImportMaterials);
                 modelImporter.importAnimation = MeshIA;
                 if (MeshAnimCompression == true)
                 {
@@ -595,7 +630,16 @@ public class AssetsSettings : EditorWindow
                 }
 
                 //Materials
-                modelImporter.importMaterials = MeshImportMaterials;
+                if (MeshImportMaterials)
+                {
+                    modelImporter.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
+                }
+                else
+                {
+                    modelImporter.materialImportMode = ModelImporterMaterialImportMode.None;
+
+                }
+                //modelImporter.importMaterials = MeshImportMaterials;
                 if (MeshImportMaterials == true)
                 {
                     modelImporter.materialLocation = ModelImporterMaterialLocation.External;
