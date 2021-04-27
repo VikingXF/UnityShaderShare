@@ -3,8 +3,9 @@
     Properties
     {
         _MainTex ("焦散贴图", 2D) = "white" {}
-		_MaskTex("Mask贴图", 2D) = "white" {}
+		_MaskTex("Mask贴图(Mask贴图R通道控制mask区域)", 2D) = "white" {}
 		_CausticIntensity("焦散强度", Range(0.0, 5.0)) = 0.5
+        _TorsionalIntensity("扭曲强度(Mask贴图G通道)", Range(0.0, 1.0)) = 0.5
 		_WaveSpeed("焦散(XY)/Mask(ZW)贴图速度",vector) = (1,1,1,1)
 		
 		
@@ -46,7 +47,7 @@
 
             sampler2D _MainTex, _MaskTex;
             float4 _MainTex_ST, _MaskTex_ST;
-			float _CausticIntensity;
+			float _CausticIntensity,_TorsionalIntensity;
 			float4 _WaveSpeed;
 			float4x4 unity_Projector;
 			float4x4 unity_ProjectorClip;
@@ -69,7 +70,7 @@
             {
                 // sample the texture				
 				float4 Maskcol = tex2D(_MaskTex, i.uv.zw);
-				float4 col = tex2D(_MainTex, i.uv.xy)*_CausticIntensity;
+				float4 col = tex2D(_MainTex, i.uv.xy+Maskcol.g*_TorsionalIntensity)*_CausticIntensity;
 				col = saturate(col*Maskcol.r);
 				
                
