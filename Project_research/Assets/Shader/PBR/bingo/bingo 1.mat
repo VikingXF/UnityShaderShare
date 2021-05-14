@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bingo
-  m_Shader: {fileID: 4800000, guid: 17b862aa3a28b014e9ba9082b9d9ca26, type: 3}
+  m_Name: bingo 1
+  m_Shader: {fileID: 4800000, guid: e0743617b5cabd6488ed32fc477fb52a, type: 3}
   m_ShaderKeywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _USENORMALMAP_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e5dfee4fb29824c43ac818b3f30719d2, type: 3}
+        m_Texture: {fileID: 2800000, guid: bfe82846ea7207a4895e84e0895f03e4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex2:

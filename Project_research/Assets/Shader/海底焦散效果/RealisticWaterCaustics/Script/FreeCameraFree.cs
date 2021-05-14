@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
-public class FreeCamera : MonoBehaviour
+public class FreeCameraFree : MonoBehaviour
 {
     public float m_MoveSpeed = 0f;
     public float m_RotateSpeed = 0f;
