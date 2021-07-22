@@ -6,7 +6,8 @@
         _Dissolution("变化", Range(0,1)) = 0
         _RoundPositionX("消失点X轴偏移",Range(-1,1)) = 0
         _RoundPositionY("消失点Y轴偏移",Range(-1,1)) = 0
-
+        [Toggle]_Soft("边缘柔化?", Float) = 0
+        _Pow("边缘柔化程度", Range(0,100)) = 10
     }
     SubShader
     {
@@ -20,7 +21,7 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
+            #pragma shader_feature _SOFT_ON
             #include "UnityCG.cginc"
 
             struct appdata
@@ -38,7 +39,7 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            fixed _Dissolution;
+            fixed _Dissolution,_Pow;
             fixed _RoundPositionX, _RoundPositionY;
             v2f vert (appdata v)
             {
@@ -54,7 +55,14 @@
                 fixed4 col = tex2D(_MainTex, i.uv);
                 float2 screenPos = i.screenPos.xy/i.screenPos.w * _ScreenParams.xy;
                 float dir = distance(fixed2(_ScreenParams.xy/2+ _ScreenParams.xy / 2*fixed2(_RoundPositionX, _RoundPositionY)), screenPos);
+                
                 col.a = step(max(_ScreenParams.x, _ScreenParams.y) * _Dissolution, dir);
+                #if _SOFT_ON
+                float dir2 = 128*dir/max(_ScreenParams.x, _ScreenParams.y); 
+                          
+                col.a =saturate(pow((1-lerp(-2,1,_Dissolution))*(dir2),_Pow));
+                #endif		
+                
                 return col;
             }
             ENDCG

@@ -567,7 +567,7 @@ namespace BabybusAssetsSettings
                         //textureImporter.SetPlatformTextureSettings(iPhoneNoAlphatextureSettings);
                         textureImporter.SetPlatformTextureSettings("Android", 1024, TextureImporterFormat.ETC_RGB4);
                         textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.PVRTC_RGB4);
-
+                        //textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.ASTC_RGBA_6x6);
                     }
                     else  //带alpha通道的
                     {
@@ -587,7 +587,8 @@ namespace BabybusAssetsSettings
                         //textureImporter.SetPlatformTextureSettings(iPhoneAlphatextureSettings);
 
                         textureImporter.SetPlatformTextureSettings("Android", 1024, TextureImporterFormat.ETC2_RGBA8);
-                        textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.PVRTC_RGBA4);
+                       textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.PVRTC_RGBA4);
+                       //textureImporter.SetPlatformTextureSettings("iPhone", 1024, TextureImporterFormat.ASTC_RGBA_6x6);
                     }
 
 
@@ -778,20 +779,20 @@ namespace BabybusAssetsSettings
                  if (!textureImporter.DoesSourceTextureHaveAlpha())//不带alpha通道的
                 {
                    
-                    textureImporter.isReadable = true;
+                    //textureImporter.isReadable = true;
                     AssetDatabase.ImportAsset(path);
                     //imagecompression.TextureRGB565(texture);
-                    textureImporter.isReadable = false;
+                    //textureImporter.isReadable = false;
 
                 }
                 else  //带alpha通道的
                 {
                    
-                    textureImporter.isReadable = true;
+                   // textureImporter.isReadable = true;
                     AssetDatabase.ImportAsset(path);
                     //imagecompression.TextureRGBA4444(texture);
                     //imagecompression.TextureRGB565(texture);
-                    textureImporter.isReadable = false;
+                    //textureImporter.isReadable = false;
 
                 }
 

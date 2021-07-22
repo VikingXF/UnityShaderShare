@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: "\u8001\u864E"
+  m_Shader: {fileID: 4800000, guid: 3bc93b57bd0b55548b778b3649e559d1, type: 3}
+  m_ShaderKeywords: _DIRECTION_TURNLEFT
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3001
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainPage1:
+        m_Texture: {fileID: 2800000, guid: c0e329fc967208a4cae64e93e45ed1cc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainPage2:
+        m_Texture: {fileID: 2800000, guid: 435844677c3e4a24096ad916d39537d2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 89bfbea619883f74e9bee49f68572ee1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Angle: 0
+    - _AngleSpeed: 0
+    - _CockAngle: 0.08
+    - _Cutoff: 0.5
+    - _Direction: 0
+    - _LRCockDir: 0
+    - _PageAngle: 1
+    - _ScaleOnCenter: 0
+    - _Scane: 1
+    - _TimeScale1: 1.08
+    - _TimeScale2: 0.66
+    - _UVAngle: 55.18
+    - _V: 1
+    - _amplitude1: 0
+    - _amplitude2: 0.2
+    - _remap: 6.8
+    - _remap1: 0
+    - _remap2: 31
+    m_Colors: []

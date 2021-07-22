@@ -3,6 +3,8 @@
 //描述:特效文件夹根据尺寸进行分类，检查分类尺寸是否不一致，检查特效材质是否使用非Babybus下的shader
 //创建时间:2020/08/21 10:35:23
 //版本:v 1.0
+//V2.0修改时间:2021/06/24 10:35:23
+//版本:v 2.0
 //=============================================
 #if UNITY_EDITOR
 
@@ -18,7 +20,7 @@ namespace OptimizationTools
     public class EffectFileInspection : EditorWindow
     {
         int toolbarInt = 0;
-        string[] toolbarStrings = new string[] { "特效贴图尺寸分类", "特效检查", "shader检查", "数据保存读取", "相同名字shader切换" };
+        string[] toolbarStrings = new string[] { "特效贴图尺寸分类", "特效检查", "shader检查修改", "数据保存读取", "shader差异查找" };
         public string Effectpath = "Assets/Effect/Texture/";
         private int texSize;
 
@@ -203,8 +205,9 @@ namespace OptimizationTools
             }
 
         }
-        //相同名字shader切换
+
         #region
+        //相同名字shader切换
         private void ChangeshaderUI()
         {
             GUILayout.BeginVertical("box", GUILayout.Width(420));
@@ -266,10 +269,10 @@ namespace OptimizationTools
             {
                 CompareShader();
             }
-            //if (GUILayout.Button("一键移动到对应文件夹", GUILayout.Height(30)))
-            //{
-
-            //}
+            if (GUILayout.Button("对应文件夹shader查找", GUILayout.Height(30)))
+            {
+                FindShader();
+            }
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
 
@@ -296,15 +299,16 @@ namespace OptimizationTools
             //===============================
             GUILayout.BeginVertical("box", GUILayout.Width(420));
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("查找需要修改的shader列表中的材质",  GUILayout.Height(30)))
+            if (GUILayout.Button("查找需要修改的shader（Oldshader）列表中的材质",  GUILayout.Height(30)))
             {
 
                 shaderFindMaterial();
             }
-            if (GUILayout.Button("对下列材质列表进行相同名字shader切换", GUILayout.Height(30)))
-            {
-                ResultChangeshader();
-            }
+            // if (GUILayout.Button("对下列材质列表进行相同名字shader切换", GUILayout.Height(30)))
+            // {
+            //     ResultChangeshader();
+            // }
+           
             GUILayout.EndHorizontal();
             GUILayout.Label("材质列表");
             //更新  
@@ -355,6 +359,27 @@ namespace OptimizationTools
             }
             _ResultshaderAssetLst = DifferentShader;
         }
+
+        private void FindShader()
+        {
+            Object[] Shaders = GetSelectedShaders();
+            if (Shaders.Length == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "选择一个包含Shder的文件夹！", "OK");
+                return;
+            }
+            List<Shader> ErrShader = new List<Shader>();
+            foreach (Shader shader in Shaders)
+            {
+                ErrShader.Add(shader);
+            }
+            _ResultshaderAssetLst = ErrShader;
+            if (ErrShader.Count == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "没有找到引用shader！", "OK");
+            }
+        }
+
         private void shaderFindMaterial()
         {
             Object[] Materilas = GetSelectedMaterilas();
@@ -377,8 +402,12 @@ namespace OptimizationTools
 
 
                 }
-            }
+            }           
             _EffectMaterialAssetLst = ErrShaderMaterial;
+            if(ErrShaderMaterial.Count == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "没有找到引用shader的材质！", "OK");
+            }
         }
 
         private void Changeshader()
@@ -420,20 +449,567 @@ namespace OptimizationTools
             foreach (Material material in _EffectMaterialAssetLst)
             {
 
-                for (int i = 0; i < _ChangeshaderAssetLst.Count; i++)
+                // for (int i = 0; i < _ChangeshaderAssetLst.Count; i++)
+                // {
+                //     if (material.shader.name == _ChangeshaderAssetLst[i].name)
+                //     {
+                //         if (material.shader != _ChangeshaderAssetLst[i])
+                //         {
+                //             int RenderQueueint = material.renderQueue;
+                //             material.shader = _ChangeshaderAssetLst[i];
+                //             material.renderQueue = RenderQueueint;
+                //         }
+
+                //     }
+
+                // }
+
+                for (int i = 0; i < _EffectshaderAssetLst.Count; i++)
                 {
-                    if (material.shader.name == _ChangeshaderAssetLst[i].name)
+                    if (material.shader.name == _EffectshaderAssetLst[i].name)
                     {
-                        if (material.shader != _ChangeshaderAssetLst[i])
+                        if (material.shader != _EffectshaderAssetLst[i])
                         {
                             int RenderQueueint = material.renderQueue;
-                            material.shader = _ChangeshaderAssetLst[i];
+                            material.shader = _EffectshaderAssetLst[i];
                             material.renderQueue = RenderQueueint;
                         }
 
                     }
 
                 }
+
+            }
+        }
+
+        //相同名字shader切换
+        private void SameShaderChange()
+        {
+         
+            if (_EffectMaterialAssetLst.Count == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "材质列表是空的！", "OK");
+                return;
+            }
+            foreach (Material material in _EffectMaterialAssetLst)
+            {
+
+
+                for (int i = 0; i < _EffectshaderAssetLst.Count; i++)
+                {
+                    if (material.shader.name == _EffectshaderAssetLst[i].name)
+                    {
+                        if (material.shader != _EffectshaderAssetLst[i])
+                        {
+                            int RenderQueueint = material.renderQueue;
+                            material.shader = _EffectshaderAssetLst[i];
+                            material.renderQueue = RenderQueueint;
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+
+        //材质特殊对应shader修改
+        private void ResultChangespecialshader()
+        {
+         
+            if (_EffectMaterialAssetLst.Count == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "材质列表是空的！", "OK");
+                return;
+            }
+            foreach (Material material in _EffectMaterialAssetLst)
+            {
+                int MatRenderQueueint = material.renderQueue;
+                if(material.shader.name == "Babybus/Particles/Additive Color")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",1f);                   
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if(material.shader.name == "Babybus/Particles/Old/Additive Color")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",1f);                   
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if(material.shader.name == "Babybus/Particles/Additive Color1")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",1f);                   
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+                if(material.shader.name == "Babybus/Particles/Additive")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",1f); 
+                    material.SetColor("_TintColor",Color.white);        
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if(material.shader.name == "Babybus/Particles/Alpha Blended Color")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);                   
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if(material.shader.name == "Babybus/Particles/Alpha Blended Color1")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);                   
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+                
+                if(material.shader.name == "Babybus/Particles/Old/Alpha Blended Color")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);                   
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if(material.shader.name == "Legacy Shaders/Particles/Alpha Blended")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);                   
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if (material.shader.name == "Legacy Shaders/Particles/Alpha Blended Premultiply")
+                {
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if (item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    }
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend", 10f);
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest", ZTest);
+                }
+
+                if (material.shader.name == "Legacy Shaders/Particles/Additive")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",1f);        
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);         
+                }
+
+                if (material.shader.name == "Legacy Shaders/Particles/Additive (Soft)")
+                {
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if (item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    }
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend", 1f);
+                    material.SetColor("_TintColor", new Color(0.4f,0.4f,0.4f,0.4f));
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest", ZTest);
+                }
+
+                if (material.shader.name == "Babybus/Particles/Alpha Blended")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);
+                    material.SetColor("_TintColor",Color.white);                                      
+                    material.renderQueue = MatRenderQueueint;
+                     material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if (material.shader.name == "Mobile/Particles/Alpha Blended")
+                {
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if (item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    }
+
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend", 10f);
+                    //material.SetColor("_TintColor", Color.white);
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest", ZTest);
+                }
+
+                if (material.shader.name == "Mobile/Particles/Additive")
+                {
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if (item.name == "Babybus/Particles/Color Texture")
+                        {
+                            material.shader = item;
+                        }
+                    }
+
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend", 1f);
+                    //material.SetColor("_TintColor", Color.white);
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest", ZTest);
+                }
+
+                if (material.shader.name == "Babybus/Particles/MaskTexture Dissolve Blend(customDataUV)")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/MaskTexture Dissolve(customDataUV)")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);                                     
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest",ZTest);       
+                }
+
+                if (material.shader.name == "Babybus/Particles/Alpha Blended 2Mask(customDataUV)")
+                {
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if (item.name == "Babybus/Particles/2Mask(customDataUV)")
+                        {
+                            material.shader = item;
+                        }
+                    }
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend", 10f);
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest", ZTest);
+                }
+
+                if (material.shader.name == "Babybus/Particles/Additive Mask")
+                {     
+                    Texture mtTex = material.GetTexture("_Mask");
+                    Vector2 Offset = material.GetTextureOffset("_Mask");
+                    Vector2 Tilling = material.GetTextureScale("_Mask");
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Particle Alpha distorted Mask")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",1f);                   
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest",ZTest);
+                    material.SetFloat("_IntensityX",0f); 
+                    material.SetFloat("_IntensityY",0f); 
+                    material.SetTexture("_MaskTex",mtTex);
+                    material.SetTextureOffset("_MaskTex",Offset);
+                    material.SetTextureScale("_MaskTex",Tilling);
+                    
+                }
+                
+                if(material.shader.name == "Babybus/Particles/Alpha Blended Mask")
+                {     
+                    Texture mtTex = material.GetTexture("_Mask");
+                    Vector2 Offset = material.GetTextureOffset("_Mask");
+                    Vector2 Tilling = material.GetTextureScale("_Mask");
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Particle Alpha distorted Mask")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);                   
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest",ZTest);
+                    material.SetFloat("_IntensityX",0f); 
+                    material.SetFloat("_IntensityY",0f); 
+                    material.SetTexture("_MaskTex",mtTex);
+                    material.SetTextureOffset("_MaskTex",Offset);
+                    material.SetTextureScale("_MaskTex",Tilling);
+                }
+
+                if(material.shader.name == "Babybus/Particles/Alpha Blended Mask(customDataUV)")
+                {     
+                    Texture mtTex = material.GetTexture("_Mask");
+                    Vector2 Offset = material.GetTextureOffset("_Mask");
+                    Vector2 Tilling = material.GetTextureScale("_Mask");
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Particle Alpha distorted Mask(customDataUV)")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",10f);                   
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest",ZTest);
+                    material.SetFloat("_IntensityX",0f); 
+                    material.SetFloat("_IntensityY",0f); 
+                    material.SetTexture("_MaskTex",mtTex);
+                    material.SetTextureOffset("_MaskTex",Offset);
+                    material.SetTextureScale("_MaskTex",Tilling);
+                }
+
+                if(material.shader.name == "Babybus/Particles/Additive Mask(customDataUV)")
+                {     
+                    Texture mtTex = material.GetTexture("_Mask");
+                    Vector2 Offset = material.GetTextureOffset("_Mask");
+                    Vector2 Tilling = material.GetTextureScale("_Mask");
+
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Particles/Particle Alpha distorted Mask(customDataUV)")
+                        {
+                            material.shader = item;
+                        }
+                    } 
+
+                    float ZTest = material.GetFloat("_ZTest");
+                    material.SetFloat("_DstBlend",1f);                   
+                    material.renderQueue = MatRenderQueueint;
+                    material.SetFloat("_ZTest",ZTest);
+                    material.SetFloat("_IntensityX",0f); 
+                    material.SetFloat("_IntensityY",0f); 
+                    material.SetTexture("_MaskTex",mtTex);
+                    material.SetTextureOffset("_MaskTex",Offset);
+                    material.SetTextureScale("_MaskTex",Tilling);
+                }
+
+
+                if(material.shader.name == "Unlit/Texture")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Unlit/Texture")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+
+                if(material.shader.name == "Babybus/Texture")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Unlit/Texture")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+
+                if(material.shader.name == "Babybus/Soft Edge Unlit")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Cutout/Soft Edge Unlit")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+
+                if(material.shader.name == "Babybus/Color Soft Edge Unlit")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Cutout/Color Soft Edge Unlit")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+
+                if(material.shader.name == "Unlit/Soft Edge Unlit")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Cutout/Color Soft Edge Unlit")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+
+                if(material.shader.name == "Babybus/Transparent")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Unlit/Transparent")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+
+                if(material.shader.name == "Unlit/Transparent")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Unlit/Transparent")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+
+                if(material.shader.name == "Babybus/Color Transparentt")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Unlit/Color Transparentt")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+                
+                if(material.shader.name == "Mobile/Diffuse")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Mobile/Diffuse")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+                if(material.shader.name == "Legacy Shaders/Diffuse")
+                {     
+                    foreach (var item in _EffectshaderAssetLst)
+                    {
+                        if(item.name == "Babybus/Mobile/Color Diffuse")
+                        {
+                            material.shader = item;
+                        }
+                    }                 
+                    material.renderQueue = MatRenderQueueint;
+     
+                }
+                // for (int i = 0; i < _ChangeshaderAssetLst.Count; i++)
+                // {
+                //     if (material.shader.name == _ChangeshaderAssetLst[i].name)
+                //     {
+                //         if (material.shader != _ChangeshaderAssetLst[i])
+                //         {
+                //             int RenderQueueint = material.renderQueue;
+                //             material.shader = _ChangeshaderAssetLst[i];
+                //             material.renderQueue = RenderQueueint;
+                //         }
+
+                //     }
+
+                // }
 
             }
         }
@@ -562,15 +1138,33 @@ namespace OptimizationTools
         private void prefabShaderInspectionUI()
         {
             GUILayout.BeginVertical("box", GUILayout.Width(420));
-            GUILayout.Label("材质shander检查");
-
-            if (GUILayout.Button("材质shander检查", GUILayout.Width(400), GUILayout.Height(30)))
+            GUILayout.Label("材质shader检查");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("材质shader检查", GUILayout.Width(200), GUILayout.Height(30)))
             {
 
                 prefabShaderInspection();
 
             }
+            if (GUILayout.Button("搜索Standard & Particles standard", GUILayout.Width(200), GUILayout.Height(30)))
+            {
 
+                FindStandardshader();
+
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
+            GUILayout.BeginVertical("box", GUILayout.Width(420));
+            GUILayout.Label("材质shader切换");
+            if (GUILayout.Button("对下列材质列表进行特殊差异shader切换", GUILayout.Width(400),GUILayout.Height(30)))
+            {
+                ResultChangespecialshader();
+            }
+
+            if (GUILayout.Button("对下列材质列表相同名字shader切换", GUILayout.Width(400),GUILayout.Height(30)))
+            {
+                SameShaderChange();
+            }
             GUILayout.EndVertical();
 
             //===============================
@@ -878,10 +1472,11 @@ namespace OptimizationTools
             if (ErrShaderMaterial.Count > 0)
             {
                 
-                foreach (Material ErrShaderMaterialitem in ErrShaderMaterial)
-                {
-                    EditorUtility.DisplayDialog("结果：警告", "有不符合的shader！材质球名称："+ ErrShaderMaterialitem.name, "OK");
-                }            
+                // foreach (Material ErrShaderMaterialitem in ErrShaderMaterial)
+                // {
+                //     EditorUtility.DisplayDialog("结果：警告", "有不符合的shader！材质球名称："+ ErrShaderMaterialitem.name, "OK");
+                // }     
+                EditorUtility.DisplayDialog("结果：警告", "有不符合的shader！", "OK");  
             }
             else
             {
@@ -889,6 +1484,56 @@ namespace OptimizationTools
             }
             
         }
+
+
+        private void FindStandardshader()
+        {
+            Object[] Materilas = GetSelectedMaterilas();
+            if (Materilas.Length == 0)
+            {
+                EditorUtility.DisplayDialog("警告", "选择一个包含材质球的文件夹或者单独材质球！", "OK");
+                return;
+            }
+
+            List<Material> ErrShaderMaterial = new List<Material>();
+
+            // Shader standardshader = Shader.Find("Standard");
+            // Shader standardSpecularshader = Shader.Find("Standard(Specular setup)");
+            // Shader Particlesstandardshader = Shader.Find("Particles/Standard Unlit");
+            // Shader ParticlesstandardSurshader = Shader.Find("Particles/Standard Surface");
+
+            
+            foreach (Material material in Materilas)
+            {
+
+                if(material.shader.name == "Standard" || material.shader.name == "Standard (Specular setup)" || material.shader.name == "Particles/Standard Unlit" || material.shader.name == "Particles/Standard Surface")
+                {
+                  
+                    ErrShaderMaterial.Add(material);       
+                }          
+                
+            }
+            _EffectMaterialAssetLst = ErrShaderMaterial;
+
+            if (ErrShaderMaterial.Count > 0)
+            {              
+               
+                EditorUtility.DisplayDialog("结果：警告", "有不符合的shader！", "OK");  
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("结果：", "所选Shader都符合", "OK");
+            }
+            
+        }
+
+        static Object[] GetSelectedShaders()
+        {
+
+            return Selection.GetFiltered(typeof(Shader), SelectionMode.DeepAssets);
+        }
+
+
         static Object[] GetSelectedMaterilas()
         {
 

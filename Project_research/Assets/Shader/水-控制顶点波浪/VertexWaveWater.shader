@@ -5,7 +5,7 @@
         _MainTex ("Texture", 2D) = "white" {}
 		
 		_TimeScale1("波速1", float) = 1
-		_remap("振幅1", Range(0, 100)) = 6.8  //振幅		
+		_remap1("振幅1", Range(0, 100)) = 6.8  //振幅		
 		_amplitude1("振幅强度1", Range(0, 10)) = 0   //振幅强度
 		_TimeScale2("波速2", float) = 1
 		_remap2("振幅2", Range(0, 100)) = 6.8  //振幅

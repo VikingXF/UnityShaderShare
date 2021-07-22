@@ -45,7 +45,10 @@ public class HiddenMeshRender : EditorWindow
         {
             hiddrender();
         }
-
+		if (GUILayout.Button("显示meshrender", GUILayout.Width(240), GUILayout.Height(30)))
+        {
+            Showrender();
+        }
     }
 
     private void hiddrender()
@@ -63,6 +66,20 @@ public class HiddenMeshRender : EditorWindow
             }
         }
     }
-
+	private void Showrender()
+    {
+        if (Selection.activeTransform != null)
+        {
+            Transform[] father = Selection.activeTransform.GetComponentsInChildren<Transform>();
+            foreach (var child in father)
+            {
+                if (child.GetComponent<MeshRenderer>() != null)
+                {
+                    child.GetComponent<MeshRenderer>().enabled = true;
+                }
+                
+            }
+        }
+    }
 }
 #endif

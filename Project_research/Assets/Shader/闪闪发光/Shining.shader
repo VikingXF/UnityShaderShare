@@ -56,7 +56,7 @@
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv.xy)*_MainColor;
 				fixed4 Shiningcol = tex2D(_ShiningTex, i.uv.zw);
-				fixed4 Shiningcol2 = tex2D(_ShiningTex, i.uv.zw+float2(_Time.y*0.02,0)+ i.viewDir);
+				fixed4 Shiningcol2 = tex2D(_ShiningTex, i.uv.zw+float2(_Time.y*0.02,0)+ i.viewDir.xy);
 				col.rgb += (Shiningcol.rgb*Shiningcol2.rgb*_ShiningColor);
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);

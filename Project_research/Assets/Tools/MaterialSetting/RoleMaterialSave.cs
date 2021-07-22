@@ -20,8 +20,9 @@ namespace RoleMaterialNameSpace
     //[CreateAssetMenu(menuName = "Create ShowObject")]
     public class RoleMaterialSave : ScriptableObject
     {
-
+        
         [SerializeField]//必须要加  
         public List<RoleMaterials> _assetLst = new List<RoleMaterials>();
+        
     }
 }

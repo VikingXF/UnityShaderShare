@@ -7,6 +7,11 @@ Shader "Unlit/OwnShadow"
 		_ShadowDir ("ShadowDir", Vector) = (0,0,0,0) //阴影方向
 		_ShadowCol("Shadow Color" , Color) = (0,0,0,0)//阴影颜色
 		_ShadowFalloff("Shadow Falloff" , Range(0.01,1)) = 1//阴影衰减
+
+		//[Toggle] _Rim ("Invert Rim?", Float) = 0
+		_RimColor("RimColor", Color) = (1,1,1,1)  
+		_RimPower("RimPower", Range(0, 10.0)) = 0.1  
+		_RimIntensity("RimIntensity", Range(0, 3.0)) = 0.1 
 	}
 	SubShader
 	{
@@ -21,7 +26,8 @@ Shader "Unlit/OwnShadow"
 			// make fog work
 			#pragma multi_compile_fog			
 			#include "UnityCG.cginc"
-
+			
+				
 			struct appdata
 			{
 				float4 vertex : POSITION;
@@ -83,12 +89,13 @@ Shader "Unlit/OwnShadow"
 			#pragma fragment frag
 			// make fog work
 			#pragma multi_compile_fog
-			
+			#pragma shader_feature _RIM_ON
 			#include "UnityCG.cginc"
 
 			struct appdata
 			{
 				float4 vertex : POSITION;	
+				float3 normal : NORMAL;
 			};
 
 			struct v2f
@@ -101,7 +108,8 @@ Shader "Unlit/OwnShadow"
 
 			fixed4 _ShadowDir,_ShadowCol;
 			float _ShadowFalloff;
-			
+			fixed4 _RimColor;  
+		    float _RimPower,_RimIntensity; 
 			float3 ShadowProjectPos(in float4 vertDir)
 			{
 				float3 shadowPos;
@@ -120,6 +128,8 @@ Shader "Unlit/OwnShadow"
 			v2f vert (appdata v)
 			{
 				v2f o;
+				
+				
 				//得到阴影的世界空间坐标
 				float3 shadowPos = ShadowProjectPos(v.vertex);
 				//转换到裁切空间
@@ -129,8 +139,21 @@ Shader "Unlit/OwnShadow"
 				//计算阴影衰减
 				float falloff = saturate( 1-distance(shadowPos , center) * _ShadowFalloff);
 				//阴影颜色
-				o.color = _ShadowCol; 
-				o.color.a = falloff;				
+				o.color = _ShadowCol;
+				//o.color.a = falloff;
+
+				//#if _RIM_ON
+                //float3 viewDir = normalize(ObjSpaceViewDir(v.vertex));
+				//float3 viewDir = float3(v.vertex.y,v.vertex.y,v.vertex.y);
+				float3  viewnormal = normalize(v.normal);
+				float Rim=1 -dot(shadowPos,viewnormal);				
+				Rim = saturate(1-pow(Rim,_RimPower) *_RimIntensity);  
+				//o.color.a *=Rim;
+				//#endif
+				//
+				o.color.a = 1-Rim;
+				
+				
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
@@ -138,6 +161,7 @@ Shader "Unlit/OwnShadow"
 			fixed4 frag (v2f i) : SV_Target
 			{	
 				fixed4 col = i.color;
+				col.a = i.color.a;
 				UNITY_APPLY_FOG(i.fogCoord, col);			
 				return col;
 			}

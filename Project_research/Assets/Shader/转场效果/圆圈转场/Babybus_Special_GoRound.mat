@@ -27,11 +27,13 @@ Material:
     - _Angle: 0
     - _Column: 5
     - _Cutoff: -0.05
-    - _Dissolution: 0.15
+    - _Dissolution: 0
+    - _Pow: 34
     - _Radius: 0
-    - _RoundPositionX: 0.52
-    - _RoundPositionY: 0.33
+    - _RoundPositionX: 0
+    - _RoundPositionY: 0
     - _ScaleOnCenter: 1
+    - _Soft: 0
     - _line: 5
     m_Colors:
     - _RoundPosition: {r: 272.98, g: 100, b: 1, a: 1}

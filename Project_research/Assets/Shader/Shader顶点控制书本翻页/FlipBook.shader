@@ -68,7 +68,8 @@
 		v2f vert_flip (appdata v)
 		{
 			v2f o;
-			o.uv = TRANSFORM_TEX(v.uv, _MainPage1);
+			//o.uv = TRANSFORM_TEX(v.uv, _MainPage1);
+			o.uv = v.uv;
 			o.uv.xy = 1 - o.uv.xy;
 
 			float4 vertex = o.uv.x <= 0.5 ? v.vertex : flip_book(v.vertex);
@@ -80,7 +81,8 @@
 		v2f vert_next_page(appdata v)
 		{
 		    v2f o;
-		    o.uv = TRANSFORM_TEX(v.uv, _MainPage1);
+		    //o.uv = TRANSFORM_TEX(v.uv, _MainPage1);
+			o.uv = v.uv;
 		    o.uv.y = 1 - o.uv.y;
 
 			o.vertex = UnityObjectToClipPos(v.vertex);
@@ -90,7 +92,7 @@
 		
 		fixed4 frag_flip (v2f i) : SV_Target
 		{
-			fixed4 col = tex2D(_MainPage1, i.uv);
+			fixed4 col = tex2D(_MainPage1, i.uv*_MainPage1_ST.xy+_MainPage1_ST.zw);
 			//UNITY_APPLY_FOG(i.fogCoord, col);
 			return col;
 		}
@@ -98,7 +100,7 @@
 		fixed4 frag_flip_back (v2f i) : SV_Target
 		{
 			i.uv.x = 1 - i.uv.x;
-			fixed4 col = tex2D(_MainPage2, i.uv);
+			fixed4 col = tex2D(_MainPage2, i.uv*_MainPage2_ST.xy+_MainPage2_ST.zw);
 			return col;
 		}
 

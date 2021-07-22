@@ -35,6 +35,6 @@ Material:
     - _CurPageAngle: 0.256
     - _Cutoff: 0.5
     - _Direction: 0
-    - _PageAngle: 0
+    - _PageAngle: 1
     - _Scane: 1
     m_Colors: []

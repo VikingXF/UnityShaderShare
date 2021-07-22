@@ -57,7 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _T_mask:
         m_Texture: {fileID: 2800000, guid: daaa7badc7f75024890d6dbd382d51c1, type: 3}
-        m_Scale: {x: 2, y: 1}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
@@ -69,19 +69,19 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _N_mask: 0.5
+    - _N_mask: 0.63
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Transitions: 0.202
+    - _Transitions: 0.145
     - _UVSec: 0
     - _ZTest: 4
     - _ZWrite: 1
-    - _length: 0.122
+    - _length: 0.23
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
-    - _WaveParams: {r: 0.2, g: 5, b: -0.1, a: 5}
+    - _WaveParams: {r: 2.24, g: 5.72, b: -0.1, a: 5}
