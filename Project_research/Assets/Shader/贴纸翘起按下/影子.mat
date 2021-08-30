@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Material 1
+  m_Name: "\u5F71\u5B50"
   m_Shader: {fileID: 4800000, guid: ca3d70d18c21d694ca503a4fdc8a4901, type: 3}
   m_ShaderKeywords: _AXIALXY_XL _GREY_ON
   m_LightmapFlags: 4
