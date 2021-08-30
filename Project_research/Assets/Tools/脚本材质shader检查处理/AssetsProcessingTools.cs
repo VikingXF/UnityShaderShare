@@ -200,7 +200,7 @@ namespace BabybusOptimizationTools
 
             if (GUILayout.Button("对下列材质列表相同名字shader切换", GUILayout.Width(400),GUILayout.Height(30)))
             {
-                //SameShaderChange();
+                SameShaderChange();
             }
             GUILayout.EndVertical();
 
